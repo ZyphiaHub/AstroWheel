@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
 
-    // Start is called before the first frame update
-    void Start()
+    public int level = 3;
+    public int timepoints = 40;
+    public int pipacs = 12;
+
+    public void SavePlayer()
     {
-        
+        SaveSystem.SavePlayer(this);
     }
 
-    
-
-    // Update is called once per frame
-    void Update()
+    public void LoadPlayer ()
     {
-        
+        PlayerData data = SaveSystem.LoadPlayer();
+
+        level = data.level;
+        timepoints = data.timepoints;
+        pipacs = data.pipacs;
+
+
     }
 }
