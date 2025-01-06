@@ -6,7 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 public class Bobbing : MonoBehaviour
 {
     public float speed = 1.5f; //speed of the moving object
-    public float height = 0.5f;
+    public float height = 4f;
     public Transform target; //target object to bob
 
 
