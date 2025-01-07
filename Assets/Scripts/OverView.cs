@@ -7,7 +7,7 @@ public class OverView : MonoBehaviour
 {
     public void BackToMainMenu()
     {
-        SceneManager.LoadSceneAsync(0);
+        SceneManager.LoadSceneAsync(1);
     }
     public void Island_1()
     {
