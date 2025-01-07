@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Starting.unity
+    guid: 7282e8169117cc747b75c1a6fb650872
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: d8521f51dbd809a4491a6b3a519dd789
+  - enabled: 1
+    path: Assets/Scenes/Island_1.unity
+    guid: 519e203da95565d47a8a23df1c2147e9
+  - enabled: 1
+    path: Assets/Scenes/Island_2.unity
+    guid: 31fd297e347651f4491a0ac0d665fbdb
+  - enabled: 1
+    path: Assets/Scenes/Island_3.unity
+    guid: db277421ff1d3d144a50f9cae03a8f45
+  - enabled: 1
+    path: Assets/Scenes/Island_4.unity
+    guid: d8b0408525e7e1a4d9176132f6c6876b
+  - enabled: 1
+    path: Assets/Scenes/Island_5.unity
+    guid: 2e20877f71e443045921e2f42335b534
+  - enabled: 1
+    path: Assets/Scenes/Island_6.unity
+    guid: b1ffc66889e0d604b96a6886f0ea2c9d
+  - enabled: 1
+    path: Assets/Scenes/Island_7.unity
+    guid: b872c9ffa4d221341b6a21652cfa2718
+  - enabled: 1
+    path: Assets/Scenes/Island_8.unity
+    guid: fe96e27c6f3c5fb4abb974d225b3348a
+  - enabled: 1
+    path: Assets/Scenes/Island_9.unity
+    guid: 861476bc90709ba4c9d4387b1d6ef88b
+  - enabled: 1
+    path: Assets/Scenes/Island_10.unity
+    guid: 1856289df3c17894c817fec2e61a2786
+  - enabled: 1
+    path: Assets/Scenes/Island_11.unity
+    guid: 1264f0573ecb8be43b6ac4ee4bba196d
+  - enabled: 1
+    path: Assets/Scenes/Island_12.unity
+    guid: 4a260a7d41fba4c47b306b267cb06204
+  - enabled: 1
+    path: Assets/Scenes/Hearth.unity
+    guid: f6b9fdc4084bcaf499021a07091ae911
+  m_configObjects: {}
