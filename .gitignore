@@ -4,3 +4,10 @@
 .vsconfig
 /Library/StateCache/SceneView
 /Assets/TextMesh Pro
+/Logs
+/Library
+/Temp
+/UserSettings
+Assets/TextMesh Pro.meta
+obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache
