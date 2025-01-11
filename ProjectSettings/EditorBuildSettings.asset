@@ -50,4 +50,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Hearth.unity
     guid: f6b9fdc4084bcaf499021a07091ae911
+  - enabled: 1
+    path: Assets/Scenes/Login.unity
+    guid: 7d48fa66353aef84ab17299d91b09f45
+  - enabled: 1
+    path: Assets/Scenes/CharCreate.unity
+    guid: d97b943eca79e31498ba41368fbb60e4
   m_configObjects: {}
