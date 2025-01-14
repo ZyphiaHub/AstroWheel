@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\CircularPath.cs" />
     <Compile Include="Assets\Scripts\PlayerData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
+    <Compile Include="Assets\Scripts\MemoriaJatek\AddCards.cs" />
     <Compile Include="Assets\Scripts\Island_2.cs" />
     <Compile Include="Assets\Scripts\DialogeBox.cs" />
     <Compile Include="Assets\Scripts\Island_11.cs" />
@@ -91,6 +92,8 @@
     <Compile Include="Assets\Scripts\Bobbing.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Scripts\Island_12.cs" />
+    <Compile Include="Assets\Scripts\MemoriaJatek\ControllerMemoryGame.cs" />
+    <Compile Include="Assets\Scripts\MemoriaJatek\MemoryCard.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
@@ -98,6 +101,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
+    <Compile Include="Assets\Scripts\MemoriaJatek\OpenMemoryGame.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
@@ -116,10 +120,10 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Hearth.cs" />
+    <Compile Include="Assets\Scripts\MemoriaJatek\MemoController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\SaveSystem.cs" />
     <Compile Include="Assets\Scripts\Island_8.cs" />
-    <Compile Include="Assets\Scripts\MemoriaJatek\MainMemoryGame.cs" />
     <Compile Include="Assets\Scripts\CookonTime\CookonTime.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Scripts\Island_4.cs" />

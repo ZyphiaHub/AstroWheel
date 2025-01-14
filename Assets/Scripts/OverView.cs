@@ -73,4 +73,9 @@ public class OverView : MonoBehaviour
     {
         SceneManager.LoadSceneAsync(14);
     }
+
+    public void MemoryGame()
+    {
+        SceneManager.LoadSceneAsync("MemoriaJatek");
+    }
 }
