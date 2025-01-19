@@ -5,8 +5,5 @@ using UnityEngine.SceneManagement;
 
 public class Island_7 : MonoBehaviour
 {
-    public void BackToOverView()
-    {
-        SceneManager.LoadSceneAsync(1); 
-    }
+    
 }

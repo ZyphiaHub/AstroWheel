@@ -7,11 +7,16 @@ public class OverView : MonoBehaviour
 {
     public void BackToMainMenu()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync("Main_Menu");
+    }
+
+    public void HOGame()
+    {
+        SceneManager.LoadSceneAsync("HOGame");
     }
     public void Island_1()
     {
-        SceneManager.LoadSceneAsync(2);
+        SceneManager.LoadSceneAsync("Island_1_Sagittarius");
     }
 
     public void Island_2()
@@ -76,6 +81,6 @@ public class OverView : MonoBehaviour
 
     public void MemoryGame()
     {
-        SceneManager.LoadSceneAsync("MemoriaJatek");
+        SceneManager.LoadSceneAsync("MemoGame");
     }
 }
