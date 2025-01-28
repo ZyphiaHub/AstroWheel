@@ -10,10 +10,7 @@ public class OverView : MonoBehaviour
         SceneManager.LoadSceneAsync("Main_Menu");
     }
 
-    public void HOGame()
-    {
-        SceneManager.LoadSceneAsync("HOGame");
-    }
+    
     public void Island_1()
     {
         SceneManager.LoadSceneAsync("Island_1_Sagittarius");
@@ -21,12 +18,12 @@ public class OverView : MonoBehaviour
 
     public void Island_2()
     {
-        SceneManager.LoadSceneAsync(3);
+        SceneManager.LoadSceneAsync("Island_2_Capricorn");
     }
 
     public void Island_3()
     {
-        SceneManager.LoadSceneAsync(4);
+        SceneManager.LoadSceneAsync("Island_3_Aquarius");
     }
 
     public void Island_4()
@@ -82,5 +79,15 @@ public class OverView : MonoBehaviour
     public void MemoryGame()
     {
         SceneManager.LoadSceneAsync("MemoGame");
+    }
+
+    public void HOGame()
+    {
+        SceneManager.LoadSceneAsync("HOGame");
+    }
+
+    public void Match3()
+    {
+        SceneManager.LoadSceneAsync("Match3");
     }
 }

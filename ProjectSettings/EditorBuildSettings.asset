@@ -15,10 +15,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Island_1_Sagittarius.unity
     guid: 519e203da95565d47a8a23df1c2147e9
   - enabled: 1
-    path: Assets/Scenes/Island_2.unity
+    path: Assets/Scenes/Island_2_Capricorn.unity
     guid: 31fd297e347651f4491a0ac0d665fbdb
   - enabled: 1
-    path: Assets/Scenes/Island_3.unity
+    path: Assets/Scenes/Island_3_Aquarius.unity
     guid: db277421ff1d3d144a50f9cae03a8f45
   - enabled: 1
     path: Assets/Scenes/Island_4.unity
@@ -62,4 +62,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HOGame.unity
     guid: 9cde0b348e6d08d45813537119075dae
+  - enabled: 1
+    path: Assets/Scenes/Match3.unity
+    guid: be0eca0e523d8a741b1dfeacece280f6
   m_configObjects: {}
