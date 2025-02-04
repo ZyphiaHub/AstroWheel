@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Island_4_Pisces.unity
     guid: d8b0408525e7e1a4d9176132f6c6876b
   - enabled: 1
-    path: Assets/Scenes/Island_5.unity
+    path: Assets/Scenes/Island_5_Aries.unity
     guid: 2e20877f71e443045921e2f42335b534
   - enabled: 1
     path: Assets/Scenes/Island_6.unity
