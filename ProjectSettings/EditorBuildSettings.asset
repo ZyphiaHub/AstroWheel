@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Island_3_Aquarius.unity
     guid: db277421ff1d3d144a50f9cae03a8f45
   - enabled: 1
-    path: Assets/Scenes/Island_4.unity
+    path: Assets/Scenes/Island_4_Pisces.unity
     guid: d8b0408525e7e1a4d9176132f6c6876b
   - enabled: 1
     path: Assets/Scenes/Island_5.unity
