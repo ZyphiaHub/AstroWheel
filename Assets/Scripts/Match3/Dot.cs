@@ -8,12 +8,11 @@ public class Dot : MonoBehaviour
     [Header("Board Variables")]
     public int column;
     public int row;
-    public int previousColumn;
-    public int previousRow;
     public int targetX;
     public int targetY;
-   
     public bool isMatched = false;
+    public int previousColumn;
+    public int previousRow;
 
     private Board board;
     public GameObject otherDot;
@@ -37,6 +36,8 @@ public class Dot : MonoBehaviour
         targetY = (int)transform.position.y;
         row = targetY;
         column = targetX;
+        previousRow = row;
+        previousColumn = column;
     }
 
     // Update is called once per frame
@@ -72,7 +73,7 @@ public class Dot : MonoBehaviour
             //Move Towards the target
             tempPosition = new Vector2(transform.position.x, targetY);
             transform.position = Vector2.Lerp(transform.position, tempPosition, .5f);
-            if (board.allDots[column, row] != this.gameObject)
+            if (board.allDots[column, row] != this.gameObject)   ///ez itt marad????????? vagy elsebe megy?
             {
                 board.allDots[column, row] = this.gameObject;
             }
@@ -87,7 +88,31 @@ public class Dot : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    public IEnumerator CheckMoveCo()
+    {
+        yield return new WaitForSeconds(.5f);
+
+        if (otherDot != null)
+        {
+            if (!isMatched && !otherDot.GetComponent<Dot>().isMatched)
+            {
+                otherDot.GetComponent<Dot>().row = row;
+                otherDot.GetComponent<Dot>().column = column;
+                row = previousRow;
+                column = previousColumn;
+                //yield return new WaitForSeconds(.5f);
+                //board.currentDot = null;
+                //board.currentState = GameState.move;
+            } else
+            {
+                //board.DestroyMatches();
+
+            }
+            otherDot = null;
+        }
+    }
+
+        private void OnMouseDown()
     {
         
             firstTouchPosition = Input.mousePosition;
@@ -148,7 +173,7 @@ public class Dot : MonoBehaviour
             row -= 1;
         }
 
-        
+        StartCoroutine(CheckMoveCo());
     }
 
     void FindMatches()
