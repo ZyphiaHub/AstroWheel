@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\Island_6.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Scripts\DatabaseManager.cs" />
+    <Compile Include="Assets\Scripts\Match3\FindMatches.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Scripts\Potions_tbl.cs" />
