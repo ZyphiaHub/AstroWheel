@@ -28,12 +28,12 @@ public class OverView : MonoBehaviour
 
     public void Island_4()
     {
-        SceneManager.LoadSceneAsync(5);
+        SceneManager.LoadSceneAsync("Island_4_Pisces");
     }
 
     public void Island_5()
     {
-        SceneManager.LoadSceneAsync(6);
+        SceneManager.LoadSceneAsync("Island_5_Aries");
     }
 
     public void Island_6()

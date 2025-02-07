@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Island_1_Sagittarius : IGameState {
+    public void EnterState()
+    {
+        Debug.Log("Beléptél az 1. jelenetbe!");
+        // Itt inicializálhatod a jelenetet (pl. puzzle elemek betöltése)
+        SceneManager.LoadScene("Island_1_Sagittarius"); // Az 1. jelenet betöltése
+    }
+
+    public void UpdateState()
+    {
+        // Itt ellenõrizheted, hogy a puzzle megoldódott-e
+        if (IsPuzzleSolved())
+        {
+            //GameManager.Instance.ChangeState(new Scene2State());
+        }
+    }
+
+    public void ExitState()
+    {
+        Debug.Log("Kiléptél az 1. jelenetbõl!");
+        // Itt takaríthatod fel a jelenetet (pl. puzzle elemek eltávolítása)
+    }
+
+    private bool IsPuzzleSolved()
+    {
+        // Itt ellenõrizd, hogy a puzzle megoldódott-e
+        return true;
+    }
+}
