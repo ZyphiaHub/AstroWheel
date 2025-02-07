@@ -39,6 +39,8 @@ public class FindMatches : MonoBehaviour {
                         {
                             if (leftDot.tag == currentDot.tag && rightDot.tag == currentDot.tag)
                             {
+
+
                                 if(!currentMatches.Contains(leftDot))
                                 {
                                     currentMatches.Add(leftDot);
@@ -93,4 +95,6 @@ public class FindMatches : MonoBehaviour {
             }
         }
     }
+
+    
 }

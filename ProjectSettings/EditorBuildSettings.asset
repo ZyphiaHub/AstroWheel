@@ -30,10 +30,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Island_6_Taurus.unity
     guid: b1ffc66889e0d604b96a6886f0ea2c9d
   - enabled: 1
-    path: Assets/Scenes/Island_7.unity
+    path: Assets/Scenes/Island_7_Gemini.unity
     guid: b872c9ffa4d221341b6a21652cfa2718
   - enabled: 1
-    path: Assets/Scenes/Island_8.unity
+    path: Assets/Scenes/Island_8_Cancer.unity
     guid: fe96e27c6f3c5fb4abb974d225b3348a
   - enabled: 1
     path: Assets/Scenes/Island_9.unity

@@ -15,6 +15,7 @@ public class Board : MonoBehaviour {
     public int width;
     public int height;
     public int offset;
+    public int match3Point = 0;
     public GameObject[] dots;
     public GameObject tilePrefab;
     
@@ -107,10 +108,15 @@ public class Board : MonoBehaviour {
     {
         if (allDots[column, row].GetComponent<Dot>().isMatched)
         {
-
+            //mennyi elem van a match-ben?
+            match3Point ++;
+            Debug.Log("timePoint:" + match3Point);
+            
+            
             findMatches.currentMatches.Remove(allDots[column, row]);
             Destroy(allDots[column, row]);
             allDots[column, row] = null;
+            
         }
     }
 
@@ -122,7 +128,7 @@ public class Board : MonoBehaviour {
             {
                 if (allDots[i, j] != null)
                 {
-
+                    
                     DestroyMatchesAt(i, j);
                 }
             }
