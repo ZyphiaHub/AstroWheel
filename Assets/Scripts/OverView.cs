@@ -90,4 +90,9 @@ public class OverView : MonoBehaviour
     {
         SceneManager.LoadSceneAsync("Match3");
     }
+
+    public void Puzzle()
+    {
+        SceneManager.LoadSceneAsync("Puzzle");
+    }
 }

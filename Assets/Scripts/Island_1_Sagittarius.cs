@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using UnityEngine.SceneManagement;
 
 public class Island_1_Sagittarius : IGameState {
@@ -8,6 +9,7 @@ public class Island_1_Sagittarius : IGameState {
     {
         Debug.Log("Beléptél az 1. jelenetbe!");
         // Itt inicializálhatod a jelenetet (pl. puzzle elemek betöltése)
+        
         SceneManager.LoadScene("Island_1_Sagittarius"); // Az 1. jelenet betöltése
     }
 
@@ -28,7 +30,18 @@ public class Island_1_Sagittarius : IGameState {
 
     private bool IsPuzzleSolved()
     {
-        // Itt ellenõrizd, hogy a puzzle megoldódott-e
+        // Puzzle megoldva, mentjük az elsõ sziget teljesítését
+        GameManager.Instance.SaveLastCompletedIsland(1); // 1 = elsõ sziget
+        SceneManager.LoadScene("Island_2_Capricorn"); // Következõ sziget betöltése
         return true;
+    }
+}
+
+public class Island1Manager : MonoBehaviour {
+    private void OnPuzzleSolved()
+    {
+        // Puzzle megoldva, mentjük az elsõ sziget teljesítését
+        GameManager.Instance.SaveLastCompletedIsland(1); // 1 = elsõ sziget
+        SceneManager.LoadScene("Main_Menu"); // Vissza a fõmenübe
     }
 }

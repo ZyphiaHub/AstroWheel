@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     private IGameState currentState;
 
     public static GameManager Instance { get; private set; }
+
+    private const string LastCompletedIslandKey = "LastCompletedIsland";
 
     private void Awake()
     {
@@ -21,8 +24,12 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        // Kezdeti állapot beállítása
-        //ChangeState(new Island_1_Sagittarius());
+        //manuális teszteléshez
+        PlayerPrefs.SetInt(LastCompletedIslandKey, 1); // Például a második sziget teljesítve
+        PlayerPrefs.Save();
+
+        Debug.Log("Beléptél az Login menübe!");
+        SceneManager.LoadScene("Login");
     }
 
     private void Update()
@@ -42,5 +49,24 @@ public class GameManager : MonoBehaviour {
 
         currentState = newState;
         currentState.EnterState();
+    }
+
+    // Mentés: Utolsó teljesített sziget mentése
+    public void SaveLastCompletedIsland(int islandIndex)
+    {
+        PlayerPrefs.SetInt(LastCompletedIslandKey, islandIndex);
+        PlayerPrefs.Save(); // Azonnali mentés
+    }
+
+    // Betöltés: Utolsó teljesített sziget betöltése
+    public int LoadLastCompletedIsland()
+    {
+        return PlayerPrefs.GetInt(LastCompletedIslandKey, 1); // Alapértelmezett érték: 0 (elsõ sziget)
+    }
+
+    // Ellenõrzés: Egy adott sziget teljesítve van-e
+    public bool IsIslandCompleted(int islandIndex)
+    {
+        return islandIndex <= LoadLastCompletedIsland();
     }
 }
