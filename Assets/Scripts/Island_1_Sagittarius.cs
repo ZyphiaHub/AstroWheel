@@ -37,11 +37,4 @@ public class Island_1_Sagittarius : IGameState {
     }
 }
 
-public class Island1Manager : MonoBehaviour {
-    private void OnPuzzleSolved()
-    {
-        // Puzzle megoldva, mentjük az elsõ sziget teljesítését
-        GameManager.Instance.SaveLastCompletedIsland(1); // 1 = elsõ sziget
-        SceneManager.LoadScene("Main_Menu"); // Vissza a fõmenübe
-    }
-}
+

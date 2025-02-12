@@ -61,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Island_1_Sagittarius.cs" />
-    <Compile Include="Assets\Scripts\MainMenuTests.cs" />
     <Compile Include="Assets\Scripts\MatiCatch\MainMatiCatch.cs" />
     <Compile Include="Assets\Scripts\MatiKviz\MainMatiKviz.cs" />
     <Compile Include="Assets\Scripts\Island_5.cs" />
@@ -73,6 +72,7 @@
     <Compile Include="Assets\Scripts\Potions_tbl.cs" />
     <Compile Include="Assets\Scripts\CircularPath.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\AddCards.cs" />
+    <Compile Include="Assets\Scripts\Island1Manager.cs" />
     <Compile Include="Assets\Scripts\Island_2.cs" />
     <Compile Include="Assets\Scripts\SQLite.cs" />
     <Compile Include="Assets\Scripts\DialogeBox.cs" />
@@ -83,6 +83,7 @@
     <Compile Include="Assets\Scripts\Match3\DestroyParticle.cs" />
     <Compile Include="Assets\Scripts\Island_10.cs" />
     <Compile Include="Assets\Scripts\Bobbing.cs" />
+    <Compile Include="Assets\Scripts\DialogManager.cs" />
     <Compile Include="Assets\Scripts\Island_12.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\MemoryCard.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -971,6 +972,10 @@
     </Reference>
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.UI">

@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance { get; private set; }
 
-    private const string LastCompletedIslandKey = "LastCompletedIsland";
+    public const string LastCompletedIslandKey = "LastCompletedIsland";
 
     private void Awake()
     {
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
     private void Start()
     {
         //manuális teszteléshez
-        PlayerPrefs.SetInt(LastCompletedIslandKey, 1); // Például a második sziget teljesítve
+        PlayerPrefs.SetInt(LastCompletedIslandKey, 0); // Például a második sziget teljesítve
         PlayerPrefs.Save();
 
         Debug.Log("Beléptél az Login menübe!");
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour {
     // Betöltés: Utolsó teljesített sziget betöltése
     public int LoadLastCompletedIsland()
     {
-        return PlayerPrefs.GetInt(LastCompletedIslandKey, 1); // Alapértelmezett érték: 0 (elsõ sziget)
+        return PlayerPrefs.GetInt(LastCompletedIslandKey, 0); // Alapértelmezett érték: 0 (elsõ sziget)
     }
 
     // Ellenõrzés: Egy adott sziget teljesítve van-e

@@ -43,7 +43,7 @@ public class LoginManager : MonoBehaviour {
                 SceneManager.LoadScene("Main_Menu"); // Fõmenü betöltése
             } else
             {
-                SceneManager.LoadScene("Island_1_Sagittarius"); // Elsõ sziget betöltése
+                SceneManager.LoadScene("Island_1"); // Elsõ sziget betöltése
             }
         } else
         {
