@@ -11,7 +11,7 @@ public class MainMenuManager : MonoBehaviour {
         for (int i = 0; i < islandButtons.Length; i++)
         {
             int islandIndex = i + 1; // A szigetek indexelése 1-tõl kezdõdik
-            if (GameManager.Instance.IsIslandCompleted(islandIndex))
+            if (GameManager.Instance.IsIslandCompleted(islandIndex-1))
             {
                 islandButtons[i].interactable = true; // Gomb engedélyezve
             } else

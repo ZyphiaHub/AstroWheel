@@ -1,21 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
-public class Island1Manager : MonoBehaviour {
-
-    public DialogManager dialogManager; // DialogManager referencia
-
+public class Island1Manager : IslandManager {
     private void Start()
     {
+        islandIndex = 1; // Az elsõ sziget indexe
+
+        // Dialógus sorok létrehozása
+        List<string> dialogLines = new List<string>
+        {
+            "Üdvözöllek az elsõ szigeten!",
+            "Itt meg kell oldanod egy kihívást, hogy továbbjuss.",
+            "Jó szórakozást a puzzle megoldásához!"
+        };
+
         // Dialógus megjelenítése
-        dialogManager.ShowDialog("Welcome young one! Jó szórakozást a puzzle megoldásához!");
-    }
-    private void OnPuzzleSolved()
-    {
-        // Puzzle megoldva, mentjük az elsõ sziget teljesítését
-        GameManager.Instance.SaveLastCompletedIsland(1); // 1 = elsõ sziget
-        SceneManager.LoadScene("Main_Menu"); // Vissza a fõmenübe
+        dialogManager.ShowDialog(dialogLines);
     }
 }
