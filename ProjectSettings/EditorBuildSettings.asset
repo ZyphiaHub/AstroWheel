@@ -30,16 +30,16 @@ EditorBuildSettings:
     path: Assets/Scenes/Island_5.unity
     guid: 2e20877f71e443045921e2f42335b534
   - enabled: 1
-    path: Assets/Scenes/Island_6_Taurus.unity
+    path: Assets/Scenes/Island_6.unity
     guid: b1ffc66889e0d604b96a6886f0ea2c9d
   - enabled: 1
     path: Assets/Scenes/Island_7.unity
     guid: b872c9ffa4d221341b6a21652cfa2718
   - enabled: 1
-    path: Assets/Scenes/Island_8_Cancer.unity
+    path: Assets/Scenes/Island_8.unity
     guid: fe96e27c6f3c5fb4abb974d225b3348a
   - enabled: 1
-    path: Assets/Scenes/Island_9_Leo.unity
+    path: Assets/Scenes/Island_9.unity
     guid: 861476bc90709ba4c9d4387b1d6ef88b
   - enabled: 1
     path: Assets/Scenes/Island_10_Virgo.unity
