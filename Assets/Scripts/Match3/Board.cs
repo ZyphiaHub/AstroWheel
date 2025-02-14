@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public enum GameState{
@@ -22,7 +23,10 @@ public class Board : MonoBehaviour {
     private BackgroundTile[,] allTiles;
     public GameObject[,] allDots;
     private FindMatches findMatches;
-    
+
+    public int remMoves = 20;
+    public TMP_Text scoreText;
+    public TMP_Text movesText;
 
 
 
@@ -32,6 +36,7 @@ public class Board : MonoBehaviour {
         allTiles = new BackgroundTile[width, height];
         allDots = new GameObject[width, height];
         SetUp();
+        UpdateUI();
 	}
 	
     private void SetUp(){
@@ -60,9 +65,6 @@ public class Board : MonoBehaviour {
                 dot.transform.parent = this.transform;
                 dot.name = "dot:( " + i + ", " + j + " )";
                 allDots[i, j] = dot;
-
-
-
 
 
 
@@ -118,6 +120,7 @@ public class Board : MonoBehaviour {
             allDots[column, row] = null;
             
         }
+        UpdateUI();
     }
 
     public void DestroyMatches()
@@ -210,7 +213,32 @@ public class Board : MonoBehaviour {
         yield return new WaitForSeconds(.5f);
         currentState = GameState.move;
 
+        
+    }
+    public void DecreaseMoveCount()
+    {
+        remMoves--;
+        Debug.Log("Hátralévő lépések: " + remMoves);
+
+        if (remMoves <= 0)
+        {
+            EndGame();
+        }
+        UpdateUI();
+    }
+    void EndGame()
+    {
+        Debug.Log("A játék véget ért!");
+        Debug.Log("Végső pontszám: " + match3Point);
+
+        // Itt lehet a játék végi logikát hozzáadni
+        // Pl.: SceneManager.LoadScene("GameOverScene");
     }
 
-
+    void UpdateUI()
+    {
+        scoreText.text = "Pontszám: " + match3Point;
+        movesText.text = "Lépések: " + remMoves;
+        Debug.Log("ui update");
+    }
 }

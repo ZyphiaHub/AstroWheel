@@ -115,6 +115,7 @@ public class Dot : MonoBehaviour
             }
             else
             {
+                board.DecreaseMoveCount();
                 board.DestroyMatches();    //van egyezés, eltakarítja 
                 
             }
