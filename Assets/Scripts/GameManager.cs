@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
     private void Start()
     {
         //manuális teszteléshez
-        PlayerPrefs.SetInt(LastCompletedIslandKey, 1); // Például a második sziget teljesítve
+        PlayerPrefs.SetInt(LastCompletedIslandKey, 7); // Például a második sziget teljesítve
         PlayerPrefs.Save();
 
         Debug.Log("Beléptél az Login menübe!");
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour {
     // Betöltés: Utolsó teljesített sziget betöltése
     public int LoadLastCompletedIsland()
     {
-        return PlayerPrefs.GetInt(LastCompletedIslandKey, 1); // Alapértelmezett érték: 0 (elsõ sziget)
+        return PlayerPrefs.GetInt(LastCompletedIslandKey, 7); // Alapértelmezett érték: 0 (elsõ sziget)
     }
 
     // Ellenõrzés: Egy adott sziget teljesítve van-e
