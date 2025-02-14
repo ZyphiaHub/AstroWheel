@@ -4,7 +4,10 @@ using UnityEngine;
 public static class DialogDatabase {
     public static Dictionary<int, string[]> IslandDialogs = new Dictionary<int, string[]>
     {
-        { 1, new string[] { "Üdv a Nyilas szigeten!", "Itt a tudás és bölcsesség próbája vár rád.", "Oldd meg a rejtvényt a továbbhaladáshoz!" } },
+        { 1, new string[] { "Welcome, young one!", "You are about to embark on a year-long journey.", 
+            "If you can solve every task, you will become a fully accredited Time Witch!",
+            "However, you must first prove your understanding of the yearly cycle.",
+            "Solve this puzzle and place the missing pieces where they belong!" } },
         { 2, new string[] { "Üdv a Bak szigeten!", "Ez a hely a fegyelem és a kitartás próbatétele.", "Meg tudod mutatni az erõdet?" } },
         { 3, new string[] { "Ez a Vízöntõ sziget!", "Itt az intuíció és kreativitás próbája vár rád.", "Találd meg a megoldást!" } },
         { 4, new string[] { "Üdv a Halak szigeten!", "A víz elem ereje segít a bölcsesség elérésében.", "Készen állsz a kihívásra?" } },
