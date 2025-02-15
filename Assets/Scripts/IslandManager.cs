@@ -1,13 +1,19 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class IslandManager : MonoBehaviour, IGameState {
     public int islandIndex; // A sziget indexe (pl. 1, 2, ..., 12)
-    public DialogManager dialogManager; // DialogManager referencia
+    public DialogManager dialogManager;
+    public Button bactToMainMenuBtn;
 
     private void Start()
     {
+        if (bactToMainMenuBtn != null)
+        {
+            bactToMainMenuBtn.onClick.AddListener(OnBackToMainMenuClicked);
+        }
         // Állapot inicializálása
         EnterState();
     }
@@ -44,9 +50,14 @@ public class IslandManager : MonoBehaviour, IGameState {
 
         // Puzzle megoldva, mentjük a sziget teljesítését
         GameManager.Instance.SaveLastCompletedIsland(islandIndex);
-        GameStateManager.Instance.ChangeState(new MainMenuState()); // Vissza a fõmenübe
+        GameStateManager.Instance.ChangeState(new MainMenuState()); 
     }
-
+    private void OnBackToMainMenuClicked()
+    {
+        Debug.Log($"GameStateManager.Instance: {GameStateManager.Instance}");
+        // Visszalépés a fõmenübe
+        GameStateManager.Instance.ChangeState(new MainMenuState());
+    }
     // Puzzle megoldásának ellenõrzése
     private bool IsPuzzleSolved()
     {

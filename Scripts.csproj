@@ -70,7 +70,6 @@
     <Compile Include="Assets\Scripts\Potions_tbl.cs" />
     <Compile Include="Assets\Scripts\CircularPath.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\AddCards.cs" />
-    <Compile Include="Assets\Scripts\Island_2.cs" />
     <Compile Include="Assets\Scripts\SQLite.cs" />
     <Compile Include="Assets\Scripts\DialogeBox.cs" />
     <Compile Include="Assets\Scripts\Island_11.cs" />
