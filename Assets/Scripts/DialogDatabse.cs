@@ -51,7 +51,10 @@ public static class DialogDatabase {
                              "I am the Ferryman of Souls, guiding those who seek passage across the unseen veil.",
                              "Nothing escapes the eyes of the dead. If you wish to claim the gifts hidden in this realm, you must sharpen your sight and see what others overlook.",
                              "Search carefully, for in this place, every object holds a story—and not all wish to be found."} },
-        { 12, new string[] { "Üdv a Halak szigeten!", "A víz elem ereje segít a bölcsesség elérésében.", "Készen állsz a kihívásra?" } }
+        { 12, new string[] { "You have stepped into the shadows of Scorpio, where truth is veiled and knowledge is power.",
+                             "Only those who truly understand the essence of matter may claim the rarest of treasures.",
+                             "Choose wisely, for every question is a blade—one that can cut through illusion or turn against the unworthy.",
+                             "Show me your insight, and the hidden paths of alchemy shall open before you."} }
         
     };
 
