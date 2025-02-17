@@ -1,73 +1,62 @@
-using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using UnityEngine.TestTools;
+using System.Collections;
 
-public class MainMenuTest
-{
+public class MainMenuManagerTests {
+    private GameManager gameManager;
     private MainMenuManager mainMenuManager;
-    private Button[] islandButtons;
-  
+    private GameObject gameManagerObject;
+    private GameObject mainMenuManagerObject;
+
+    public const string LastCompletedIslandKey = "LastCompletedIsland";
+
     [SetUp]
     public void SetUp()
     {
-        // Betöltjük a Main_Menu scene-t
-        SceneManager.LoadScene("Main_Menu");
+        // Létrehozunk egy új GameManager objektumot
+        gameManagerObject = new GameObject();
+        gameManager = gameManagerObject.AddComponent<GameManager>();
 
-        // Várunk egy képkockát, hogy a scene teljesen betöltõdjön
-        //yield return null;
+        // Létrehozunk egy új MainMenuManager objektumot
+        mainMenuManagerObject = new GameObject();
+        mainMenuManager = mainMenuManagerObject.AddComponent<MainMenuManager>();
 
-        // Megkeressük a MainMenuManager-t
-        mainMenuManager = GameObject.FindObjectOfType<MainMenuManager>();
-
-        // Debug üzenet
-        if (mainMenuManager == null)
+        // Létrehozunk egy új gomb tömböt és hozzárendeljük a MainMenuManager-hez
+        mainMenuManager.islandButtons = new Button[12];
+        for (int i = 0; i < mainMenuManager.islandButtons.Length; i++)
         {
-            Debug.LogError("A MainMenuManager nem található a scene-ben.");
-        } else
-        {
-            Debug.Log("A MainMenuManager sikeresen megtalálva.");
-        }
-
-        // Ellenõrizzük, hogy a MainMenuManager létezik
-        Assert.IsNotNull(mainMenuManager, "A MainMenuManager nem található a scene-ben.");
-    }
-
-
-
-
-    [UnityTest]
-    public IEnumerator Test_Buttons_Activate_Based_On_LastCompletedIsland()
-    {
-        // Gombok tömbjének elérése
-        islandButtons = mainMenuManager.islandButtons;
-
-        // Ellenõrizzük, hogy minden gomb letiltva van kezdetben
-        for (int i = 1; i < islandButtons.Length; i++)
-        {
-            Assert.IsFalse(islandButtons[i].interactable, $"A(z) {i + 1}. gomb nem lett letiltva kezdetben.");
-        }
-
-        // Mentjük, hogy az elsõ sziget teljesítve van
-        GameManager.Instance.SaveLastCompletedIsland(1);
-        yield return null; // Várunk egy képkockát, hogy a mentés frissüljön
-
-        // Ellenõrizzük, hogy csak az elsõ gomb engedélyezve van
-        Assert.IsTrue(islandButtons[0].interactable, "Az elsõ gomb nem lett engedélyezve.");
-        for (int i = 1; i < islandButtons.Length; i++)
-        {
-            Assert.IsFalse(islandButtons[i].interactable, $"A(z) {i + 1}. gomb nem lett letiltva.");
+            GameObject buttonObject = new GameObject();
+            mainMenuManager.islandButtons[i] = buttonObject.AddComponent<Button>();
         }
     }
 
     [TearDown]
     public void TearDown()
     {
-        // Töröljük a mentett adatokat a teszt után
-        PlayerPrefs.DeleteKey(GameManager.LastCompletedIslandKey);
-        PlayerPrefs.Save();
+        // Töröljük a létrehozott objektumokat a teszt után
+        Object.Destroy(gameManagerObject);
+        Object.Destroy(mainMenuManagerObject);
+    }
+
+    [UnityTest]
+    public IEnumerator TestIslandButtonsInteractability()
+    {
+        // Beállítjuk, hogy a 3. sziget legyen az utolsó teljesített sziget
+        
+        
+        GameManager.Instance.SaveLastCompletedIsland(3);
+        yield return null; 
+
+        // Ellenõrizzük, hogy a gombok interaktívvá váltak-e a megfelelõ szigeteknél
+        for (int i = 0; i < mainMenuManager.islandButtons.Length; i++)
+        {
+            if (i < 4)
+                Assert.IsTrue(mainMenuManager.islandButtons[i].interactable, $"Gomb {i} nem interaktív, pedig kellene lennie.");
+            
+            else
+                Assert.IsFalse(mainMenuManager.islandButtons[i].interactable, $"Gomb {i} interaktív, pedig nem kellene lennie.");
+        }
     }
 }

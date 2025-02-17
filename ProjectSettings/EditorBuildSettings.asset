@@ -42,13 +42,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Island_9.unity
     guid: 861476bc90709ba4c9d4387b1d6ef88b
   - enabled: 1
-    path: Assets/Scenes/Island_10_Virgo.unity
+    path: Assets/Scenes/Island_10.unity
     guid: 1856289df3c17894c817fec2e61a2786
   - enabled: 1
-    path: Assets/Scenes/Island_11_Libra.unity
+    path: Assets/Scenes/Island_11.unity
     guid: 1264f0573ecb8be43b6ac4ee4bba196d
   - enabled: 1
-    path: Assets/Scenes/Island_12_Scorpion.unity
+    path: Assets/Scenes/Island_12.unity
     guid: 4a260a7d41fba4c47b306b267cb06204
   - enabled: 1
     path: Assets/Scenes/Hearth.unity
