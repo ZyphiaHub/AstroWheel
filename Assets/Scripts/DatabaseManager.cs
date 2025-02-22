@@ -1,74 +1,74 @@
-using UnityEngine;
-using SQLite4Unity3d;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using SQLite4Unity3d;
+using UnityEngine;
 
 public class DatabaseManager : MonoBehaviour {
-    private SQLiteConnection dbConnection;
+    private SQLiteConnection db;
+    private string dbFileName = "game_data.db";
 
     void Start()
     {
-        // Adatbázis útvonal
-        string dbPath = $"{Application.streamingAssetsPath}/game_data.db";
+        InitializeDatabase();
+        CreateTable();
+        InsertSampleData(); // Opcionális, csak teszteléshez
+        LoadCharacters();
+    }
 
+    private void InitializeDatabase()
+    {
+        string dbPath = Path.Combine(Application.persistentDataPath, dbFileName);
+        string streamingPath = Path.Combine(Application.streamingAssetsPath, dbFileName);
 
-        if (System.IO.File.Exists(dbPath))
+        if (!File.Exists(dbPath))
         {
-            Debug.Log("Adatbázis fájl elérhetõ!");
+            File.Copy(streamingPath, dbPath);
+            Debug.Log("Database copied to: " + dbPath);
         } else
         {
-            Debug.LogError("Adatbázis fájl nem található!");
-        }
-        // Adatbázis tesztelése
-        try
-        {
-            dbConnection = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-            Debug.Log("Adatbázis csatlakoztatva!");
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError($"Hiba az adatbázis csatlakoztatása során: {ex.Message}");
+            Debug.Log("Database already exists at: " + dbPath);
         }
 
-
-
-        dbConnection = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
-
-        Debug.Log("Adatbázis csatlakoztatva!");
-
-        // Tesztelés
-        TestDatabase();
+        db = new SQLiteConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+        Debug.Log("Database connected: " + dbPath);
     }
 
-    void TestDatabase()
+    private void CreateTable()
     {
-        // Táblák létrehozása, ha nem léteznek
-        dbConnection.CreateTable<Potion>();
+        db.CreateTable<Character>();
+        Debug.Log("Character table ensured.");
+    }
 
-        // Adatok beszúrása
-        dbConnection.InsertAll(new List<Potion>
+    private void InsertSampleData()
+    {
+        if (db.Table<Character>().Count() == 0)
         {
-            new Potion { Name = "Healing Potion", Effect = "Restores 50 HP", Rarity = 2, Price = 10.5f },
-            new Potion { Name = "Mana Elixir", Effect = "Restores 30 Mana", Rarity = 3, Price = 15.0f }
-        });
-
-        Debug.Log("Adatok hozzáadva!");
-
-        // Adatok lekérdezése
-        var potions = dbConnection.Table<Potion>().ToList();
-        foreach (var potion in potions)
-        {
-            Debug.Log(potion.ToString());
+            db.Insert(new Character { AstroSign = "Aries", Gender = "Male" });
+            db.Insert(new Character { AstroSign = "Taurus", Gender = "Female" });
+            Debug.Log("Sample data inserted.");
         }
     }
 
-    private void OnDestroy()
+    public List<Character> GetAllCharacters()
     {
-        // Adatbázis kapcsolat bezárása
-        dbConnection.Close();
-        Debug.Log("Adatbázis kapcsolat lezárva!");
+        return db.Table<Character>().ToList();
+    }
+
+    private void LoadCharacters()
+    {
+        List<Character> characters = GetAllCharacters();
+
+        foreach (Character character in characters)
+        {
+            Debug.Log($"ID: {character.CharacterId}, Sign: {character.AstroSign}, Gender: {character.Gender}");
+        }
     }
 }
-      
-    
 
+public class Character {
+    [PrimaryKey, AutoIncrement]
+    public int CharacterId { get; set; }
+    public string AstroSign { get; set; }
+    public string Gender { get; set; }
+}
