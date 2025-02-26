@@ -66,14 +66,12 @@
     <Compile Include="Assets\Scripts\Island_9.cs" />
     <Compile Include="Assets\Scripts\Island_6.cs" />
     <Compile Include="Assets\Scripts\APIClient.cs" />
-    <Compile Include="Assets\Scripts\DatabaseManager.cs" />
     <Compile Include="Assets\Scripts\Match3\FindMatches.cs" />
     <Compile Include="Assets\Scripts\CircularPath.cs" />
     <Compile Include="Assets\Scripts\ServerSyncGet.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\AddCards.cs" />
     <Compile Include="Assets\Scripts\SQLite.cs" />
     <Compile Include="Assets\Scripts\DialogeBox.cs" />
-    <Compile Include="Assets\Scripts\APITest.cs" />
     <Compile Include="Assets\Scripts\Island_11.cs" />
     <Compile Include="Assets\Scripts\LoginManager.cs" />
     <Compile Include="Assets\Scripts\IslandManager.cs" />
@@ -90,7 +88,6 @@
     <Compile Include="Assets\Scripts\Match3\BackgroundTile.cs" />
     <Compile Include="Assets\Scripts\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\MainMenuState.cs" />
-    <Compile Include="Assets\Scripts\Puzzle\MainPuzzle.cs" />
     <Compile Include="Assets\Scripts\Island_7.cs" />
     <Compile Include="Assets\Scripts\Island_3.cs" />
     <Compile Include="Assets\Scripts\DialogDatabse.cs" />
@@ -104,9 +101,9 @@
     <Compile Include="Assets\Scripts\LocalAPIManager regi.cs" />
     <Compile Include="Assets\Scripts\Match3\Dot.cs" />
     <Compile Include="Assets\Scripts\ServerSync.cs" />
+    <Compile Include="Assets\Scripts\Puzzle\PuzzleGameManager.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />
     <Compile Include="Assets\Scripts\CookonTime\CookonTime.cs" />
-    <Compile Include="Assets\Scripts\DatabaseManagerregi.cs" />
     <Compile Include="Assets\Scripts\Island_4.cs" />
   </ItemGroup>
   <ItemGroup>
