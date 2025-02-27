@@ -33,13 +33,6 @@ public class PuzzleGameManager : MonoBehaviour {
             image.GetComponent<Button>().onClick.AddListener(delegate { StartGame(texture); });
         }
 
-
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
     public void StartGame(Texture2D jigsawTexture)
     {
@@ -54,6 +47,9 @@ public class PuzzleGameManager : MonoBehaviour {
 
         //create jigsaw pieces
         CreateJigsawPieces(jigsawTexture);
+
+        //place the pieces randomly into the visible area
+        Scatter();
 
         Vector2Int GetDimensions(Texture2D texture, int difficulty)
         {
@@ -96,8 +92,44 @@ public class PuzzleGameManager : MonoBehaviour {
                 //name pieces fro our sanity (and debugging)
                 piece.name = $"Piece{(row * dimensions.x) + col}";
                 pieces.Add(piece);
-            }
-        }
 
+                //assign the correct parts of the texture for this jigsaw piece
+                float width1 = 1f / dimensions.x;
+                float height1 = 1f / dimensions.y;
+                Vector2[] uv = new Vector2[4];
+                uv[0] = new Vector2(width1 * col, height1 * row);
+                uv[1] = new Vector2(width1 * (col + 1), height1 * row);
+                uv[2] = new Vector2(width1 * col, height1 * (row + 1));
+                uv[3] = new Vector2(width1 * (col + 1), height1 * (row + 1));
+
+                Mesh mesh = piece.GetComponent<MeshFilter>().mesh;
+                mesh.uv = uv;
+                //update the texture on the piece
+                piece.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", jigsawTexture);
+
+
+            }
+
+        }
     }
+
+    private void Scatter()
+    {
+        float orthoHeight = Camera.main.orthographicSize;
+        float screenAspect = (float)Screen.width / Screen.height;
+        float orthoWidth = (screenAspect * orthoHeight);
+
+        float pieceWidth = width * gameHolder.localScale.x;
+        float pieceHeight = height * gameHolder.localScale.y;
+
+        orthoHeight -= pieceHeight;
+        orthoWidth -= pieceWidth;
+
+        //place each peces randomly
+        foreach (Transform piece in pieces) {
+            float x = Random.Range(-orthoWidth, orthoWidth);
+            float y = Random.Range(-orthoHeight, orthoHeight);
+            piece.position = new Vector3(x, y, -1);
+            }
+    } 
 }
