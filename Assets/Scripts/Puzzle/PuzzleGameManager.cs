@@ -51,6 +51,8 @@ public class PuzzleGameManager : MonoBehaviour {
         //place the pieces randomly into the visible area
         Scatter();
 
+        UpdateBorder();
+
         Vector2Int GetDimensions(Texture2D texture, int difficulty)
         {
             Vector2Int dimensions = Vector2Int.zero;
@@ -126,10 +128,37 @@ public class PuzzleGameManager : MonoBehaviour {
         orthoWidth -= pieceWidth;
 
         //place each peces randomly
-        foreach (Transform piece in pieces) {
+        foreach (Transform piece in pieces)
+        {
             float x = Random.Range(-orthoWidth, orthoWidth);
             float y = Random.Range(-orthoHeight, orthoHeight);
             piece.position = new Vector3(x, y, -1);
-            }
-    } 
+        }
+    }
+
+    // Update the border to fit the chosen puzzle.
+    private void UpdateBorder()
+    {
+        LineRenderer lineRenderer = gameHolder.GetComponent<LineRenderer>();
+
+        // Calculate half sizes to simplify the code.
+        float halfWidth = (width * dimensions.x) / 2f;
+        float halfHeight = (height * dimensions.y) / 2f;
+
+        // We want the border to be behind the pieces.
+        float borderZ = 0f;
+
+        // Set border vertices, starting top left, going clockwise.
+        lineRenderer.SetPosition(0, new Vector3(-halfWidth, halfHeight, borderZ));
+        lineRenderer.SetPosition(1, new Vector3(halfWidth, halfHeight, borderZ));
+        lineRenderer.SetPosition(2, new Vector3(halfWidth, -halfHeight, borderZ));
+        lineRenderer.SetPosition(3, new Vector3(-halfWidth, -halfHeight, borderZ));
+
+        // Set the thickness of the border line.
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
+
+        // Show the border line.
+        lineRenderer.enabled = true;
+    }
 }
