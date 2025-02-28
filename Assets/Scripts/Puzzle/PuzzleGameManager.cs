@@ -15,11 +15,17 @@ public class PuzzleGameManager : MonoBehaviour {
     [SerializeField] private List<Texture2D> imageTexture;
     [SerializeField] private Transform levelSelectPanel;
     [SerializeField] private Image levelSelectPrefab;
+    [SerializeField] private GameObject playAgainButton;
 
     private List<Transform> pieces;
     private Vector2Int dimensions;
     private float width;
     private float height;
+
+    private Transform draggingPiece = null;
+    private Vector3 offset;
+
+    private int piecesCorrect;
 
     // Start is called before the first frame update
     void Start()
@@ -109,6 +115,9 @@ public class PuzzleGameManager : MonoBehaviour {
                 //update the texture on the piece
                 piece.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", jigsawTexture);
 
+                // Add a BoxCollider2D to the piece
+                BoxCollider2D collider = piece.gameObject.AddComponent<BoxCollider2D>();
+                collider.size = new Vector2(width, height); // Set collider size to match the piece size
 
             }
 
@@ -161,4 +170,91 @@ public class PuzzleGameManager : MonoBehaviour {
         // Show the border line.
         lineRenderer.enabled = true;
     }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            // Convert mouse position to world coordinates
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mouseWorldPos.z = 0; // Ensure z is 0 for 2D
+
+            RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero);
+            if (hit)
+            {
+                // Everything is moveable, so we don't need to check it's a Piece.
+                draggingPiece = hit.transform;
+                offset = draggingPiece.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                offset += Vector3.back;
+                Debug.Log("Piece clicked: " + hit.transform.name); // Debug log
+            } else
+            {
+                Debug.Log("No piece clicked"); // Debug log
+            }
+        }
+
+        // When we release the mouse button stop dragging.
+        if (draggingPiece && Input.GetMouseButtonUp(0))
+        {
+            SnapAndDisableIfCorrect();
+            draggingPiece.position += Vector3.forward;
+            draggingPiece = null;
+        }
+
+        // Set the dragged piece position to the position of the mouse.
+        if (draggingPiece)
+        {
+            Vector3 newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            newPosition.z = draggingPiece.position.z;
+            newPosition += offset;
+            draggingPiece.position = newPosition;
+        }
+    }
+
+    private void SnapAndDisableIfCorrect()
+    {
+        // We need to know the index of the piece to determine it's correct position.
+        int pieceIndex = pieces.IndexOf(draggingPiece);
+
+        // The coordinates of the piece in the puzzle.
+        int col = pieceIndex % dimensions.x;
+        int row = pieceIndex / dimensions.x;
+
+        // The target position in the non-scaled coordinates.
+        Vector2 targetPosition = new((-width * dimensions.x / 2) + (width * col) + (width / 2),
+                                     (-height * dimensions.y / 2) + (height * row) + (height / 2));
+
+        // Check if we're in the correct location.
+        if (Vector2.Distance(draggingPiece.localPosition, targetPosition) < (width / 2))
+        {
+            // Snap to our destination.
+            draggingPiece.localPosition = targetPosition;
+
+            // Disable the collider so we can't click on the object anymore.
+            draggingPiece.GetComponent<BoxCollider2D>().enabled = false;
+
+            // Increase the number of correct pieces, and check for puzzle completion.
+            piecesCorrect++;
+            if (piecesCorrect == pieces.Count)
+            {
+                playAgainButton.SetActive(true);
+            }
+        }
+    }
+    public void RestartGame()
+    {
+        // Destroy all the puzzle pieces.
+        foreach (Transform piece in pieces)
+        {
+            Destroy(piece.gameObject);
+        }
+        pieces.Clear();
+        // Hide the outline
+        gameHolder.GetComponent<LineRenderer>().enabled = false;
+        // Show the level select UI.
+        playAgainButton.SetActive(false);
+        levelSelectPanel.gameObject.SetActive(true);
+    }
+
 }
