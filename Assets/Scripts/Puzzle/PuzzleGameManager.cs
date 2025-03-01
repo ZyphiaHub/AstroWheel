@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,11 @@ public class PuzzleGameManager : MonoBehaviour {
     [SerializeField] private Transform levelSelectPanel;
     [SerializeField] private Image levelSelectPrefab;
     [SerializeField] private GameObject playAgainButton;
+
+    [Header("Score")]
+    [SerializeField] private TextMeshProUGUI scoreText; // Changed to TextMeshProUGUI
+    private int score = 0;
+    private int moves = 0;
 
     private List<Transform> pieces;
     private Vector2Int dimensions;
@@ -42,6 +48,10 @@ public class PuzzleGameManager : MonoBehaviour {
     }
     public void StartGame(Texture2D jigsawTexture)
     {
+        // Reset the score
+        score = 0;
+        UpdateScoreUI();
+
         //hide the UI
         levelSelectPanel.gameObject.SetActive(false);
 
@@ -58,6 +68,7 @@ public class PuzzleGameManager : MonoBehaviour {
         Scatter();
 
         UpdateBorder();
+        piecesCorrect = 0;
 
         Vector2Int GetDimensions(Texture2D texture, int difficulty)
         {
@@ -183,6 +194,9 @@ public class PuzzleGameManager : MonoBehaviour {
             RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero);
             if (hit)
             {
+                // Increase move count
+                moves++;
+                Debug.Log("Moves: " + moves);
                 // Everything is moveable, so we don't need to check it's a Piece.
                 draggingPiece = hit.transform;
                 offset = draggingPiece.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -206,7 +220,7 @@ public class PuzzleGameManager : MonoBehaviour {
         if (draggingPiece)
         {
             Vector3 newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            newPosition.z = draggingPiece.position.z;
+            
             newPosition += offset;
             draggingPiece.position = newPosition;
         }
@@ -236,9 +250,15 @@ public class PuzzleGameManager : MonoBehaviour {
 
             // Increase the number of correct pieces, and check for puzzle completion.
             piecesCorrect++;
+            score += 3; 
+            UpdateScoreUI();
+
             if (piecesCorrect == pieces.Count)
             {
                 playAgainButton.SetActive(true);
+                score = score - moves;
+                Debug.Log(score);
+                UpdateScoreUI();
             }
         }
     }
@@ -250,11 +270,25 @@ public class PuzzleGameManager : MonoBehaviour {
             Destroy(piece.gameObject);
         }
         pieces.Clear();
+
+        // Reset the score
+        score = 0;
+        UpdateScoreUI();
+
         // Hide the outline
         gameHolder.GetComponent<LineRenderer>().enabled = false;
         // Show the level select UI.
         playAgainButton.SetActive(false);
         levelSelectPanel.gameObject.SetActive(true);
     }
+    private void UpdateScoreUI()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + score; // Update the TextMeshPro text
+            
+        }
+    }
+
 
 }
