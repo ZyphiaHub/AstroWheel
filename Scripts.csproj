@@ -78,9 +78,11 @@
     <Compile Include="Assets\Scripts\OverView.cs" />
     <Compile Include="Assets\Scripts\Match3\Board.cs" />
     <Compile Include="Assets\Scripts\Match3\DestroyParticle.cs" />
+    <Compile Include="Assets\Scripts\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\Island_10.cs" />
     <Compile Include="Assets\Scripts\Bobbing.cs" />
     <Compile Include="Assets\Scripts\DialogManager.cs" />
+    <Compile Include="Assets\Scripts\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\Island_12.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\MemoryCard.cs" />
     <Compile Include="Assets\Scripts\GameStateManager.cs" />
@@ -92,9 +94,11 @@
     <Compile Include="Assets\Scripts\Island_3.cs" />
     <Compile Include="Assets\Scripts\DialogDatabse.cs" />
     <Compile Include="Assets\Scripts\Patterning\MainPatterning.cs" />
+    <Compile Include="Assets\Scripts\RegisterManager.cs" />
     <Compile Include="Assets\Scripts\Hearth.cs" />
     <Compile Include="Assets\Scripts\PersistentDataManager.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\MemoController.cs" />
+    <Compile Include="Assets\Scripts\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\PotionsTbl.cs" />
     <Compile Include="Assets\Scripts\Island_8.cs" />
     <Compile Include="Assets\Scripts\SQLiteManager.cs" />

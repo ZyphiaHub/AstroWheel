@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
 
     public const string LastCompletedIslandKey = "LastCompletedIsland";
+    public const string TotalScoreKey = "TotalScore";
+    public const string PlayerIdKey = "PlayerId";
+    public const string CharacterIdKey = "CharacterId";
 
     private void Awake()
     {
@@ -69,4 +72,29 @@ public class GameManager : MonoBehaviour {
     {
         return islandIndex <= LoadLastCompletedIsland();
     }
+    public void SaveTotalScore(int totalScore)
+    {
+        PlayerPrefs.SetInt(TotalScoreKey, totalScore);
+        PlayerPrefs.Save(); // Azonnali mentés
+    }
+
+    // TotalScore betöltése
+    public int LoadTotalScore()
+    {
+        return PlayerPrefs.GetInt(TotalScoreKey, 0); // Alapértelmezett érték: 0
+    }
+
+    // PlayerId mentése
+    public void SavePlayerId(string playerId)
+    {
+        PlayerPrefs.SetString(PlayerIdKey, playerId);
+        PlayerPrefs.Save(); // Azonnali mentés
+    }
+
+    // PlayerId betöltése
+    public string LoadPlayerId()
+    {
+        return PlayerPrefs.GetString(PlayerIdKey, ""); // Alapértelmezett érték: üres string
+    }
+
 }

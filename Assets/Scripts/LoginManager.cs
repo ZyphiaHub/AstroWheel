@@ -22,15 +22,18 @@ public class LoginManager : MonoBehaviour {
         string email = emailInputField.text;
         string password = passwordInputField.text;
 
-        // Email formátum ellenõrzése
         if (!IsValidEmail(email))
         {
-            errorMessageText.text = "Érvénytelen email cím!";
+            errorMessageText.text = "Invalid email address!";
             return;
         }
 
-        // Egyszerû ellenõrzés (csak példa)
-        if (email == "admin@ex.com" && password == "admin")
+        // Regisztrált adatok betöltése a PlayerPrefs-bõl
+        string registeredEmail = PlayerPrefs.GetString("RegisteredEmail", "");
+        string registeredPassword = PlayerPrefs.GetString("RegisteredPassword", "");
+
+        // Bejelentkezési adatok ellenõrzése
+        if (email == registeredEmail && password == registeredPassword)
         {
             Debug.Log("Sikeres bejelentkezés!");
 
@@ -38,8 +41,8 @@ public class LoginManager : MonoBehaviour {
             int lastCompletedIsland = GameManager.Instance.LoadLastCompletedIsland();
 
             // Jelenetváltás a mentett adatok alapján
-            if (lastCompletedIsland >= 1) // Ha az elsõ sziget teljesítve van
-            {
+            if (lastCompletedIsland >= 1)
+            { // Ha az elsõ sziget teljesítve van
                 SceneManager.LoadScene("Main_Menu"); // Fõmenü betöltése
             } else
             {
@@ -47,10 +50,10 @@ public class LoginManager : MonoBehaviour {
             }
         } else
         {
-            errorMessageText.text = "Hibás email cím vagy jelszó!";
+            errorMessageText.text = "Invald email or password!";
         }
 
-        
+
     }
     private bool IsValidEmail(string email)
     {
