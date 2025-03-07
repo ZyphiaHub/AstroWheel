@@ -10,6 +10,7 @@ public class IslandManager : MonoBehaviour, IGameState {
     public Button bactToMainMenuBtn;
     public Button previousIslandButton; // Elõzõ sziget gombja
     public Button nextIslandButton;
+    public Image characterImage;
 
     private void Start()
     {
@@ -28,6 +29,9 @@ public class IslandManager : MonoBehaviour, IGameState {
 
         // Állapot inicializálása
         EnterState();
+
+        // Karakterkép betöltése
+        LoadSelectedCharacterImage();
     }
 
     // IGameState metódusok
@@ -116,5 +120,28 @@ public class IslandManager : MonoBehaviour, IGameState {
         // Itt implementáld a puzzle megoldásának logikáját
         // Például: return puzzle.IsSolved;
         return false; // Csak példa
+    }
+
+    private void LoadSelectedCharacterImage()
+    {
+        // Betöltjük a kiválasztott karakterkép indexét
+        int selectedCharacterIndex = PlayerPrefs.GetInt("SelectedCharacterIndex", 0);
+
+        // Ellenõrizzük, hogy a RegisterManager és a characterSprites tömb létezik-e
+        if (RegisterManager.Instance != null && RegisterManager.Instance.CharacterSprites != null)
+        {
+            // Ellenõrizzük, hogy a kiválasztott index érvényes-e
+            if (selectedCharacterIndex >= 0 && selectedCharacterIndex < RegisterManager.Instance.CharacterSprites.Length)
+            {
+                // Beállítjuk a karakterképet
+                characterImage.sprite = RegisterManager.Instance.CharacterSprites[selectedCharacterIndex];
+            } else
+            {
+                Debug.LogWarning("Érvénytelen karakterkép index: " + selectedCharacterIndex);
+            }
+        } else
+        {
+            Debug.LogWarning("RegisterManager vagy characterSprites tömb nincs beállítva!");
+        }
     }
 }

@@ -1900,6 +1900,7 @@ MonoBehaviour:
   bactToMainMenuBtn: {fileID: 234151367}
   previousIslandButton: {fileID: 2087561635}
   nextIslandButton: {fileID: 1112976952}
+  characterImage: {fileID: 1058149522}
 --- !u!1 &1273319613
 GameObject:
   m_ObjectHideFlags: 0

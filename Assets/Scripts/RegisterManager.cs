@@ -4,6 +4,8 @@ using System.Text.RegularExpressions;
 using UnityEngine.UI;
 
 public class RegisterManager : MonoBehaviour {
+    public static RegisterManager Instance; // Singleton példány
+
     public TMP_InputField emailInputField;
     public TMP_InputField passwordInputField;
     public Button registerButton;
@@ -13,6 +15,8 @@ public class RegisterManager : MonoBehaviour {
     public Transform characterImageContainer; // Karakterképek tárolója
 
     [SerializeField] private Sprite[] characterSprites; // Karakterképek tömbje
+    // Property a characterSprites tömb eléréséhez
+    public Sprite[] CharacterSprites => characterSprites;
     private int selectedCharacterIndex = 0; // Kiválasztott karakter indexe
 
     private void Start()
@@ -23,6 +27,18 @@ public class RegisterManager : MonoBehaviour {
 
         // Karakterképek megjelenítése a panelen
         LoadCharacterImages();
+    }
+    private void Awake()
+    {
+        // Singleton minta implementációja
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Ne törlõdjön a scene váltáskor
+        } else
+        {
+            Destroy(gameObject); // Ha már van példány, töröld ezt
+        }
     }
 
     public void OnRegisterButtonClicked()
@@ -92,6 +108,8 @@ public class RegisterManager : MonoBehaviour {
     private void OnCharacterSelected(int index)
     {
         selectedCharacterIndex = index;
+        PlayerPrefs.SetInt("SelectedCharacterIndex", selectedCharacterIndex); // Mentés a PlayerPrefs-be
+        PlayerPrefs.Save(); // Azonnali mentés
         Debug.Log("Selected character index: " + index);
        // characterSelectionPanel.SetActive(false); // Panel bezárása
     }
