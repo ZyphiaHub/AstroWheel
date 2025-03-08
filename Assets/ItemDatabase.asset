@@ -13,123 +13,84 @@ MonoBehaviour:
   m_Name: ItemDatabase
   m_EditorClassIdentifier: 
   items:
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Shepherd's purse
+    witchName: mother's heart
+    latinName: Capsella bursa-pastoris
+    description: Helps to stop bleeding.
     icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
-    icon: {fileID: 21300000, guid: 4e17ed7d88f03db4a86a0ab3a9dedce6, type: 3}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Narrowleaf plantain
+    witchName: Lamb's tongue
+    latinName: Plantago lanceolata
+    description: Effective treatment for bleeding, it quickly staunches blood flow
+      and encourages the repair of damaged tissue.
+    icon: {fileID: 21300000, guid: 0b3b7d954a80ba9449c09b289011071e, type: 3}
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
-    icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
-    icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
-    icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
-    icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
-    icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
-    icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
-    icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
-    icon: {fileID: 0}
-  - englishName: 
-    witchName: 
-    latinName: 
-    description: 
+  - englishName: Crystal
+    witchName: "Var\xE1zskrist\xE1ly"
+    latinName: Crystallum Magica
+    description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 0}

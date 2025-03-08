@@ -1,29 +1,35 @@
-using UnityEngine;
+using System.Collections.Generic;
 
-public class InventoryManager : MonoBehaviour {
-    public ItemDatabase itemDatabase; // ScriptableObject referenciája
+public class Inventory {
+    public Dictionary<ItemDatabase.Item, int> items = new Dictionary<ItemDatabase.Item, int>();
 
-    // Tárgy mennyiségének mentése PlayerPrefs-be
-    public void SaveItemQuantity(int itemId, int quantity)
+    public void Initialize(ItemDatabase itemDatabase)
     {
-        PlayerPrefs.SetInt("ItemQuantity_" + itemId, quantity);
-        PlayerPrefs.Save();
-        Debug.Log($"Item {itemId} quantity saved: {quantity}");
+        // Példa: Hozzáadunk néhány tárgyat az inventoryhoz
+        AddItem(itemDatabase.items[0], 3); // 3 darab Shepherd's purse
+        AddItem(itemDatabase.items[1], 5); // 5 darab Narrowleaf plantain
+        AddItem(itemDatabase.items[2], 1); // 1 darab Crystal
+        AddItem(itemDatabase.items[3], 1);
+        AddItem(itemDatabase.items[4], 1);
+
+        AddItem(itemDatabase.items[5], 1);
+        AddItem(itemDatabase.items[6], 1);
+        AddItem(itemDatabase.items[7], 1);
+        AddItem(itemDatabase.items[8], 1);
+        AddItem(itemDatabase.items[9], 1);
+
+        AddItem(itemDatabase.items[10], 1);
+        AddItem(itemDatabase.items[11], 1);
     }
 
-    // Tárgy mennyiségének betöltése PlayerPrefs-bõl
-    public int LoadItemQuantity(int itemId)
+    public void AddItem(ItemDatabase.Item item, int quantity)
     {
-        return PlayerPrefs.GetInt("ItemQuantity_" + itemId, 0); // Alapértelmezett érték: 0
-    }
-
-    // Tárgy nevének lekérése
-    public string GetItemEnglishName(int itemId)
-    {
-        if (itemId >= 0 && itemId < itemDatabase.items.Length)
+        if (items.ContainsKey(item))
         {
-            return itemDatabase.items[itemId].englishName;
+            items[item] += quantity;
+        } else
+        {
+            items.Add(item, quantity);
         }
-        return "Unknown Item";
     }
 }

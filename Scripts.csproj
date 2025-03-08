@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\MatiCatch\MainMatiCatch.cs" />
     <Compile Include="Assets\Scripts\MatiKviz\MainMatiKviz.cs" />
     <Compile Include="Assets\Scripts\Island_5.cs" />
+    <Compile Include="Assets\Scripts\ItemInitializer.cs" />
     <Compile Include="Assets\Scripts\Island_9.cs" />
     <Compile Include="Assets\Scripts\Island_6.cs" />
     <Compile Include="Assets\Scripts\APIClient.cs" />
