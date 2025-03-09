@@ -87,16 +87,7 @@ public class InventoryUI : MonoBehaviour {
                 Debug.LogError("Stack object not found in slot prefab!");
             }
 
-            // Debug: Kiírjuk a slot prefab szerkezetét
-            Debug.Log("Slot prefab structure:");
-            foreach (Transform child in slot.transform)
-            {
-                Debug.Log(child.name);
-                foreach (Transform grandChild in child)
-                {
-                    Debug.Log(" - " + grandChild.name);
-                }
-            }
+            
         }
     }
 }

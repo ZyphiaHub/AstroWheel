@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Inventory {
     public Dictionary<PlantDatabase.Item, int> items = new Dictionary<PlantDatabase.Item, int>();
+    public Dictionary<CraftedItem, int> craftedItems = new Dictionary<CraftedItem, int>();
 
     public void Initialize(PlantDatabase plantDatabase)
     {
@@ -106,6 +107,39 @@ public class Inventory {
 
             // Meghívjuk a RemoveItem metódust minden tárgyhoz
             RemoveItem(item, quantity);
+        }
+    }
+
+    // Craftolt tárgyak hozzáadása
+    public void AddCraftedItem(CraftedItem item, int quantity)
+    {
+        if (craftedItems.ContainsKey(item))
+        {
+            craftedItems[item] += quantity;
+        } else
+        {
+            craftedItems.Add(item, quantity);
+        }
+    }
+
+    // Craftolt tárgyak eltávolítása
+    public void RemoveCraftedItem(CraftedItem item, int quantity)
+    {
+        if (craftedItems.ContainsKey(item))
+        {
+            craftedItems[item] -= quantity;
+
+            if (craftedItems[item] <= 0)
+            {
+                craftedItems.Remove(item);
+                Debug.Log($"{item.craftedItemName} eltávolítva az inventoryból.");
+            } else
+            {
+                Debug.Log($"{item.craftedItemName} mennyisége csökkentve. Új mennyiség: {craftedItems[item]}");
+            }
+        } else
+        {
+            Debug.LogWarning($"{item.craftedItemName} nem található az inventoryban.");
         }
     }
 }
