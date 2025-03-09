@@ -63,7 +63,6 @@
     <Compile Include="Assets\Scripts\MatiCatch\MainMatiCatch.cs" />
     <Compile Include="Assets\Scripts\MatiKviz\MainMatiKviz.cs" />
     <Compile Include="Assets\Scripts\Island_5.cs" />
-    <Compile Include="Assets\Scripts\ItemInitializer.cs" />
     <Compile Include="Assets\Scripts\Island_9.cs" />
     <Compile Include="Assets\Scripts\Island_6.cs" />
     <Compile Include="Assets\Scripts\APIClient.cs" />
@@ -83,15 +82,16 @@
     <Compile Include="Assets\Scripts\Island_10.cs" />
     <Compile Include="Assets\Scripts\Bobbing.cs" />
     <Compile Include="Assets\Scripts\DialogManager.cs" />
-    <Compile Include="Assets\Scripts\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\Island_12.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\MemoryCard.cs" />
     <Compile Include="Assets\Scripts\GameStateManager.cs" />
+    <Compile Include="Assets\Scripts\PlantInitializer.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Match3\BackgroundTile.cs" />
     <Compile Include="Assets\Scripts\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\MainMenuState.cs" />
     <Compile Include="Assets\Scripts\Island_7.cs" />
+    <Compile Include="Assets\Scripts\PlantDatabase.cs" />
     <Compile Include="Assets\Scripts\Island_3.cs" />
     <Compile Include="Assets\Scripts\DialogDatabse.cs" />
     <Compile Include="Assets\Scripts\Patterning\MainPatterning.cs" />
