@@ -57,7 +57,7 @@ public class Inventory {
         AddItem(randomItem, quantity);
 
         // Debug üzenet
-        Debug.Log($"Véletlenszerûen hozzáadva: {randomItem.name} ({quantity} db)");
+        Debug.Log($"Véletlenszerûen hozzáadva: {randomItem.englishName} ({quantity} db)");
     }
 
     public void RemoveItem(PlantDatabase.Item item, int quantity)

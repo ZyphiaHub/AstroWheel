@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro; // TextMeshPro névtér importálása
 
 public class InventoryUI : MonoBehaviour {
-    public ItemDatabase itemDatabase; // ItemDatabase referenciája
+    public PlantDatabase itemDatabase; // ItemDatabase referenciája
     public GameObject slotPrefab;     // Slot prefab referenciája
     public Transform panelParent;     // A Panel, amelybe a slotok kerülnek
 
