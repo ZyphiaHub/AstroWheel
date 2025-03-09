@@ -11,10 +11,10 @@ public class RegisterManager : MonoBehaviour {
     public Button registerButton;
     public Button selectCharacterButton;
     public TMP_Text errorMessageText;
-    public GameObject characterSelectionPanel; // Karakterkép választó panel
-    public Transform characterImageContainer; // Karakterképek tárolója
+    public GameObject characterSelectionPanel; 
+    public Transform characterImageContainer; 
 
-    [SerializeField] private Sprite[] characterSprites; // Karakterképek tömbje
+    [SerializeField] private Sprite[] characterSprites; 
     // Property a characterSprites tömb eléréséhez
     public Sprite[] CharacterSprites => characterSprites;
     private int selectedCharacterIndex = 0; // Kiválasztott karakter indexe

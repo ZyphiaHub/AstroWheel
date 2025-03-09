@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour {
     public const string PlayerIdKey = "PlayerId";
     public const string CharacterIdKey = "CharacterId";
 
+    private int islandIndex; // Új változó az aktuális sziget indexének tárolására
+
     private void Awake()
     {
         if (Instance == null)
@@ -28,8 +30,8 @@ public class GameManager : MonoBehaviour {
     private void Start()
     {
         //manuális teszteléshez
-        PlayerPrefs.SetInt(LastCompletedIslandKey, 3); // Például a második sziget teljesítve
-        PlayerPrefs.Save();
+        //PlayerPrefs.SetInt(LastCompletedIslandKey, 3); // Például a második sziget teljesítve
+       // PlayerPrefs.Save();
 
         Debug.Log("Beléptél a Login Menübe");
         SceneManager.LoadScene("Login");
@@ -72,6 +74,7 @@ public class GameManager : MonoBehaviour {
     {
         return islandIndex <= LoadLastCompletedIsland();
     }
+
     public void SaveTotalScore(int totalScore)
     {
         PlayerPrefs.SetInt(TotalScoreKey, totalScore);
@@ -97,4 +100,28 @@ public class GameManager : MonoBehaviour {
         return PlayerPrefs.GetString(PlayerIdKey, ""); // Alapértelmezett érték: üres string
     }
 
+    // Puzzle megoldásának állapotának mentése
+    public void SetPuzzleSolved(bool isSolved)
+    {
+        PlayerPrefs.SetInt($"Island_{islandIndex}_Solved", isSolved ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    // Puzzle megoldásának állapotának betöltése
+    public bool IsPuzzleSolved(int islandIndex)
+    {
+        return PlayerPrefs.GetInt($"Island_{islandIndex}_Solved", 0) == 1;
+    }
+
+    // Aktuális sziget indexének lekérése
+    public int GetCurrentIslandIndex()
+    {
+        return islandIndex; // vagy bármilyen más logika, ami visszaadja az aktuális sziget indexét
+    }
+
+    // Aktuális sziget indexének beállítása
+    public void SetCurrentIslandIndex(int index)
+    {
+        islandIndex = index;
+    }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PuzzleGameManager : MonoBehaviour {
@@ -17,6 +18,7 @@ public class PuzzleGameManager : MonoBehaviour {
     [SerializeField] private Transform levelSelectPanel;
     [SerializeField] private Image levelSelectPrefab;
     [SerializeField] private GameObject playAgainButton;
+    [SerializeField] private Button backtToMainMenuBtn;
 
     [Header("Score")]
     [SerializeField] private TextMeshProUGUI scoreText; // Changed to TextMeshProUGUI
@@ -32,6 +34,7 @@ public class PuzzleGameManager : MonoBehaviour {
     private Vector3 offset;
 
     private int piecesCorrect;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +46,10 @@ public class PuzzleGameManager : MonoBehaviour {
             image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
             //assign button action
             image.GetComponent<Button>().onClick.AddListener(delegate { StartGame(texture); });
+        }
+        if (backtToMainMenuBtn != null)
+        {
+            backtToMainMenuBtn.onClick.AddListener(OnBackToMainMenuClicked);
         }
 
     }
@@ -256,9 +263,12 @@ public class PuzzleGameManager : MonoBehaviour {
             if (piecesCorrect == pieces.Count)
             {
                 playAgainButton.SetActive(true);
+                backtToMainMenuBtn.gameObject.SetActive(true);
                 score = score - moves;
                 Debug.Log(score);
                 UpdateScoreUI();
+
+                OnPuzzleSolved();
             }
         }
     }
@@ -289,6 +299,24 @@ public class PuzzleGameManager : MonoBehaviour {
             
         }
     }
+    private void OnPuzzleSolved()
+    {
+        // Frissítjük a játékos összpontszámát a GameManager-ben
+        int currentTotalScore = GameManager.Instance.LoadTotalScore();
+        
+        GameManager.Instance.SaveTotalScore(currentTotalScore + score);
+        Debug.Log("current totalscore: "+currentTotalScore);
 
+        // Beállítjuk, hogy a puzzle megoldva van
+        GameManager.Instance.SetPuzzleSolved(true);
+
+    }
+
+    private void OnBackToMainMenuClicked()
+    {
+        Debug.Log($"GameStateManager.Instance: {GameStateManager.Instance}");
+        // Visszalépés a fõmenübe
+        GameStateManager.Instance.ChangeState(new MainMenuState());
+    }
 
 }

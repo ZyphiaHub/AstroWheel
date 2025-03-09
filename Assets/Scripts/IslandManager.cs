@@ -47,14 +47,14 @@ public class IslandManager : MonoBehaviour, IGameState {
         } else
         {
             dialogManager.dialogPanel.SetActive(false);
-            
+
         }
         UpdateNavigationButtons();
     }
 
     public void UpdateState()
     {
-        
+
         if (IsPuzzleSolved())
         {
             ExitState();
@@ -67,7 +67,7 @@ public class IslandManager : MonoBehaviour, IGameState {
 
         // Puzzle megoldva, mentjük a sziget teljesítését
         GameManager.Instance.SaveLastCompletedIsland(islandIndex);
-        GameStateManager.Instance.ChangeState(new MainMenuState()); 
+        //GameStateManager.Instance.ChangeState(new MainMenuState());
     }
     private void OnBackToMainMenuClicked()
     {
@@ -89,10 +89,10 @@ public class IslandManager : MonoBehaviour, IGameState {
 
     private void NavigateToIsland(int targetIslandIndex)
     {
-        if (targetIslandIndex >= 1 && targetIslandIndex <= 12) 
+        if (targetIslandIndex >= 1 && targetIslandIndex <= 12)
         {
             Debug.Log($"Navigálás a(z) {targetIslandIndex}. szigetre!");
-            SceneManager.LoadScene($"Island_{targetIslandIndex}"); 
+            SceneManager.LoadScene($"Island_{targetIslandIndex}");
         } else
         {
             Debug.LogWarning($"Érvénytelen sziget index: {targetIslandIndex}");
@@ -117,9 +117,8 @@ public class IslandManager : MonoBehaviour, IGameState {
     // Puzzle megoldásának ellenõrzése
     private bool IsPuzzleSolved()
     {
-        // Itt implementáld a puzzle megoldásának logikáját
-        // Például: return puzzle.IsSolved;
-        return false; // Csak példa
+        // A GameManager segítségével ellenõrizzük, hogy a puzzle megoldva van-e
+        return GameManager.Instance.IsPuzzleSolved(islandIndex);
     }
 
     private void LoadSelectedCharacterImage()

@@ -46,9 +46,9 @@ public class MainMenuManager : MonoBehaviour {
         string playerName = PlayerPrefs.GetString("PlayerName", "Guest");
         playerNameText.text = "Player: " + playerName;
 
-        // Pontok
-        int playerScore = PlayerPrefs.GetInt("PlayerScore", 0);
-        playerScoreText.text = "TimeScore: " + playerScore;
+        // Pontok betöltése a GameManager segítségével
+        int playerScore = GameManager.Instance.LoadTotalScore();
+        playerScoreText.text = "TimeScore: " + playerScore.ToString();
 
         // Utolsó teljesített sziget száma
         int lastCompletedIsland = PlayerPrefs.GetInt("LastCompletedIsland", 0);
