@@ -4,17 +4,17 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class DialogManager : MonoBehaviour {
-    public GameObject dialogPanel; // A dialógus panel (UI Panel)
-    public TMP_Text dialogText;    // A dialógus szövege (TextMeshPro - Text)
-    public Button nextButton;      // A "Tovább" gomb (Button)
-    public Button closeButton;     // A "Bezárás" gomb (Button)
+    public GameObject dialogPanel; 
+    public TMP_Text dialogText;    
+    public Button nextButton;      
+    public Button closeButton;     
 
-    private List<string> dialogLines; // A dialógus sorok listája
-    private int currentLineIndex;     // Az aktuális sor indexe
+    private List<string> dialogLines; 
+    private int currentLineIndex;     
 
     private void Start()
     {
-        // Gomb események hozzárendelése
+        
         nextButton.onClick.AddListener(ShowNextLine);
         closeButton.onClick.AddListener(CloseDialog);
 
@@ -28,8 +28,8 @@ public class DialogManager : MonoBehaviour {
     // Dialógus megjelenítése több sorral
     public void ShowDialog(List<string> lines)
     {
-        dialogLines = lines; // Sorok beállítása
-        currentLineIndex = 0; // Az elsõ sor kezdõdik
+        dialogLines = lines; 
+        currentLineIndex = 0; 
 
         // Az elsõ sor megjelenítése
         dialogText.text = dialogLines[currentLineIndex];
@@ -37,7 +37,7 @@ public class DialogManager : MonoBehaviour {
 
         // "Tovább" gomb engedélyezése, ha több sor van
         nextButton.gameObject.SetActive(dialogLines.Count > 1);
-        closeButton.gameObject.SetActive(false); // "Bezárás" gomb elrejtése
+        closeButton.gameObject.SetActive(false); 
     }
 
     // Következõ sor megjelenítése
@@ -59,13 +59,12 @@ public class DialogManager : MonoBehaviour {
         if (currentLineIndex == dialogLines.Count - 1)
         {
             nextButton.gameObject.SetActive(false);
-            closeButton.gameObject.SetActive(true); // "Bezárás" gomb megjelenítése
+            closeButton.gameObject.SetActive(true); 
         }
     }
 
-    // Dialógus bezárása
     private void CloseDialog()
     {
-        dialogPanel.SetActive(false); // Panel elrejtése
+        dialogPanel.SetActive(false); 
     }
 }

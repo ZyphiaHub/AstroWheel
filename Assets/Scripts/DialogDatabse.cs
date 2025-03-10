@@ -4,9 +4,9 @@ using UnityEngine;
 public static class DialogDatabase {
     public static Dictionary<int, string[]> IslandDialogs = new Dictionary<int, string[]>
     {
-        { 1, new string[] { "Welcome, young one!", "You are about to embark on a year-long journey.", 
+        { 1, new string[] { "Welcome, young one! You are about to embark on a year-long journey.", 
                             "If you can solve every task, you will become a fully accredited Time Witch!",
-                            "However, you must first prove your understanding of the yearly cycle.",
+                            "However, you must first prove your understanding of the yearly astrological cycle.",
                             "Solve this puzzle and place the missing pieces where they belong!" } },
         { 2, new string[] { "Welcome to the domain of Capricorn! As a Time Witch you must craft potions later.",
                             "But before that, you need to show me that you can distinguish between different plant materials.",

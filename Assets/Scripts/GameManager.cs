@@ -21,11 +21,15 @@ public class GameManager : MonoBehaviour {
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            Debug.Log("GameManager inicializálva.");
         } else
         {
+            Debug.LogWarning("Második GameManager példány törölve!");
             Destroy(gameObject);
         }
     }
+
+    
 
     private void Start()
     {
@@ -43,6 +47,8 @@ public class GameManager : MonoBehaviour {
         {
             currentState.UpdateState();
         }
+        
+
     }
 
     public void ChangeState(IGameState newState)
@@ -66,7 +72,7 @@ public class GameManager : MonoBehaviour {
     // Betöltés: Utolsó teljesített sziget betöltése
     public int LoadLastCompletedIsland()
     {
-        return PlayerPrefs.GetInt(LastCompletedIslandKey, 3); // Alapértelmezett érték: 0 (elsõ sziget)
+        return PlayerPrefs.GetInt(LastCompletedIslandKey, 0); // Alapértelmezett érték: 0 (elsõ sziget)
     }
 
     // Ellenõrzés: Egy adott sziget teljesítve van-e
@@ -84,7 +90,7 @@ public class GameManager : MonoBehaviour {
     // TotalScore betöltése
     public int LoadTotalScore()
     {
-        return PlayerPrefs.GetInt(TotalScoreKey, 0); // Alapértelmezett érték: 0
+        return PlayerPrefs.GetInt(TotalScoreKey, 0); 
     }
 
     // PlayerId mentése

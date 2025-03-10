@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class IslandManager : MonoBehaviour, IGameState {
-    public int islandIndex; // A sziget indexe (pl. 1, 2, ..., 12)
+    public int islandIndex; 
     public DialogManager dialogManager;
     public Button bactToMainMenuBtn;
     public Button previousIslandButton; // Elõzõ sziget gombja
@@ -38,16 +38,17 @@ public class IslandManager : MonoBehaviour, IGameState {
     public void EnterState()
     {
         Debug.Log($"Beléptél a(z) {islandIndex}. szigetre!");
+        int lastCompletedIsland = GameManager.Instance.LoadLastCompletedIsland();
 
+        Debug.Log($"Last completed island: {lastCompletedIsland}, Current island: {islandIndex}");
         // Dialógus megjelenítése, ha a játékos elõször érkezik
-        if (GameManager.Instance.LoadLastCompletedIsland() < islandIndex)  ///0 tól kezdõdik az elsõ, 1 tõl a második
+        if (lastCompletedIsland < islandIndex)
         {
             List<string> dialogList = new List<string>(DialogDatabase.GetDialogForIsland(islandIndex));
             dialogManager.ShowDialog(dialogList);
         } else
         {
-            dialogManager.dialogPanel.SetActive(false);
-
+            //dialogManager.dialogPanel.SetActive(false);
         }
         UpdateNavigationButtons();
     }
@@ -71,9 +72,8 @@ public class IslandManager : MonoBehaviour, IGameState {
     }
     private void OnBackToMainMenuClicked()
     {
-        Debug.Log($"GameStateManager.Instance: {GameStateManager.Instance}");
-        // Visszalépés a fõmenübe
-        GameStateManager.Instance.ChangeState(new MainMenuState());
+        SceneManager.LoadScene("Main_Menu");
+        
     }
 
     private void OnPreviousIslandClicked()

@@ -18,12 +18,17 @@ public class PuzzleGameManager : MonoBehaviour {
     [SerializeField] private Transform levelSelectPanel;
     [SerializeField] private Image levelSelectPrefab;
     [SerializeField] private GameObject playAgainButton;
-    [SerializeField] private Button backtToMainMenuBtn;
+    
 
     [Header("Score")]
-    [SerializeField] private TextMeshProUGUI scoreText; // Changed to TextMeshProUGUI
+    [SerializeField] private TextMeshProUGUI scoreText; 
     private int score = 0;
     private int moves = 0;
+
+    [Header("Inventory")]
+    [SerializeField] private PlantDatabase plantDatabase; // Referencia a PlantDatabase-re
+    [SerializeField] private Inventory inventory;
+
 
     private List<Transform> pieces;
     private Vector2Int dimensions;
@@ -34,24 +39,44 @@ public class PuzzleGameManager : MonoBehaviour {
     private Vector3 offset;
 
     private int piecesCorrect;
-    
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        //create the UI
-        foreach (Texture2D texture in imageTexture)
+        if (inventory == null)
         {
-            Image image = Instantiate(levelSelectPrefab, levelSelectPanel);
-            image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
-            //assign button action
-            image.GetComponent<Button>().onClick.AddListener(delegate { StartGame(texture); });
-        }
-        if (backtToMainMenuBtn != null)
-        {
-            backtToMainMenuBtn.onClick.AddListener(OnBackToMainMenuClicked);
+            inventory = new Inventory();
+            Debug.Log("Inventory létrehozva kódban.");
         }
 
+        // Ellenõrizzük, hogy az utolsó teljesített sziget 0-e
+        if (GameManager.Instance.LoadLastCompletedIsland() == 0)
+        {
+            // Ha 0, akkor egybõl elindítjuk az elsõ képet
+            if (imageTexture.Count > 0)
+            {
+                StartGame(imageTexture[0]); // Az elsõ kép betöltése
+            } else
+            {
+                Debug.LogWarning("Nincs kép az imageTexture listában!");
+            }
+        } else   //a játékos már járt itt, választhat más képet
+        {
+
+
+            //create the UI
+            foreach (Texture2D texture in imageTexture)
+            {
+                Image image = Instantiate(levelSelectPrefab, levelSelectPanel);
+                image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+
+                image.GetComponent<Button>().onClick.AddListener(delegate { StartGame(texture); });
+            }
+            
+                
+                
+
+        }
     }
     public void StartGame(Texture2D jigsawTexture)
     {
@@ -263,7 +288,7 @@ public class PuzzleGameManager : MonoBehaviour {
             if (piecesCorrect == pieces.Count)
             {
                 playAgainButton.SetActive(true);
-                backtToMainMenuBtn.gameObject.SetActive(true);
+                
                 score = score - moves;
                 Debug.Log(score);
                 UpdateScoreUI();
@@ -310,13 +335,40 @@ public class PuzzleGameManager : MonoBehaviour {
         // Beállítjuk, hogy a puzzle megoldva van
         GameManager.Instance.SetPuzzleSolved(true);
 
+        if (GameManager.Instance.LoadLastCompletedIsland() == 0) {
+            GameManager.Instance.SaveLastCompletedIsland(1);
+        }
+
+        // Hozzáadjuk a 0 indexû tárgyat az inventoryhoz
+        if (plantDatabase != null && inventory != null)
+        {
+            if (plantDatabase.items.Length > 0)
+            {
+                PlantDatabase.Item itemToAdd = plantDatabase.items[0]; // 0 indexû tárgy
+                inventory.AddItem(itemToAdd, score/3); 
+                Debug.Log($"Item added to inventory: {itemToAdd.englishName}");
+            } else
+            {
+                Debug.LogWarning("Nincsenek tárgyak a PlantDatabase-ben!");
+            }
+        } else
+        {
+            Debug.LogWarning("PlantDatabase vagy Inventory nincs beállítva!");
+        }
+        if (plantDatabase == null)
+        {
+            Debug.LogError("PlantDatabase nincs beállítva a PuzzleGameManager-ben!");
+            return;
+        }
+
+        if (inventory == null)
+        {
+            Debug.LogError("Inventory nincs beállítva a PuzzleGameManager-ben!");
+            return;
+        }
+
     }
 
-    private void OnBackToMainMenuClicked()
-    {
-        Debug.Log($"GameStateManager.Instance: {GameStateManager.Instance}");
-        // Visszalépés a fõmenübe
-        GameStateManager.Instance.ChangeState(new MainMenuState());
-    }
+    
 
 }
