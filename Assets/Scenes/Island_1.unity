@@ -447,7 +447,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 308295582}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OverView, Assembly-CSharp
         m_MethodName: Island_2
         m_Mode: 1
@@ -508,7 +508,6 @@ GameObject:
   - component: {fileID: 308295581}
   - component: {fileID: 308295580}
   - component: {fileID: 308295579}
-  - component: {fileID: 308295582}
   - component: {fileID: 308295583}
   m_Layer: 0
   m_Name: Main Camera(Island 1)
@@ -591,18 +590,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &308295582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 308295578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec1674cbfbd696f46a9489dc5f9ae9e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &308295583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,7 +691,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 308295582}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OverView, Assembly-CSharp
         m_MethodName: Island_2
         m_Mode: 1
@@ -1210,7 +1197,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 308295582}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OverView, Scripts
         m_MethodName: Puzzle
         m_Mode: 1
