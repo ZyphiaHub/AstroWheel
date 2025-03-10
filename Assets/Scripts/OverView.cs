@@ -13,27 +13,27 @@ public class OverView : MonoBehaviour
     
     public void Island_1()
     {
-        SceneManager.LoadSceneAsync("Island_1_Sagittarius");
+        SceneManager.LoadSceneAsync("Island_1");
     }
 
     public void Island_2()
     {
-        SceneManager.LoadSceneAsync("Island_2_Capricorn");
+        SceneManager.LoadSceneAsync("Island_2");
     }
 
     public void Island_3()
     {
-        SceneManager.LoadSceneAsync("Island_3_Aquarius");
+        SceneManager.LoadSceneAsync("Island_3");
     }
 
     public void Island_4()
     {
-        SceneManager.LoadSceneAsync("Island_4_Pisces");
+        SceneManager.LoadSceneAsync("Island_4");
     }
 
     public void Island_5()
     {
-        SceneManager.LoadSceneAsync("Island_5_Aries");
+        SceneManager.LoadSceneAsync("Island_5");
     }
 
     public void Island_6()
@@ -73,7 +73,7 @@ public class OverView : MonoBehaviour
 
     public void Hearth()
     {
-        SceneManager.LoadSceneAsync(14);
+        SceneManager.LoadSceneAsync("Hearth");
     }
 
     public void MemoryGame()
