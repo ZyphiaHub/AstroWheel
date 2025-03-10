@@ -9,12 +9,14 @@ public class LoginManager : MonoBehaviour {
     public TMP_InputField passwordInputField; 
     public Button loginButton;
     public Button registerButton;
+    public Button quitButton;
     public TMP_Text errorMessageText;
 
     private void Start()
     {
         // Gomb esemény hozzárendelése
         loginButton.onClick.AddListener(OnLoginButtonClicked);
+        quitButton.onClick.AddListener(OnQuitToDesktopClicked);
     }
 
     public void OnLoginButtonClicked()
@@ -60,5 +62,11 @@ public class LoginManager : MonoBehaviour {
         // Egyszerû regex az email cím ellenõrzésére
         string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
         return Regex.IsMatch(email, pattern);
+    }
+
+    private void OnQuitToDesktopClicked()
+    {
+        Debug.Log("Kilépés a játékból...");
+        Application.Quit(); 
     }
 }
