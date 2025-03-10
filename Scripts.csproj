@@ -98,7 +98,6 @@
     <Compile Include="Assets\Scripts\PersistentDataManager.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\MemoController.cs" />
     <Compile Include="Assets\Scripts\InventoryUI.cs" />
-    <Compile Include="Assets\Scripts\PotionsTbl.cs" />
     <Compile Include="Assets\Scripts\SQLiteManager.cs" />
     <Compile Include="Assets\Scripts\LocalAPIManager regi.cs" />
     <Compile Include="Assets\Scripts\Match3\Dot.cs" />
