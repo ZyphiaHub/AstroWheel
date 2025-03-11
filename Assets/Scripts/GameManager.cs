@@ -33,12 +33,12 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        //manuális teszteléshez
-        //PlayerPrefs.SetInt(LastCompletedIslandKey, 3); // Például a második sziget teljesítve
-       // PlayerPrefs.Save();
+        
 
         Debug.Log("Beléptél a Login Menübe");
         SceneManager.LoadScene("Login");
+
+        
     }
 
     private void Update()
