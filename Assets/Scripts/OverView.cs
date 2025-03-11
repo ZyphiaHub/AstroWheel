@@ -38,37 +38,37 @@ public class OverView : MonoBehaviour
 
     public void Island_6()
     {
-        SceneManager.LoadSceneAsync(7);
+        SceneManager.LoadSceneAsync("Island_6");
     }
 
     public void Island_7()
     {
-        SceneManager.LoadSceneAsync(8);
+        SceneManager.LoadSceneAsync("Island_7");
     }
 
     public void Island_8()
     {
-        SceneManager.LoadSceneAsync(9);
+        SceneManager.LoadSceneAsync("Island_8");
     }
 
     public void Island_9()
     {
-        SceneManager.LoadSceneAsync(10);
+        SceneManager.LoadSceneAsync("Island_9");
     }
 
     public void Island_10()
     {
-        SceneManager.LoadSceneAsync(11);
+        SceneManager.LoadSceneAsync("Island_10");
     }
 
     public void Island11()
     {
-        SceneManager.LoadSceneAsync(12);
+        SceneManager.LoadSceneAsync("Island_11");
     }
 
     public void Island12()
     {
-        SceneManager.LoadSceneAsync(13);
+        SceneManager.LoadSceneAsync("Island_12");
     }
 
     public void Hearth()
