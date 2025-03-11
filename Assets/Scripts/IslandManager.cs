@@ -110,7 +110,9 @@ public class IslandManager : MonoBehaviour, IGameState {
         // Következõ sziget gomb letiltása, ha az utolsó szigeten vagyunk
         if (nextIslandButton != null)
         {
-            nextIslandButton.interactable = (islandIndex < 12);
+            int lastCompletedIsland = GameManager.Instance.LoadLastCompletedIsland();
+            bool isNextIslandWithinLimit = (islandIndex + 1 <= lastCompletedIsland + 1) && (islandIndex + 1 <= 12);
+            nextIslandButton.interactable = isNextIslandWithinLimit;
         }
     }
 
