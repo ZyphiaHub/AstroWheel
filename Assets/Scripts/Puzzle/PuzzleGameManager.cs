@@ -27,7 +27,7 @@ public class PuzzleGameManager : MonoBehaviour {
 
     [Header("Inventory")]
     [SerializeField] private PlantDatabase plantDatabase; // Referencia a PlantDatabase-re
-    [SerializeField] private Inventory inventory;
+    
 
 
     private List<Transform> pieces;
@@ -43,11 +43,7 @@ public class PuzzleGameManager : MonoBehaviour {
 
     void Start()
     {
-        if (inventory == null)
-        {
-            inventory = new Inventory();
-            Debug.Log("Inventory létrehozva kódban.");
-        }
+        
 
         // Ellenõrizzük, hogy az utolsó teljesített sziget 0-e
         if (GameManager.Instance.LoadLastCompletedIsland() == 0)
@@ -320,7 +316,7 @@ public class PuzzleGameManager : MonoBehaviour {
     {
         if (scoreText != null)
         {
-            scoreText.text = "Score: " + score; // Update the TextMeshPro text
+            scoreText.text = "Score: " + score + "    Moves: " + moves; 
             
         }
     }
@@ -340,32 +336,28 @@ public class PuzzleGameManager : MonoBehaviour {
         }
 
         // Hozzáadjuk a 0 indexû tárgyat az inventoryhoz
-        if (plantDatabase != null && inventory != null)
+        if (plantDatabase != null && plantDatabase.items.Length > 0)
         {
-            if (plantDatabase.items.Length > 0)
-            {
-                PlantDatabase.Item itemToAdd = plantDatabase.items[0]; // 0 indexû tárgy
-                inventory.AddItem(itemToAdd, score/3); 
-                Debug.Log($"Item added to inventory: {itemToAdd.englishName}");
-            } else
-            {
-                Debug.LogWarning("Nincsenek tárgyak a PlantDatabase-ben!");
-            }
+            PlantDatabase.Item itemToAdd = plantDatabase.items[0];
+            int quantityToAdd = score / 3;
+            if (quantityToAdd < 1) { quantityToAdd = 1; }          
+                
+            InventoryManager.Instance.inventory.AddItem(itemToAdd, quantityToAdd);
+
+            Debug.Log($"Item added to inventory: {itemToAdd.englishName}, Quantity: {quantityToAdd}");
+            InventoryManager.Instance.inventory.PrintInventory();
         } else
-        {
-            Debug.LogWarning("PlantDatabase vagy Inventory nincs beállítva!");
+            {
+            Debug.LogWarning("PlantDatabase nincs beállítva vagy nincsenek tárgyak!");
         }
+        
         if (plantDatabase == null)
         {
             Debug.LogError("PlantDatabase nincs beállítva a PuzzleGameManager-ben!");
             return;
         }
 
-        if (inventory == null)
-        {
-            Debug.LogError("Inventory nincs beállítva a PuzzleGameManager-ben!");
-            return;
-        }
+       
 
     }
 
