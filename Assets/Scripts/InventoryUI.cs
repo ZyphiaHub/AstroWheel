@@ -3,23 +3,19 @@ using UnityEngine.UI;
 using TMPro; // TextMeshPro névtér importálása
 
 public class InventoryUI : MonoBehaviour {
-    public PlantDatabase itemDatabase; // ItemDatabase referenciája
+    public PlantDatabase plantDatabase; // ItemDatabase referenciája
     public GameObject slotPrefab;     // Slot prefab referenciája
-    public Transform panelParent;     // A Panel, amelybe a slotok kerülnek
+    public Transform panelParent;     
 
-    private Inventory inventory;     // A játékos inventoryja
+       
 
-    void Start()
+    private void Start()
     {
-        // Példa: Betöltjük az inventoryt (ez lehet más forrásból is)
-        inventory = new Inventory();
-        inventory.Initialize(itemDatabase);
-
-        // Inventory tartalmának megjelenítése
-        DisplayInventory();
+        // Frissítjük az UI-t az inventory tartalma alapján
+        RefreshInventoryUI();
     }
 
-    private void DisplayInventory()
+    private void RefreshInventoryUI()
     {
         // Töröljük a korábbi slotokat
         foreach (Transform child in panelParent)
@@ -28,7 +24,7 @@ public class InventoryUI : MonoBehaviour {
         }
 
         // Létrehozzuk a slotokat az inventory tartalma alapján
-        foreach (var itemEntry in inventory.items)
+        foreach (var entry in InventoryManager.Instance.inventory.items)
         {
             // Létrehozunk egy új slotot
             GameObject slot = Instantiate(slotPrefab, panelParent);
@@ -37,20 +33,20 @@ public class InventoryUI : MonoBehaviour {
             Image iconImage = slot.transform.Find("Icon").GetComponent<Image>();
             if (iconImage != null)
             {
-                iconImage.sprite = itemEntry.Key.icon;
+                iconImage.sprite = entry.Key.icon;
             } else
             {
                 Debug.LogError("Icon object not found in slot prefab!");
             }
 
-            // Beállítjuk a tárgy nevét (TMP komponens használata)
+            // Beállítjuk a növény nevét (TMP komponens használata)
             Transform nameTransform = slot.transform.Find("Label/Name");
             if (nameTransform != null)
             {
                 TextMeshProUGUI nameLabel = nameTransform.GetComponent<TextMeshProUGUI>();
                 if (nameLabel != null)
                 {
-                    nameLabel.text = itemEntry.Key.englishName;
+                    nameLabel.text = entry.Key.englishName;
                 } else
                 {
                     Debug.LogError("TextMeshProUGUI component not found on Name object!");
@@ -72,7 +68,7 @@ public class InventoryUI : MonoBehaviour {
                 TextMeshProUGUI quantityText = stackTransform.GetComponent<TextMeshProUGUI>();
                 if (quantityText != null)
                 {
-                    quantityText.text = itemEntry.Value.ToString();
+                    quantityText.text = entry.Value.ToString();
                 } else
                 {
                     Debug.LogError("TextMeshProUGUI component not found on Stack object!");
@@ -90,4 +86,8 @@ public class InventoryUI : MonoBehaviour {
             
         }
     }
+
+    
+
+    
 }
