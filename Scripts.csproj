@@ -73,12 +73,14 @@
     <Compile Include="Assets\Scripts\LoginManager.cs" />
     <Compile Include="Assets\Scripts\IslandManager.cs" />
     <Compile Include="Assets\Scripts\OverView.cs" />
+    <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\RecipeDatabase.cs" />
     <Compile Include="Assets\Scripts\Match3\Board.cs" />
     <Compile Include="Assets\Scripts\Match3\DestroyParticle.cs" />
     <Compile Include="Assets\Scripts\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\Bobbing.cs" />
     <Compile Include="Assets\Scripts\DialogManager.cs" />
+    <Compile Include="Assets\Scripts\InventorySaver.cs" />
     <Compile Include="Assets\Scripts\CraftedItemInitializer.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\MemoryCard.cs" />
     <Compile Include="Assets\Scripts\GameStateManager.cs" />
