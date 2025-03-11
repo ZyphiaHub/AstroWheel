@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\MatiCatch\MainMatiCatch.cs" />
     <Compile Include="Assets\Scripts\MatiKviz\MainMatiKviz.cs" />
+    <Compile Include="Assets\Scripts\ItemInitializer.cs" />
     <Compile Include="Assets\Scripts\APIClient.cs" />
     <Compile Include="Assets\Scripts\RecipeManager.cs" />
     <Compile Include="Assets\Scripts\Match3\FindMatches.cs" />
@@ -80,7 +81,7 @@
     <Compile Include="Assets\Scripts\InventoryManager.cs" />
     <Compile Include="Assets\Scripts\Bobbing.cs" />
     <Compile Include="Assets\Scripts\DialogManager.cs" />
-    <Compile Include="Assets\Scripts\CraftedItemInitializer.cs" />
+    <Compile Include="Assets\Scripts\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\MemoryCard.cs" />
     <Compile Include="Assets\Scripts\GameStateManager.cs" />
     <Compile Include="Assets\Scripts\PlantInitializer.cs" />
