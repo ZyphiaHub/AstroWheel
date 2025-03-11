@@ -21,7 +21,8 @@ public class PuzzleGameManager : MonoBehaviour {
     
 
     [Header("Score")]
-    [SerializeField] private TextMeshProUGUI scoreText; 
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI descText;
     private int score = 0;
     private int moves = 0;
 
@@ -97,7 +98,7 @@ public class PuzzleGameManager : MonoBehaviour {
 
         UpdateBorder();
         piecesCorrect = 0;
-
+        descText.gameObject.SetActive(true);
         Vector2Int GetDimensions(Texture2D texture, int difficulty)
         {
             Vector2Int dimensions = Vector2Int.zero;
@@ -284,8 +285,11 @@ public class PuzzleGameManager : MonoBehaviour {
             if (piecesCorrect == pieces.Count)
             {
                 playAgainButton.SetActive(true);
-                
                 score = score - moves;
+                if (score <= 0) {
+                    score = 3;
+                }
+                
                 Debug.Log(score);
                 UpdateScoreUI();
 
@@ -345,7 +349,9 @@ public class PuzzleGameManager : MonoBehaviour {
             InventoryManager.Instance.inventory.AddItem(itemToAdd, quantityToAdd);
 
             Debug.Log($"Item added to inventory: {itemToAdd.englishName}, Quantity: {quantityToAdd}");
+            
             InventoryManager.Instance.inventory.PrintInventory();
+            InventoryManager.Instance.SaveInventory();
         } else
             {
             Debug.LogWarning("PlantDatabase nincs beállítva vagy nincsenek tárgyak!");
