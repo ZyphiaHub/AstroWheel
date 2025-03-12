@@ -28,15 +28,8 @@ MonoBehaviour:
     description: A stone made from the plants of the Water element. It protects against
       astral attacks and negative environmental energies.
     icon: {fileID: 21300000, guid: f7cd7d683998262478efb639c05803e7, type: 3}
-  - itemName: 
-    description: 
-    icon: {fileID: 0}
-  - itemName: 
-    description: 
-    icon: {fileID: 0}
-  - itemName: 
-    description: 
-    icon: {fileID: 0}
-  - itemName: 
-    description: 
-    icon: {fileID: 0}
+  - itemName: Elixir of Second Chances
+    description: The threads of fate sometimes become tangled. A single sip of this
+      elixir unravels the knots, weaving new paths before you.  Drink it, and time
+      will favor you once more! Gain +3 extra moves in the game.
+    icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}

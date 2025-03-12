@@ -472,6 +472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plantDatabase: {fileID: 11400000, guid: 9eaecee37aff1c04fbdf06680b5f1f37, type: 2}
+  itemDatabase: {fileID: 11400000, guid: 61acc7d210a793e469a3dd50925367aa, type: 2}
 --- !u!4 &2012109858
 Transform:
   m_ObjectHideFlags: 0
