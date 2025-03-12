@@ -63,11 +63,9 @@
     <Compile Include="Assets\Scripts\MatiCatch\MainMatiCatch.cs" />
     <Compile Include="Assets\Scripts\MatiKviz\MainMatiKviz.cs" />
     <Compile Include="Assets\Scripts\ItemInitializer.cs" />
-    <Compile Include="Assets\Scripts\APIClient.cs" />
     <Compile Include="Assets\Scripts\RecipeManager.cs" />
     <Compile Include="Assets\Scripts\Match3\FindMatches.cs" />
     <Compile Include="Assets\Scripts\CircularPath.cs" />
-    <Compile Include="Assets\Scripts\ServerSyncGet.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\AddCards.cs" />
     <Compile Include="Assets\Scripts\SQLite.cs" />
     <Compile Include="Assets\Scripts\DialogeBox.cs" />
@@ -82,6 +80,7 @@
     <Compile Include="Assets\Scripts\Bobbing.cs" />
     <Compile Include="Assets\Scripts\DialogManager.cs" />
     <Compile Include="Assets\Scripts\ItemDatabase.cs" />
+    <Compile Include="Assets\Scripts\ServerSyncZsofi.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\MemoryCard.cs" />
     <Compile Include="Assets\Scripts\GameStateManager.cs" />
     <Compile Include="Assets\Scripts\PlantInitializer.cs" />
@@ -98,15 +97,16 @@
     <Compile Include="Assets\Scripts\CraftingSystem.cs" />
     <Compile Include="Assets\Scripts\Hearth.cs" />
     <Compile Include="Assets\Scripts\PersistentDataManager.cs" />
+    <Compile Include="Assets\Scripts\ServerSyncGetZsofi.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\MemoController.cs" />
     <Compile Include="Assets\Scripts\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\SQLiteManager.cs" />
     <Compile Include="Assets\Scripts\LocalAPIManager regi.cs" />
     <Compile Include="Assets\Scripts\Match3\Dot.cs" />
-    <Compile Include="Assets\Scripts\ServerSync.cs" />
     <Compile Include="Assets\Scripts\Puzzle\PuzzleGameManager.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />
     <Compile Include="Assets\Scripts\CookonTime\CookonTime.cs" />
+    <Compile Include="Assets\Scripts\APIClientZsofi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Scripts.asmdef" />
