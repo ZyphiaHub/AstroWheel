@@ -3,5 +3,25 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "CraftedItemDatabase", menuName = "ScriptableObjects/CraftedItemDatabase", order = 3)]
 public class CraftedItemDatabase : ScriptableObject {
-    public List<CraftedItem> craftedItems; // Az összes craftolt tárgy
+
+    [System.Serializable]
+    public class Item {
+        public string itemName;
+        public string description;
+        public Sprite icon;
+        public override bool Equals(object obj)
+        {
+            if (obj is Item other)
+            {
+                return itemName == other.itemName; 
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return itemName.GetHashCode();
+        }
+    }
+    public CraftedItem[] items; // Az összes craftolt tárgy
 }
