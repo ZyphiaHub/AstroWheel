@@ -13,10 +13,22 @@ public class InventoryUI : MonoBehaviour {
     public GameObject craftedSlotPrefab; // Crafted slot prefab referenciája
     public Transform craftedPanelParent;
 
+    [Header("Crafting UI References")]
+    public GameObject craftPanel;       // Craft panel referenciája
+    public Transform recipeListParent;  // Recept lista panel referenciája
+    public GameObject recipeButtonPrefab; // Recept gomb prefab referenciája
+    public TextMeshProUGUI ingredientText; // Alapanyagok szövege
+    public Button craftButton;          // Craft gomb referenciája
+
+    private CraftingRecipe selectedRecipe; // Kiválasztott recept
+
+
     private void Start()
     {
+        
         // Frissítjük az UI-t az inventory tartalma alapján
         RefreshInventoryUI();
+        InitializeCraftPanel();
     }
 
     private void RefreshInventoryUI()
@@ -99,80 +111,88 @@ public class InventoryUI : MonoBehaviour {
 
     /*InventoryUI.Instance.RefreshInventoryUI(); // Frissíti az UI-t*/
 
-    /*private void RefreshInventoryUI()
+
+
+    // Craft panel inicializálása
+    private void InitializeCraftPanel()
     {
-        // Töröljük a korábbi slotokat
-        foreach (Transform child in panelParent)
+        // Töröljük a korábbi recept gombokat
+        foreach (Transform child in recipeListParent)
         {
             Destroy(child.gameObject);
         }
 
-        // Létrehozzuk a slotokat az inventory tartalma alapján
-        foreach (var entry in InventoryManager.Instance.inventory.items)
+        // Létrehozzuk a recept gombokat
+        foreach (var recipe in InventoryManager.Instance.craftingRecipe)
         {
-              
-            // Létrehozunk egy új slotot
-            GameObject slot = Instantiate(slotPrefab, panelParent);
-
-            // Beállítjuk az ikont
-            Image iconImage = slot.transform.Find("Icon").GetComponent<Image>();
-            if (iconImage != null)
+            GameObject recipeButton = Instantiate(recipeButtonPrefab, recipeListParent);
+            TextMeshProUGUI buttonText = recipeButton.GetComponentInChildren<TextMeshProUGUI>();
+            if (buttonText != null)
             {
-                iconImage.sprite = entry.Key.icon;
-            } else
-            {
-                Debug.LogError("Icon object not found in slot prefab!");
+                buttonText.text = recipe.outputItem.itemName; // Recept neve
             }
 
-            // Beállítjuk a növény nevét (TMP komponens használata)
-            Transform nameTransform = slot.transform.Find("Label/Name");
-            if (nameTransform != null)
-            {
-                TextMeshProUGUI nameLabel = nameTransform.GetComponent<TextMeshProUGUI>();
-                if (nameLabel != null)
-                {
-                    nameLabel.text = entry.Key.englishName;
-                } else
-                {
-                    Debug.LogError("TextMeshProUGUI component not found on Name object!");
-                    Debug.Log("Name object components:");
-                    foreach (var component in nameTransform.GetComponents<Component>())
-                    {
-                        Debug.Log(" - " + component.GetType().Name);
-                    }
-                }
-            } else
-            {
-                Debug.LogError("Name object not found in slot prefab!");
-            }
-
-            // Beállítjuk a mennyiséget (TMP komponens használata)
-            Transform stackTransform = slot.transform.Find("Stack");
-            if (stackTransform != null)
-            {
-                TextMeshProUGUI quantityText = stackTransform.GetComponent<TextMeshProUGUI>();
-                if (quantityText != null)
-                {
-                    quantityText.text = entry.Value.ToString();
-                } else
-                {
-                    Debug.LogError("TextMeshProUGUI component not found on Stack object!");
-                    Debug.Log("Stack object components:");
-                    foreach (var component in stackTransform.GetComponents<Component>())
-                    {
-                        Debug.Log(" - " + component.GetType().Name);
-                    }
-                }
-            } else
-            {
-                Debug.LogError("Stack object not found in slot prefab!");
-            }
-
-            
+            // Gomb eseménykezelõje
+            Button button = recipeButton.GetComponent<Button>();
+            button.onClick.AddListener(() => SelectRecipe(recipe));
         }
-    }*/
 
+        // Craft gomb eseménykezelõje
+        craftButton.onClick.AddListener(CraftSelectedRecipe);
+    }
 
+    // Recept kiválasztása
+    private void SelectRecipe(CraftingRecipe recipe)
+    {
+        selectedRecipe = recipe;
+        UpdateIngredientText(recipe);
+    }
+
+    // Alapanyagok szövegének frissítése
+    private void UpdateIngredientText(CraftingRecipe recipe)
+    {
+        string ingredientList = "Szükséges alapanyagok:\n";
+        foreach (var ingredient in recipe.ingredients)
+        {
+            if (ingredient.plantItem != null) // Növény alapanyag
+            {
+                int availableQuantity = InventoryManager.Instance.inventory.items.ContainsKey(ingredient.plantItem)
+                    ? InventoryManager.Instance.inventory.items[ingredient.plantItem]
+                    : 0;
+                ingredientList += $"{ingredient.plantItem.englishName}: {ingredient.quantity} (Rendelkezésre áll: {availableQuantity})\n";
+            } else if (ingredient.craftedItem != null) // Crafted item alapanyag
+            {
+                int availableQuantity = InventoryManager.Instance.craftedInventory.items.ContainsKey(ingredient.craftedItem)
+                    ? InventoryManager.Instance.craftedInventory.items[ingredient.craftedItem]
+                    : 0;
+                ingredientList += $"{ingredient.craftedItem.itemName}: {ingredient.quantity} (Rendelkezésre áll: {availableQuantity})\n";
+            }
+        }
+        ingredientText.text = ingredientList;
+    }
+
+    // Craftolás indítása
+    private void CraftSelectedRecipe()
+    {
+        if (selectedRecipe != null)
+        {
+            bool success = InventoryManager.Instance.CraftItem(selectedRecipe);
+            if (success)
+            {
+                Debug.Log("Craftolás sikeres!");
+                RefreshInventoryUI(); // Frissítjük az UI-t
+                UpdateIngredientText(selectedRecipe); // Frissítjük az alapanyagok listáját
+            } else
+            {
+                Debug.Log("Craftolás sikertelen: nincs elegendõ alapanyag.");
+            }
+        } else
+        {
+            Debug.LogWarning("Nincs kiválasztva recept!");
+        }
+    }
+
+    
 
 
 }

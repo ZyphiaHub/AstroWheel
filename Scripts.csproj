@@ -73,7 +73,6 @@
     <Compile Include="Assets\Scripts\IslandManager.cs" />
     <Compile Include="Assets\Scripts\OverView.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
-    <Compile Include="Assets\Scripts\RecipeDatabase.cs" />
     <Compile Include="Assets\Scripts\Match3\Board.cs" />
     <Compile Include="Assets\Scripts\Match3\DestroyParticle.cs" />
     <Compile Include="Assets\Scripts\InventoryManager.cs" />
@@ -102,6 +101,7 @@
     <Compile Include="Assets\Scripts\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\SQLiteManager.cs" />
     <Compile Include="Assets\Scripts\LocalAPIManager regi.cs" />
+    <Compile Include="Assets\Scripts\CraftingRecipe.cs" />
     <Compile Include="Assets\Scripts\Match3\Dot.cs" />
     <Compile Include="Assets\Scripts\Puzzle\PuzzleGameManager.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />

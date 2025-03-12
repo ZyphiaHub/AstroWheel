@@ -5,11 +5,14 @@ public class InventoryManager : MonoBehaviour {
     public static InventoryManager Instance { get; private set; }
 
     public Inventory inventory { get; private set; }
-    public CraftedInventory craftedInventory { get; private set; } // Új CraftedInventory
+    public CraftedInventory craftedInventory { get; private set; } 
 
     [Header("References")]
     public PlantDatabase plantDatabase; // Az Inspectorban állítsd be!
     public ItemDatabase itemDatabase; // Új ItemDatabase referenciája
+
+    [Header("Crafting Recipes")]
+    public List<CraftingRecipe> craftingRecipe;
 
     private void Awake()
     {
@@ -75,35 +78,7 @@ public class InventoryManager : MonoBehaviour {
         SaveCraftedInventory();
         Debug.Log("Crafted inventory initialized with new items.");
 
-        /*bool hasSavedCraftedData = false;
         
-        foreach (var item in itemDatabase.items)
-        {
-            string key = "crafted_" + item.itemName.Replace(" ", "");
-            if (PlayerPrefs.HasKey(key))
-            {
-                hasSavedCraftedData = true;
-                break;
-            }
-        }
-
-        if (hasSavedCraftedData)
-        {
-            LoadCraftedInventory();
-            
-            // Mentjük a frissített CraftedInventory-t
-            SaveCraftedInventory();
-            Debug.Log("Crafted inventory initialized with new items.");
-
-        } else
-        {
-            foreach (var item in itemDatabase.items)
-            {
-                craftedInventory.AddItem(item, 0);
-            }
-            SaveCraftedInventory();
-            Debug.Log("New crafted inventory initialized with 0 quantities.");
-        }*/
     }
 
     // Plant inventory mentése PlayerPrefs-be
@@ -133,15 +108,7 @@ public class InventoryManager : MonoBehaviour {
 
         PlayerPrefs.Save();
         Debug.Log("Crafted inventory saved.");
-        /*foreach (var entry in itemDatabase.items)
-        {
-            string key = "crafted_" + entry.itemName.Replace(" ", "");
-            int quantity = craftedInventory.items.ContainsKey(entry) ? craftedInventory.items[entry] : 0;
-            PlayerPrefs.SetInt(key, quantity);
-        }
-
-        PlayerPrefs.Save();
-        Debug.Log("Crafted inventory saved.");*/
+        
     }
 
     // Plant inventory betöltése PlayerPrefs-bõl
@@ -173,16 +140,7 @@ public class InventoryManager : MonoBehaviour {
             }
         }
         Debug.Log("Crafted inventory loaded.");
-        /*foreach (var item in itemDatabase.items)
-        {
-            string key = "crafted_" + item.itemName.Replace(" ", "");
-            if (PlayerPrefs.HasKey(key))
-            {
-                int quantity = PlayerPrefs.GetInt(key);
-                craftedInventory.AddItem(item, quantity);
-            }
-        }
-        Debug.Log("Crafted inventory loaded.");*/
+        
     }
 
     // PlayerPrefs törlése (mindkét inventoryhoz)
@@ -191,7 +149,52 @@ public class InventoryManager : MonoBehaviour {
         PlayerPrefs.DeleteAll();
         Debug.Log("PlayerPrefs cleared.");
     }
+
+
+    /*CRAFTING*/
+    public bool CraftItem(CraftingRecipe recipe)
+    {
+        // Ellenõrizzük, hogy van-e elegendõ alapanyag
+        foreach (var ingredient in recipe.ingredients)
+        {
+            if (ingredient.plantItem != null) 
+            {
+                if (!inventory.items.ContainsKey(ingredient.plantItem) || inventory.items[ingredient.plantItem] < ingredient.quantity)
+                {
+                    Debug.LogWarning($"Nincs elegendõ {ingredient.plantItem.englishName} a craftoláshoz.");
+                    return false; // Nincs elegendõ alapanyag
+                }
+            } else if (ingredient.craftedItem != null) // Crafted item alapanyag
+            {
+                if (!craftedInventory.items.ContainsKey(ingredient.craftedItem) || craftedInventory.items[ingredient.craftedItem] < ingredient.quantity)
+                {
+                    Debug.LogWarning($"Nincs elegendõ {ingredient.craftedItem.itemName} a craftoláshoz.");
+                    return false; // Nincs elegendõ alapanyag
+                }
+            }
+        }
+
+        // Levonjuk az alapanyagokat
+        foreach (var ingredient in recipe.ingredients)
+        {
+            if (ingredient.plantItem != null) // Növény alapanyag
+            {
+                inventory.RemoveItem(ingredient.plantItem, ingredient.quantity);
+            } else if (ingredient.craftedItem != null) // Crafted item alapanyag
+            {
+                craftedInventory.RemoveItem(ingredient.craftedItem, ingredient.quantity);
+            }
+        }
+
+        // Hozzáadjuk a kimeneti crafted itemet
+        craftedInventory.AddItem(recipe.outputItem, recipe.outputQuantity);
+        Debug.Log($"Craftolás sikeres: {recipe.outputQuantity} db {recipe.outputItem.itemName} létrehozva.");
+
+        return true; // Craftolás sikeres
+    }
 }
+
+
 
 /*// Tárgyak hozzáadása a leltárakhoz
 InventoryManager.Instance.inventory.AddItem(plantDatabase.items[0], 5); // 5 növény hozzáadása
