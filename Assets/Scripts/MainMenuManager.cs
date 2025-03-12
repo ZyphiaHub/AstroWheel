@@ -22,11 +22,11 @@ public class MainMenuManager : MonoBehaviour {
             if (GameManager.Instance.IsIslandCompleted(islandIndex-1))
             {
                 islandButtons[i].interactable = true; 
-                Debug.Log($"gomb {i+1} él");
+                //Debug.Log($"gomb {i+1} él");
             } else
             {
                 islandButtons[i].interactable = false; 
-                Debug.Log($"gomb {i+1} letiltva");
+                //Debug.Log($"gomb {i+1} letiltva");
             }
 
             //gomb lenyomás vizsgálat
