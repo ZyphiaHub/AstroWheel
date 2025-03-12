@@ -10,7 +10,12 @@ public class OverView : MonoBehaviour
         SceneManager.LoadSceneAsync("Main_Menu");
     }
 
-    
+    public void BackToLogin()
+    {
+        SceneManager.LoadSceneAsync("Login");
+    }
+
+
     public void Island_1()
     {
         SceneManager.LoadSceneAsync("Island_1");
