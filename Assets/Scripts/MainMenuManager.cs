@@ -44,15 +44,15 @@ public class MainMenuManager : MonoBehaviour {
     {
         // Játékos neve
         string playerName = PlayerPrefs.GetString("PlayerName", "Guest");
-        playerNameText.text = "Player: " + playerName;
+        playerNameText.text = "Witch: \n" + playerName;
 
         // Pontok betöltése a GameManager segítségével
         int playerScore = GameManager.Instance.LoadTotalScore();
-        playerScoreText.text = "TimeScore: " + playerScore.ToString();
+        playerScoreText.text = "ChronoPoints: \n" + playerScore.ToString();
 
         // Utolsó teljesített sziget száma
         int lastCompletedIsland = PlayerPrefs.GetInt("LastCompletedIsland", 0);
-        lastCompletedIslandText.text = "Last Completed Island: " + lastCompletedIsland;
+        lastCompletedIslandText.text = "Last Completed \nIsland: " + lastCompletedIsland;
     }
 
 }
