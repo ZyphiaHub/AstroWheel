@@ -121,24 +121,59 @@ public class InventoryUI : MonoBehaviour {
         {
             Destroy(child.gameObject);
         }
+        if (InventoryManager.Instance.craftingRecipe == null || InventoryManager.Instance.craftingRecipe.Count == 0)
+        {
+            Debug.LogWarning("A craftingRecipe lista üres vagy null!");
+            return;
+        }
+
+        Debug.Log($"Receptek száma: {InventoryManager.Instance.craftingRecipe.Count}");
 
         // Létrehozzuk a recept gombokat
         foreach (var recipe in InventoryManager.Instance.craftingRecipe)
         {
+            if (recipe == null || recipe.outputItem == null)
+            {
+                Debug.LogWarning("Hibás recept található a listában!");
+                continue;
+            }
             GameObject recipeButton = Instantiate(recipeButtonPrefab, recipeListParent);
+
+            if (recipeButton == null)
+            {
+                Debug.LogError("Nem sikerült létrehozni a recept gombot!");
+                continue;
+            }
+
             TextMeshProUGUI buttonText = recipeButton.GetComponentInChildren<TextMeshProUGUI>();
             if (buttonText != null)
             {
                 buttonText.text = recipe.outputItem.itemName; // Recept neve
+            } else
+            {
+                Debug.LogError("TextMeshProUGUI komponens nem található a recept gombon!");
             }
 
             // Gomb eseménykezelõje
             Button button = recipeButton.GetComponent<Button>();
+            if (button != null)
+            {
+                button.onClick.AddListener(() => SelectRecipe(recipe));
+            } else
+            {
+                Debug.LogError("Button komponens nem található a recept gombon!");
+            }
             button.onClick.AddListener(() => SelectRecipe(recipe));
         }
 
         // Craft gomb eseménykezelõje
-        craftButton.onClick.AddListener(CraftSelectedRecipe);
+        if (craftButton != null)
+        {
+            craftButton.onClick.AddListener(CraftSelectedRecipe);
+        } else
+        {
+            Debug.LogError("Craft gomb nincs beállítva!");
+        }
     }
 
     // Recept kiválasztása
