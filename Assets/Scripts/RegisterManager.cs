@@ -188,6 +188,6 @@ public class RegisterManager : MonoBehaviour {
         PlayerPrefs.Save();
 
         // Adatok elküldése a szerverre
-        StartCoroutine(APIClient.Instance.PostData(playerName, email, password, selectedCharacterIndex));
+       /* StartCoroutine(APIClient.Instance.PostData(playerName, email, password, selectedCharacterIndex));*/
     }
 }
