@@ -14,11 +14,11 @@ public class InventoryUI : MonoBehaviour {
     public Transform craftedPanelParent;
 
     [Header("Crafting UI References")]
-    public GameObject craftPanel;       // Craft panel referenciája
-    public Transform recipeListParent;  // Recept lista panel referenciája
-    public GameObject recipeButtonPrefab; // Recept gomb prefab referenciája
-    public TextMeshProUGUI ingredientText; // Alapanyagok szövege
-    public Button craftButton;          // Craft gomb referenciája
+    public GameObject craftPanel;       
+    public Transform recipeListParent;  
+    public GameObject recipeButtonPrefab; 
+    public TextMeshProUGUI ingredientText; 
+    public Button craftButton;          
 
     private CraftingRecipe selectedRecipe; // Kiválasztott recept
 
@@ -92,7 +92,7 @@ public class InventoryUI : MonoBehaviour {
         }
 
         // Beállítjuk a mennyiséget (TMP komponens használata)
-        Transform stackTransform = slot.transform.Find("Stack");
+        Transform stackTransform = slot.transform.Find("StackBg/Stack");
         if (stackTransform != null)
         {
             TextMeshProUGUI quantityText = stackTransform.GetComponent<TextMeshProUGUI>();
@@ -148,7 +148,7 @@ public class InventoryUI : MonoBehaviour {
             TextMeshProUGUI buttonText = recipeButton.GetComponentInChildren<TextMeshProUGUI>();
             if (buttonText != null)
             {
-                buttonText.text = recipe.outputItem.itemName; // Recept neve
+                buttonText.text = recipe.outputItem.itemName; 
             } else
             {
                 Debug.LogError("TextMeshProUGUI komponens nem található a recept gombon!");
@@ -186,7 +186,7 @@ public class InventoryUI : MonoBehaviour {
     // Alapanyagok szövegének frissítése
     private void UpdateIngredientText(CraftingRecipe recipe)
     {
-        string ingredientList = "Szükséges alapanyagok:\n";
+        string ingredientList = "Ingredients needed:\n";
         foreach (var ingredient in recipe.ingredients)
         {
             if (ingredient.plantItem != null) // Növény alapanyag
@@ -194,13 +194,13 @@ public class InventoryUI : MonoBehaviour {
                 int availableQuantity = InventoryManager.Instance.inventory.items.ContainsKey(ingredient.plantItem)
                     ? InventoryManager.Instance.inventory.items[ingredient.plantItem]
                     : 0;
-                ingredientList += $"{ingredient.plantItem.englishName}: {ingredient.quantity} (Rendelkezésre áll: {availableQuantity})\n";
+                ingredientList += $"{ingredient.plantItem.englishName}: {ingredient.quantity} (You have: {availableQuantity})\n";
             } else if (ingredient.craftedItem != null) // Crafted item alapanyag
             {
                 int availableQuantity = InventoryManager.Instance.craftedInventory.items.ContainsKey(ingredient.craftedItem)
                     ? InventoryManager.Instance.craftedInventory.items[ingredient.craftedItem]
                     : 0;
-                ingredientList += $"{ingredient.craftedItem.itemName}: {ingredient.quantity} (Rendelkezésre áll: {availableQuantity})\n";
+                ingredientList += $"{ingredient.craftedItem.itemName}: {ingredient.quantity} (You have: {availableQuantity})\n";
             }
         }
         ingredientText.text = ingredientList;
@@ -215,11 +215,11 @@ public class InventoryUI : MonoBehaviour {
             if (success)
             {
                 Debug.Log("Craftolás sikeres!");
-                RefreshInventoryUI(); // Frissítjük az UI-t
-                UpdateIngredientText(selectedRecipe); // Frissítjük az alapanyagok listáját
+                RefreshInventoryUI(); 
+                UpdateIngredientText(selectedRecipe); 
             } else
             {
-                Debug.Log("Craftolás sikertelen: nincs elegendõ alapanyag.");
+                Debug.Log("Crafting is not possible: not enough ingredients.");
             }
         } else
         {
