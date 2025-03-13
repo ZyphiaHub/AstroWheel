@@ -189,7 +189,8 @@ public class InventoryManager : MonoBehaviour {
         // Hozzáadjuk a kimeneti crafted itemet
         craftedInventory.AddItem(recipe.outputItem, recipe.outputQuantity);
         Debug.Log($"Craftolás sikeres: {recipe.outputQuantity} db {recipe.outputItem.itemName} létrehozva.");
-
+        SaveInventory();
+        SaveCraftedInventory();
         return true; // Craftolás sikeres
     }
 }
