@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c566ce04eb65b942a08548fdecd6094, type: 3}
+  m_Name: APIConfigSettings
+  m_EditorClassIdentifier: 
+  playersGetUrl: https://astrowheelapi.onrender.com/api/players
+  playerGetByIdUrl: https://astrowheelapi.onrender.com/api/players/{0}
+  playerMeGetUrl: https://astrowheelapi.onrender.com/api/players/me
+  playerMaterialsGetUrl: https://astrowheelapi.onrender.com/api/players/{0}/materials
+  playerPutUrl: https://astrowheelapi.onrender.com/api/players/{0}
+  playerDeleteUrl: https://astrowheelapi.onrender.com/api/players/{0}
+  characterGetUrl: https://astrowheelapi.onrender.com/api/character
+  characterGetByIdUrl: https://astrowheelapi.onrender.com/api/character/{0}
+  characterPostUrl: https://astrowheelapi.onrender.com/api/character
+  characterPutUrl: https://astrowheelapi.onrender.com/api/character/{0}
+  characterDeleteUrl: https://astrowheelapi.onrender.com/api/character/{0}
+  inventoriesGetUrl: https://astrowheelapi.onrender.com/api/Inventory
+  inventoryGetByIdUrl: https://astrowheelapi.onrender.com/api/Inventory/{0}
+  inventoryPostUrl: https://astrowheelapi.onrender.com/api/Inventory
+  inventoryPutUrl: https://astrowheelapi.onrender.com/api/Inventory/{0}
+  inventoryDeleteUrl: https://astrowheelapi.onrender.com/api/Inventory/{0}
+  inventoryMaterialsGetUrl: https://astrowheelapi.onrender.com/api/inventoryMaterials
+  inventoryMaterialGetByIdUrl: https://astrowheelapi.onrender.com/api/inventoryMaterials/{0}/{1}
+  inventoryMaterialPostUrl: https://astrowheelapi.onrender.com/api/inventoryMaterials
+  inventoryMaterialPutUrl: https://astrowheelapi.onrender.com/api/inventoryMaterials/{0}/{1}
+  inventoryMaterialDeleteUrl: https://astrowheelapi.onrender.com/api/inventoryMaterials/{0}/{1}
+  materialsGetUrl: https://astrowheelapi.onrender.com/api/Material
+  materialGetByIdUrl: https://astrowheelapi.onrender.com/api/Material/{0}
+  materialPostUrl: https://astrowheelapi.onrender.com/api/Material
+  materialPutUrl: https://astrowheelapi.onrender.com/api/Material/{0}
+  materialDeleteUrl: https://astrowheelapi.onrender.com/api/Material/{0}
+  totalScoreGetByPlayerIdUrl: https://astrowheelapi.onrender.com/api/TotalScore/{0}
