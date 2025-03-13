@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEditor;
 
-public class RecipeInitializer : MonoBehaviour {
+/*public class RecipeInitializer : MonoBehaviour {
     public PlantDatabase plantDatabase; // A PlantDatabase referenciája (már betöltve)
     public CraftingSystem craftingSystem; // A CraftingSystem referenciája
     public CraftedItemDatabase craftedItemDatabase;
