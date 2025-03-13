@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1045849310}
-  - component: {fileID: 1045849313}
+  - component: {fileID: 1045849311}
   m_Layer: 0
   m_Name: DatabaseManager
   m_TagString: Untagged
@@ -198,7 +198,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1045849313
+--- !u!114 &1045849311
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2652145f108eb6144a20c276c3c147fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiUrl: https://unityrest.onrender.com/api/Players
+  apiConfig: {fileID: 11400000, guid: 62bad0c5af51377419e44607fadbaeca, type: 2}
 --- !u!1 &1152641827
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2652145f108eb6144a20c276c3c147fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apiUrl: https://unityrest.onrender.com/api/Players
+  apiConfig: {fileID: 0}
 --- !u!4 &1719454443
 Transform:
   m_ObjectHideFlags: 0
@@ -488,6 +488,82 @@ MonoBehaviour:
       quantity: 2
     outputItem:
       itemName: Elixir of Second Chances
+      description: The threads of fate sometimes become tangled. A single sip of
+        this elixir unravels the knots, weaving new paths before you.  Drink it,
+        and time will favor you once more! Gain +3 extra moves in the game.
+      icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
+    outputQuantity: 1
+  - ingredients:
+    - plantItem:
+        englishName: Jade Orchid
+        witchName: Squirrel's ear
+        latinName: Goodyeara repens
+        description: Material fro Crystals
+        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
+      craftedItem:
+        itemName: 
+        description: 
+        icon: {fileID: 0}
+      quantity: 2
+    outputItem:
+      itemName: Fire agate
+      description: The threads of fate sometimes become tangled. A single sip of
+        this elixir unravels the knots, weaving new paths before you.  Drink it,
+        and time will favor you once more! Gain +3 extra moves in the game.
+      icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
+    outputQuantity: 1
+  - ingredients:
+    - plantItem:
+        englishName: Jade Orchid
+        witchName: Squirrel's ear
+        latinName: Goodyeara repens
+        description: Material fro Crystals
+        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
+      craftedItem:
+        itemName: 
+        description: 
+        icon: {fileID: 0}
+      quantity: 2
+    outputItem:
+      itemName: Elixir of Second Chances
+      description: The threads of fate sometimes become tangled. A single sip of
+        this elixir unravels the knots, weaving new paths before you.  Drink it,
+        and time will favor you once more! Gain +3 extra moves in the game.
+      icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
+    outputQuantity: 1
+  - ingredients:
+    - plantItem:
+        englishName: Jade Orchid
+        witchName: Squirrel's ear
+        latinName: Goodyeara repens
+        description: Material fro Crystals
+        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
+      craftedItem:
+        itemName: 
+        description: 
+        icon: {fileID: 0}
+      quantity: 2
+    outputItem:
+      itemName: Amethyst
+      description: The threads of fate sometimes become tangled. A single sip of
+        this elixir unravels the knots, weaving new paths before you.  Drink it,
+        and time will favor you once more! Gain +3 extra moves in the game.
+      icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
+    outputQuantity: 1
+  - ingredients:
+    - plantItem:
+        englishName: Jade Orchid
+        witchName: Squirrel's ear
+        latinName: Goodyeara repens
+        description: Material fro Crystals
+        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
+      craftedItem:
+        itemName: 
+        description: 
+        icon: {fileID: 0}
+      quantity: 2
+    outputItem:
+      itemName: Cross-stone
       description: The threads of fate sometimes become tangled. A single sip of
         this elixir unravels the knots, weaving new paths before you.  Drink it,
         and time will favor you once more! Gain +3 extra moves in the game.
