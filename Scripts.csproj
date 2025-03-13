@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\Bobbing.cs" />
     <Compile Include="Assets\Scripts\DialogManager.cs" />
     <Compile Include="Assets\Scripts\ItemDatabase.cs" />
+    <Compile Include="Assets\Scripts\APIClientBetti.cs" />
     <Compile Include="Assets\Scripts\ServerSyncZsofi.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\MemoryCard.cs" />
     <Compile Include="Assets\Scripts\GameStateManager.cs" />
@@ -87,13 +88,13 @@
     <Compile Include="Assets\Scripts\Match3\BackgroundTile.cs" />
     <Compile Include="Assets\Scripts\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\CraftedItemDatabase.cs" />
+    <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\MainMenuState.cs" />
     <Compile Include="Assets\Scripts\PlantDatabase.cs" />
     <Compile Include="Assets\Scripts\RecipeInitializer.cs" />
     <Compile Include="Assets\Scripts\DialogDatabse.cs" />
     <Compile Include="Assets\Scripts\Patterning\MainPatterning.cs" />
     <Compile Include="Assets\Scripts\RegisterManager.cs" />
-    <Compile Include="Assets\Scripts\CraftingSystem.cs" />
     <Compile Include="Assets\Scripts\Hearth.cs" />
     <Compile Include="Assets\Scripts\PersistentDataManager.cs" />
     <Compile Include="Assets\Scripts\ServerSyncGetZsofi.cs" />
@@ -101,11 +102,13 @@
     <Compile Include="Assets\Scripts\InventoryUI.cs" />
     <Compile Include="Assets\Scripts\SQLiteManager.cs" />
     <Compile Include="Assets\Scripts\LocalAPIManager regi.cs" />
+    <Compile Include="Assets\Scripts\APIconfig.cs" />
     <Compile Include="Assets\Scripts\CraftingRecipe.cs" />
     <Compile Include="Assets\Scripts\Match3\Dot.cs" />
     <Compile Include="Assets\Scripts\Puzzle\PuzzleGameManager.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />
     <Compile Include="Assets\Scripts\CookonTime\CookonTime.cs" />
+    <Compile Include="Assets\Scripts\APITester.cs" />
     <Compile Include="Assets\Scripts\APIClientZsofi.cs" />
   </ItemGroup>
   <ItemGroup>
