@@ -205,7 +205,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 270481636}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LoginManager, Assembly-CSharp
         m_MethodName: OnLoginButtonClicked
         m_Mode: 1
@@ -780,8 +780,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 270481637}
-  - component: {fileID: 270481636}
-  - component: {fileID: 270481638}
+  - component: {fileID: 270481640}
+  - component: {fileID: 270481639}
   m_Layer: 0
   m_Name: LoginManager
   m_TagString: Untagged
@@ -789,24 +789,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &270481636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 270481635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef1bc7b8fc367ad4b9b52f183cfea238, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emailInputField: {fileID: 1462073517}
-  passwordInputField: {fileID: 1193395406}
-  loginButton: {fileID: 11286345}
-  registerButton: {fileID: 2084605022}
-  quitButton: {fileID: 1124686100}
-  errorMessageText: {fileID: 1102455227}
 --- !u!4 &270481637
 Transform:
   m_ObjectHideFlags: 0
@@ -822,7 +804,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &270481638
+--- !u!114 &270481639
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -871,6 +853,24 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 001fe65f78df48b4293fc3f7b31eb414, type: 3}
   - {fileID: 21300000, guid: 9d1e157d42485f645bfb4283a7c97141, type: 3}
   - {fileID: 21300000, guid: dd15b6928c4fe6d4d9c88cae551ce763, type: 3}
+--- !u!114 &270481640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270481635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef1bc7b8fc367ad4b9b52f183cfea238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emailInputField: {fileID: 1462073517}
+  passwordInputField: {fileID: 1193395406}
+  loginButton: {fileID: 11286345}
+  registerButton: {fileID: 2084605022}
+  quitButton: {fileID: 1124686100}
+  errorMessageText: {fileID: 1102455227}
 --- !u!1 &299119278
 GameObject:
   m_ObjectHideFlags: 0
@@ -2502,7 +2502,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 270481636}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LoginManager, Assembly-CSharp
         m_MethodName: OnLoginButtonClicked
         m_Mode: 1
@@ -2905,7 +2905,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 270481636}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LoginManager, Assembly-CSharp
         m_MethodName: OnLoginButtonClicked
         m_Mode: 1
@@ -3388,7 +3388,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 270481636}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LoginManager, Assembly-CSharp
         m_MethodName: OnLoginButtonClicked
         m_Mode: 1

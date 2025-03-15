@@ -3,9 +3,21 @@ using TMPro;
 using System.Text.RegularExpressions;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using UnityEngine.Networking;
+using System.Linq;
 
-/*public class RegisterManager : MonoBehaviour {
-    public static RegisterManager Instance; 
+[System.Serializable]
+public class RegistrationData {
+    public string UserName;
+    public string Email;
+    public string Password;
+    public string PlayerName;
+    public int CharacterId;
+}
+
+public class RegisterManager : MonoBehaviour {
+    public static RegisterManager Instance; // Singleton példány
 
     public TMP_InputField emailInputField;
     public TMP_InputField passwordInputField;
@@ -61,9 +73,10 @@ using UnityEngine.SceneManagement;
             return;
         }
 
-        if (password.Length < 6)
+        // Jelszó ellenõrzése
+        if (!IsPasswordValid(password, out string passwordErrorMessage))
         {
-            errorMessageText.text = "The password should be at least 6 character long!";
+            errorMessageText.text = passwordErrorMessage;
             return;
         }
 
@@ -78,7 +91,6 @@ using UnityEngine.SceneManagement;
         PlayerPrefs.Save();
 
         Debug.Log("Sikeres regisztráció!");
-        //errorMessageText.text = "Player registered!";
     }
 
     private bool IsValidEmail(string email)
@@ -93,14 +105,12 @@ using UnityEngine.SceneManagement;
         // Panel aktiválása vagy deaktiválása
         if (characterSelectionPanel.activeSelf)
         {
-            
             PlayerPrefs.SetInt("SelectedCharacterIndex", selectedCharacterIndex);
-            PlayerPrefs.Save(); 
+            PlayerPrefs.Save(); // Azonnali mentés
             Debug.Log("Selected character index saved: " + selectedCharacterIndex);
         }
 
         characterSelectionPanel.SetActive(!characterSelectionPanel.activeSelf);
-        
         registerNamePanel.SetActive(true);
     }
 
@@ -123,10 +133,10 @@ using UnityEngine.SceneManagement;
 
             // Gomb hozzáadása a képhez
             Button button = imageObject.AddComponent<Button>();
-            int index = i; 
+            int index = i; // Lokális változó a ciklusban
             button.onClick.AddListener(() => OnCharacterSelected(index));
         }
-        //Debug.Log("Loaded " + characterSprites.Length + " character images.");
+        Debug.Log("Loaded " + characterSprites.Length + " character images.");
     }
 
     private void OnCharacterSelected(int index)
@@ -150,17 +160,52 @@ using UnityEngine.SceneManagement;
         string password = PlayerPrefs.GetString("RegisteredPassword", "");
         int characterIndex = selectedCharacterIndex;
 
-        
+        // Adatok elküldése a szerverre
+        StartCoroutine(RegisterPlayer(playerName, email, password, characterIndex));
+    }
 
-        // Adatok mentése és elküldése a szerverre
-        //SavePlayerData(playerName, email, password, characterIndex);
+    private IEnumerator RegisterPlayer(string playerName, string email, string password, int characterIndex)
+    {
+        string url = "https://astrowheelapi.onrender.com/api/auth/register"; // Regisztrációs URL
 
-        Debug.Log("Player name saved: " + playerName);
-        errorMessageText.text = "Name saved successfully!";
+        // Regisztrációs adatok összeállítása
+        var registrationData = new RegistrationData
+        {
+            UserName = email, // A UserName mezõt is kitöltjük az e-mail címmel
+            Email = email,
+            Password = password,
+            PlayerName = playerName,
+            CharacterId = characterIndex
+        };
+        string jsonData = JsonUtility.ToJson(registrationData);
 
-        // Név regisztrációs panel bezárása
-        registerNamePanel.SetActive(false);
-        SceneManager.LoadScene("Island_1");
+        Debug.Log("Sending registration data: " + jsonData); // JSON adatok logolása
+
+        // POST kérés elküldése
+        using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError("Registration failed: " + webRequest.error);
+                Debug.LogError("Server response: " + webRequest.downloadHandler.text); // Szerver válasz logolása
+                errorMessageText.text = "Registration failed: " + webRequest.downloadHandler.text;
+            } else
+            {
+                Debug.Log("Registration successful: " + webRequest.downloadHandler.text);
+                errorMessageText.text = "Registration successful!";
+
+                // Név regisztrációs panel bezárása
+                registerNamePanel.SetActive(false);
+                SceneManager.LoadScene("Island_1");
+            }
+        }
     }
 
     public void CloseCharacterCreationPanels()
@@ -177,19 +222,49 @@ using UnityEngine.SceneManagement;
         PlayerPrefs.Save();
 
         // Visszaléptetés a login képernyõre (ha szükséges)
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Login");
+        SceneManager.LoadScene("Login");
     }
 
-    private void SavePlayerData(string playerName, string email, string password, int selectedCharacterIndex)
+    private bool IsPasswordValid(string password, out string errorMessage)
     {
-        // Adatok mentése a PlayerPrefs-be
-        PlayerPrefs.SetString("PlayerName", playerName);
-        PlayerPrefs.SetString("RegisteredEmail", email);
-        PlayerPrefs.SetString("RegisteredPassword", password);
-        PlayerPrefs.SetInt("SelectedCharacterIndex", selectedCharacterIndex);
-        PlayerPrefs.Save();
+        errorMessage = "";
 
-        // Adatok elküldése a szerverre
-       /* StartCoroutine(APIClient.Instance.PostData(playerName, email, password, selectedCharacterIndex));*/
-   /* }*/
-/*}*/
+        if (password.Length < 6)
+        {
+            errorMessage = "The password should be at least 6 characters long!";
+            return false;
+        }
+
+        if (!password.Any(char.IsDigit))
+        {
+            errorMessage = "The password must contain at least one digit!";
+            return false;
+        }
+
+        if (!password.Any(char.IsLower))
+        {
+            errorMessage = "The password must contain at least one lowercase letter!";
+            return false;
+        }
+
+        if (!password.Any(char.IsUpper))
+        {
+            errorMessage = "The password must contain at least one uppercase letter!";
+            return false;
+        }
+
+        if (!password.Any(ch => !char.IsLetterOrDigit(ch)))
+        {
+            errorMessage = "The password must contain at least one special character!";
+            return false;
+        }
+
+        if (password.Distinct().Count() < 1)
+        {
+            errorMessage = "The password must use at least 1 different characters!";
+            return false;
+        }
+
+        return true;
+    }
+}

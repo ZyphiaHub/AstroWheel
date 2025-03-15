@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System.Text.RegularExpressions;
 
-public class LoginManager : MonoBehaviour {
+/*public class LoginManager : MonoBehaviour {
     public TMP_InputField emailInputField; 
     public TMP_InputField passwordInputField; 
     public Button loginButton;
@@ -69,4 +69,4 @@ public class LoginManager : MonoBehaviour {
         Debug.Log("Kilépés a játékból...");
         Application.Quit(); 
     }
-}
+}*/

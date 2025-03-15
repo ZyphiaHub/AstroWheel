@@ -47,6 +47,71 @@ public class APIClient : MonoBehaviour {
             }
         }
     }
+
+    public IEnumerator Register(string email, string password, string playerName, System.Action<string> onSuccess, System.Action<string> onError)
+    {
+        string url = "https://astrowheelapi.onrender.com/api/auth/register"; // Regisztrációs URL
+
+        // Regisztrációs adatok összeállítása
+        var registrationData = new RegisterRequest
+        {
+            email = email,
+            password = password,
+            playerName = playerName
+        };
+        string jsonData = JsonUtility.ToJson(registrationData);
+
+        // POST kérés elküldése
+        using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                onError?.Invoke(webRequest.error);
+            } else
+            {
+                onSuccess?.Invoke(webRequest.downloadHandler.text);
+            }
+        }
+    }
+
+    public IEnumerator Login(string email, string password, System.Action<string> onSuccess, System.Action<string> onError)
+    {
+        string url = "https://astrowheelapi.onrender.com/api/auth/login"; // Bejelentkezési URL
+
+        // Bejelentkezési adatok összeállítása
+        var loginData = new LoginRequest
+        {
+            email = email,
+            password = password
+        };
+        string jsonData = JsonUtility.ToJson(loginData);
+
+        // POST kérés elküldése
+        using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                onError?.Invoke(webRequest.error);
+            } else
+            {
+                onSuccess?.Invoke(webRequest.downloadHandler.text);
+            }
+        }
+    }
     private IEnumerator FetchAndDisplayPlayers()
     {
         yield return APIClient.Instance.GetPlayers(
@@ -63,6 +128,7 @@ public class APIClient : MonoBehaviour {
             }
         );
     }
+
 
 }
 
@@ -86,4 +152,17 @@ public class PlayerData {
 [System.Serializable]
 public class PlayerDataWrapper {
     public PlayerData[] players;
+}
+
+[System.Serializable]
+public class RegisterRequest {
+    public string email;
+    public string password;
+    public string playerName;
+}
+
+[System.Serializable]
+public class LoginRequest {
+    public string email;
+    public string password;
 }
