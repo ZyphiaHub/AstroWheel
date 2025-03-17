@@ -75,12 +75,13 @@ public class LoginManager : MonoBehaviour {
         string url = "https://astrowheelapi.onrender.com/api/auth/login"; // Bejelentkezési URL
 
         // Bejelentkezési adatok összeállítása
-        var loginData = new
+        var loginData = new LoginData
         {
-            email = email,
-            password = password
+            Email = email,
+            Password = password
         };
         string jsonData = JsonUtility.ToJson(loginData);
+        Debug.Log("Sending login data: " + jsonData);
 
         // POST kérés elküldése
         using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
@@ -95,10 +96,20 @@ public class LoginManager : MonoBehaviour {
             if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
             {
                 onError?.Invoke(webRequest.error);
+                Debug.LogError("Login failed: " + webRequest.error);
+                Debug.LogError("Server response: " + webRequest.downloadHandler.text); // Szerver válasz logolása
             } else
             {
                 onSuccess?.Invoke(webRequest.downloadHandler.text);
+                Debug.Log("Registration successful: " + webRequest.downloadHandler.text);
             }
         }
+    }
+
+    [System.Serializable]
+    public class LoginData
+    {
+        public string Email;
+        public string Password;
     }
 }
