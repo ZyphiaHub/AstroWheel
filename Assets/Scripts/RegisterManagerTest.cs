@@ -7,14 +7,7 @@ using System.Collections;
 using UnityEngine.Networking;
 using System.Linq;
 
-[System.Serializable]
-public class RegistrationData {
-    public string UserName;
-    public string Email;
-    public string Password;
-    public string PlayerName;
-    public int CharacterId;
-}
+
 
 public class RegisterManager : MonoBehaviour {
     public static RegisterManager Instance; // Singleton példány
@@ -195,11 +188,11 @@ public class RegisterManager : MonoBehaviour {
             {
                 Debug.LogError("Registration failed: " + webRequest.error);
                 Debug.LogError("Server response: " + webRequest.downloadHandler.text); // Szerver válasz logolása
-                errorMessageText.text = "Registration failed: " + webRequest.downloadHandler.text;
+                
             } else
             {
                 Debug.Log("Registration successful: " + webRequest.downloadHandler.text);
-                errorMessageText.text = "Registration successful!";
+                
 
                 // Név regisztrációs panel bezárása
                 registerNamePanel.SetActive(false);
@@ -266,5 +259,13 @@ public class RegisterManager : MonoBehaviour {
         }
 
         return true;
+    }
+    [System.Serializable]
+    public class RegistrationData {
+        public string UserName;
+        public string Email;
+        public string Password;
+        public string PlayerName;
+        public int CharacterId;
     }
 }
