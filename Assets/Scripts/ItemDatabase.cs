@@ -4,6 +4,7 @@ using UnityEngine;
 public class ItemDatabase : ScriptableObject {
     [System.Serializable]
     public class Item {
+        public string id;
         public string itemName;
         public string description;
         public Sprite icon;
