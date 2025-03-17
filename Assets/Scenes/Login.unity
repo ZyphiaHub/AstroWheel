@@ -780,8 +780,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 270481637}
-  - component: {fileID: 270481640}
-  - component: {fileID: 270481639}
+  - component: {fileID: 270481641}
+  - component: {fileID: 270481642}
   m_Layer: 0
   m_Name: LoginManager
   m_TagString: Untagged
@@ -804,7 +804,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &270481639
+--- !u!114 &270481641
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -813,7 +813,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 270481635}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcef7520a539b314a8504a817ccb4e04, type: 3}
+  m_Script: {fileID: 11500000, guid: aca50445685cee04b8489c0d8487f9ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   emailInputField: {fileID: 1462073517}
@@ -853,7 +853,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 001fe65f78df48b4293fc3f7b31eb414, type: 3}
   - {fileID: 21300000, guid: 9d1e157d42485f645bfb4283a7c97141, type: 3}
   - {fileID: 21300000, guid: dd15b6928c4fe6d4d9c88cae551ce763, type: 3}
---- !u!114 &270481640
+--- !u!114 &270481642
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -862,7 +862,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 270481635}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef1bc7b8fc367ad4b9b52f183cfea238, type: 3}
+  m_Script: {fileID: 11500000, guid: d50a30618a84fe6499539a21d82cea7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   emailInputField: {fileID: 1462073517}

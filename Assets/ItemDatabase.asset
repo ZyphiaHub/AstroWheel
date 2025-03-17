@@ -13,23 +13,43 @@ MonoBehaviour:
   m_Name: ItemDatabase
   m_EditorClassIdentifier: 
   items:
-  - itemName: Cross-stone
+  - id: 16
+    itemName: Cross-stone
     description: A stone made from the plants of Earth element. It protects against
       malice and curses. It transforms conflict into harmony.
     icon: {fileID: 21300000, guid: 20e793d3cd5d40142bd9b270e2500a5f, type: 3}
-  - itemName: Fire agate
+  - id: 17
+    itemName: Fire agate
     description: A stone made from the plants of Fire element. Protects against malice.
     icon: {fileID: 21300000, guid: 5d73fc73e795db8499852ff770d9f300, type: 3}
-  - itemName: Heliotrop
+  - id: 18
+    itemName: Heliotrop
     description: A stone made from the plants of the Air element. It wards off unwanted
       effects
     icon: {fileID: 21300000, guid: 47041d99134636347a2459a27ea5d9ac, type: 3}
-  - itemName: Amethyst
+  - id: 19
+    itemName: Amethyst
     description: A stone made from the plants of the Water element. It protects against
       astral attacks and negative environmental energies.
     icon: {fileID: 21300000, guid: f7cd7d683998262478efb639c05803e7, type: 3}
-  - itemName: Elixir of Second Chances
+  - id: 20
+    itemName: Elixir of Second Chances
     description: The threads of fate sometimes become tangled. A single sip of this
       elixir unravels the knots, weaving new paths before you.  Drink it, and time
       will favor you once more! Gain +3 extra moves in the game.
     icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
+  - id: 21
+    itemName: Wand of Truth
+    description: Guides you like a compass when you don't know where to step next.
+    icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
+  - id: 22
+    itemName: Elixir of Second Chances
+    description: The threads of fate sometimes become tangled. A single sip of this
+      elixir unravels the knots, weaving new paths before you.  Drink it, and time
+      will favor you once more! Gain +3 extra moves in the game.
+    icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
+  - id: 23
+    itemName: ChronoPotion
+    description: A concetradet elixir of your achievements. This is the only form
+      of time, that will satisfy Chronos.
+    icon: {fileID: 21300000, guid: 05fdc8516eec0c34db37c3e6143cd7c2, type: 3}
