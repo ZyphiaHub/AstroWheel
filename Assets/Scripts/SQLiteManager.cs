@@ -1,7 +1,8 @@
 using UnityEngine;
-using SQLite4Unity3d; // Importáld a SQLite4Unity3d névteret
+using SQLite4Unity3d; 
 using System.IO;
 using System.Linq;
+using Microsoft.Build.Framework;
 
 public class LocalDatabaseManager : MonoBehaviour {
     private SQLiteConnection connection;
@@ -59,23 +60,28 @@ public class LocalDatabaseManager : MonoBehaviour {
 
     // Adatmodell a PlayerTbl táblához
     public class PlayerTbl {
-        [PrimaryKey]
-        public int playerId { get; set; } //egyedi szám azonosító
-        public string playerName { get; set; } //karakter neve
-        public string userId { get; set; } //email akart lenni sztem
+        [PrimaryKey] public int playerId { get; set; }
+        [Required] [MaxLength(255)] public string playerName { get; set; } 
+        [Required] public string userId { get; set; } //email akart lenni sztem
         public string playerPassword { get; set; }
-        public int characterId { get; set; } //kar kép id
+        public int? characterId { get; set; } //kar kép id
         public int islandId { get; set; } //utolsó teljesített sziget
         public int totalScore { get; set; }
         public int lastLogin { get; set; }
-        public int createdAt { get; set; }
+        [Required] public int createdAt { get; set; }
         public int isActive { get; set; }
 
     }
 
-    public class CharacterTbl { }
+    public class CharacterTbl {
+        [PrimaryKey] public int CharacterId { get; set; } 
+        [MaxLength(50)] public string AstroSign { get; set; } 
+        [MaxLength(10)] public string Gender { get; set; }
+        public int CharacterIndex { get; set; } // Karakter indexe
+    }
 
-    public class InventoryTbl { }
+    public class InventoryTbl {
+        }
 
     public class IslandTbl { }
     public class MaterialTbl { }
