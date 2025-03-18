@@ -7,6 +7,7 @@ using System.Collections;
 using UnityEngine.Networking;
 using System.Linq;
 using UnityEditor.PackageManager;
+using System.Net;
 
 
 
@@ -33,28 +34,25 @@ public class RegisterManager : MonoBehaviour {
 
     private void Start()
     {
-        // Gomb események
         registerButton.onClick.AddListener(OnRegisterButtonClicked);
         saveCharNameButton.onClick.AddListener(OnSaveCharacterNameButtonClicked);
 
         cancelCharacterButton.onClick.AddListener(CloseCharacterCreationPanels);
         cancelNameButton.onClick.AddListener(CloseCharacterCreationPanels);
 
-        // Karakterképek megjelenítése a panelen
         LoadCharacterImages();
        
     }
 
     private void Awake()
     {
-        // Singleton minta implementációja
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Ne törlõdjön a scene váltáskor
+            DontDestroyOnLoad(gameObject); 
         } else
         {
-            Destroy(gameObject); // Ha már van példány, töröld ezt
+            Destroy(gameObject);
         }
     }
 
@@ -69,7 +67,6 @@ public class RegisterManager : MonoBehaviour {
             return;
         }
 
-        // Jelszó ellenõrzése
         if (!IsPasswordValid(password, out string passwordErrorMessage))
         {
             errorMessageText.text = passwordErrorMessage;
@@ -86,12 +83,11 @@ public class RegisterManager : MonoBehaviour {
         GameManager.Instance.SaveTotalScore(0);
         PlayerPrefs.Save();
 
-        Debug.Log("Sikeres regisztráció!");
+        
     }
 
     private bool IsValidEmail(string email)
     {
-        // Egyszerû regex az email cím ellenõrzésére
         string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
         return Regex.IsMatch(email, pattern);
     }
@@ -102,7 +98,7 @@ public class RegisterManager : MonoBehaviour {
         if (characterSelectionPanel.activeSelf)
         {
             PlayerPrefs.SetInt("SelectedCharacterIndex", selectedCharacterIndex);
-            PlayerPrefs.Save(); // Azonnali mentés
+            PlayerPrefs.Save();
             Debug.Log("Selected character index saved: " + selectedCharacterIndex);
         }
 
@@ -129,7 +125,7 @@ public class RegisterManager : MonoBehaviour {
 
             // Gomb hozzáadása a képhez
             Button button = imageObject.AddComponent<Button>();
-            int index = i; // Lokális változó a ciklusban
+            int index = i; 
             button.onClick.AddListener(() => OnCharacterSelected(index));
         }
         //Debug.Log("Loaded " + characterSprites.Length + " character images.");
@@ -151,58 +147,45 @@ public class RegisterManager : MonoBehaviour {
             return;
         }
 
-        // Az összes regisztrációs adatot összegyûjtjük
         string email = PlayerPrefs.GetString("RegisteredEmail", "");
         string password = PlayerPrefs.GetString("RegisteredPassword", "");
         int characterIndex = selectedCharacterIndex;
 
-        // Adatok elküldése a szerverre
         StartCoroutine(RegisterPlayer(playerName, email, password, characterIndex, 
             response =>
             {
-                Debug.Log("Reg successful: " + response);
+                //Debug.Log("Registration successful: " + response);
+
 
                 if (loginManager != null)
                 {
-                    Debug.Log("loginmanagerbe vagyok");
                     StartCoroutine(loginManager.Login(email, password,
                         response => {
-                            Debug.Log("Login successful: " + response);
+                            //Debug.Log("Login successful: " + response);
+                            //StartCoroutine(FetchPlayerData());
                         },
                         error => {
                             Debug.Log("Login failed: " + error);
                         }
                     ));
                 }
-                SceneManager.LoadScene("Island_1"); // Elsõ sziget betöltése
+                SceneManager.LoadScene("Island_1"); 
                 
             },
             error =>
             {
                 errorMessageText.text = "Invalid email or password!";
             }));
-        if (loginManager != null)
-        {
-            Debug.Log("loginmanagerbe vagyok");
-            StartCoroutine(loginManager.Login(email, password,
-                response => {
-                    Debug.Log("Login successful: " + response);
-                },
-                error => {
-                    Debug.Log("Login failed: " + error);
-                }
-            ));
-        }
+       
     }
 
     private IEnumerator RegisterPlayer(string playerName, string email, string password, int characterIndex, System.Action<string> onSuccess, System.Action<string>onError)
     {
         string url = "https://astrowheelapi.onrender.com/api/auth/register"; // Regisztrációs URL
 
-        // Regisztrációs adatok összeállítása
         var registrationData = new RegistrationData
         {
-            UserName = email, // A UserName mezõt is kitöltjük az e-mail címmel
+            UserName = email, 
             Email = email,
             Password = password,
             PlayerName = playerName,
@@ -210,7 +193,7 @@ public class RegisterManager : MonoBehaviour {
         };
         string jsonData = JsonUtility.ToJson(registrationData);
 
-        Debug.Log("Sending registration data: " + jsonData); // JSON adatok logolása
+        Debug.Log("Sending registration data: " + jsonData); 
 
         // POST kérés elküldése
         using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
@@ -231,61 +214,16 @@ public class RegisterManager : MonoBehaviour {
             {
                 onSuccess?.Invoke(webRequest.downloadHandler.text);
                 Debug.Log("Registration successful: " + webRequest.downloadHandler.text);
+                
 
                 // Regisztráció után lekérjük a játékos adatait
-                //StartCoroutine(FetchPlayerData());
+                
 
                 // Név regisztrációs panel bezárása
                 //registerNamePanel.SetActive(false);
-                
+
                 // SceneManager.LoadScene("Island_1");
 
-            }
-        }
-    }
-    private IEnumerator LoginAfterRegistration(string email, string password)
-    {
-        string url = "https://astrowheelapi.onrender.com/api/auth/login"; // Bejelentkezési URL
-
-        // Bejelentkezési adatok összeállítása
-        var loginData = new LoginData
-        {
-            Email = email,
-            Password = password
-        };
-        string jsonData = JsonUtility.ToJson(loginData);
-        Debug.Log("Sending login data: " + jsonData);
-
-        // POST kérés elküldése
-        using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
-        {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
-            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            webRequest.downloadHandler = new DownloadHandlerBuffer();
-            webRequest.SetRequestHeader("Content-Type", "application/json");
-
-            yield return webRequest.SendWebRequest();
-
-            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError("Login failed: " + webRequest.error);
-                Debug.LogError("Server response: " + webRequest.downloadHandler.text); // Szerver válasz logolása
-            } else
-            {
-                Debug.Log("Login successful: " + webRequest.downloadHandler.text);
-
-                // Token mentése
-                var response = JsonUtility.FromJson<LoginResponse>(webRequest.downloadHandler.text);
-                PlayerPrefs.SetString("AuthToken", response.Token);
-                PlayerPrefs.Save();
-
-                // Játékos adatainak lekérése
-                yield return StartCoroutine(FetchPlayerData());
-
-                // Név regisztrációs panel bezárása
-                registerNamePanel.SetActive(false);
-
-                SceneManager.LoadScene("Island_1");
             }
         }
     }
@@ -351,47 +289,11 @@ public class RegisterManager : MonoBehaviour {
         return true;
     }
 
-    // Játékos adatainak lekérése
-    private IEnumerator FetchPlayerData()
-    {
-        string url = "https://astrowheelapi.onrender.com/api/players/me";
-        string authToken = PlayerPrefs.GetString("AuthToken", ""); // Hitelesítési token lekérése
-
-        if (string.IsNullOrEmpty(authToken))
-        {
-            Debug.LogError("No authentication token found.");
-            yield break;
-        }
-
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
-        {
-            webRequest.SetRequestHeader("Authorization", "Bearer " + authToken); // Token hozzáadása a fejléchez
-            yield return webRequest.SendWebRequest();
-
-            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError("Error fetching player data: " + webRequest.error);
-                Debug.LogError("Server response: " + webRequest.downloadHandler.text);
-            } else
-            {
-                Debug.Log("Player data fetched successfully: " + webRequest.downloadHandler.text);
-                ProcessPlayerData(webRequest.downloadHandler.text); // Válasz feldolgozása
-            }
-        }
-    }
-
+    
 
    
 
-    private void ProcessPlayerData(string jsonData)
-    {
-        // JSON adatok feldolgozása
-        PlayerData playerData = JsonUtility.FromJson<PlayerData>(jsonData);
-        Debug.Log("Player Name: " + playerData.PlayerName);
-        Debug.Log("Email: " + playerData.Email);
-        Debug.Log("Character ID: " + playerData.CharacterId);
-        // További adatok feldolgozása...
-    }
+    
 
     [System.Serializable]
     public class PlayerData {
@@ -423,6 +325,6 @@ public class RegisterManager : MonoBehaviour {
 
     [System.Serializable]
     public class LoginResponse {
-        public string Token;
+        public string token;
     }
 }
