@@ -19,6 +19,7 @@ public class LoginManager : MonoBehaviour {
         // Gomb esemény hozzárendelése
         loginButton.onClick.AddListener(OnLoginButtonClicked);
         quitButton.onClick.AddListener(OnQuitToDesktopClicked);
+        PrintAllPlayerPrefs();
     }
 
     public void OnLoginButtonClicked()
@@ -102,6 +103,26 @@ public class LoginManager : MonoBehaviour {
             {
                 onSuccess?.Invoke(webRequest.downloadHandler.text);
                 Debug.Log("Registration successful: " + webRequest.downloadHandler.text);
+            }
+        }
+    }
+
+    private void PrintAllPlayerPrefs()
+    {
+        Debug.Log("PlayerPrefs változók:");
+
+        // Az összes PlayerPrefs kulcs lekérése
+        string[] keys = PlayerPrefs.GetString("PlayerPrefsKeys", "").Split(',');
+
+        foreach (string key in keys)
+        {
+            if (!string.IsNullOrEmpty(key))
+            {
+                if (PlayerPrefs.HasKey(key))
+                {
+                    string value = PlayerPrefs.GetString(key, "");
+                    Debug.Log($"{key}: {value}");
+                }
             }
         }
     }

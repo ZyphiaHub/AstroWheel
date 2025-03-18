@@ -352,7 +352,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1719454441
+--- !u!1 &1846508802
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -360,37 +360,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1719454443}
-  - component: {fileID: 1719454442}
+  - component: {fileID: 1846508804}
+  - component: {fileID: 1846508803}
   m_Layer: 0
-  m_Name: APITest
+  m_Name: APILite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1719454442
+--- !u!114 &1846508803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1719454441}
+  m_GameObject: {fileID: 1846508802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2652145f108eb6144a20c276c3c147fd, type: 3}
+  m_Script: {fileID: 11500000, guid: c4015afa2b953da4ca56aa0a27a8e0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1719454443
+--- !u!4 &1846508804
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1719454441}
+  m_GameObject: {fileID: 1846508802}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 969, y: 575, z: 0}
+  m_LocalPosition: {x: 888.48883, y: 289.82538, z: 135.33664}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -430,17 +430,20 @@ MonoBehaviour:
   craftingRecipe:
   - ingredients:
     - plantItem:
+        id: 0
         englishName: Jade Orchid
         witchName: Squirrel's ear
         latinName: Goodyeara repens
         description: Material fro Crystals
         icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
       craftedItem:
+        id: 
         itemName: 
         description: 
         icon: {fileID: 0}
       quantity: 2
     outputItem:
+      id: 
       itemName: Elixir of Second Chances
       description: The threads of fate sometimes become tangled. A single sip of
         this elixir unravels the knots, weaving new paths before you.  Drink it,
@@ -449,17 +452,20 @@ MonoBehaviour:
     outputQuantity: 1
   - ingredients:
     - plantItem:
+        id: 0
         englishName: Jade Orchid
         witchName: Squirrel's ear
         latinName: Goodyeara repens
         description: Material fro Crystals
         icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
       craftedItem:
+        id: 
         itemName: 
         description: 
         icon: {fileID: 0}
       quantity: 2
     outputItem:
+      id: 
       itemName: Fire agate
       description: The threads of fate sometimes become tangled. A single sip of
         this elixir unravels the knots, weaving new paths before you.  Drink it,
@@ -468,17 +474,20 @@ MonoBehaviour:
     outputQuantity: 1
   - ingredients:
     - plantItem:
+        id: 0
         englishName: Jade Orchid
         witchName: Squirrel's ear
         latinName: Goodyeara repens
         description: Material fro Crystals
         icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
       craftedItem:
+        id: 
         itemName: 
         description: 
         icon: {fileID: 0}
       quantity: 2
     outputItem:
+      id: 
       itemName: Elixir of Second Chances
       description: The threads of fate sometimes become tangled. A single sip of
         this elixir unravels the knots, weaving new paths before you.  Drink it,
@@ -487,17 +496,20 @@ MonoBehaviour:
     outputQuantity: 1
   - ingredients:
     - plantItem:
+        id: 0
         englishName: Jade Orchid
         witchName: Squirrel's ear
         latinName: Goodyeara repens
         description: Material fro Crystals
         icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
       craftedItem:
+        id: 
         itemName: 
         description: 
         icon: {fileID: 0}
       quantity: 2
     outputItem:
+      id: 
       itemName: Amethyst
       description: The threads of fate sometimes become tangled. A single sip of
         this elixir unravels the knots, weaving new paths before you.  Drink it,
@@ -506,17 +518,20 @@ MonoBehaviour:
     outputQuantity: 1
   - ingredients:
     - plantItem:
+        id: 0
         englishName: Jade Orchid
         witchName: Squirrel's ear
         latinName: Goodyeara repens
         description: Material fro Crystals
         icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
       craftedItem:
+        id: 
         itemName: 
         description: 
         icon: {fileID: 0}
       quantity: 2
     outputItem:
+      id: 
       itemName: Cross-stone
       description: The threads of fate sometimes become tangled. A single sip of
         this elixir unravels the knots, weaving new paths before you.  Drink it,
@@ -545,5 +560,5 @@ SceneRoots:
   - {fileID: 1625761195}
   - {fileID: 1152641829}
   - {fileID: 4871540}
-  - {fileID: 1719454443}
   - {fileID: 2012109858}
+  - {fileID: 1846508804}

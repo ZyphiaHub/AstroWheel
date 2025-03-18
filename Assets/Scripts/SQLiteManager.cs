@@ -2,9 +2,23 @@ using UnityEngine;
 using SQLite4Unity3d; 
 using System.IO;
 using System.Linq;
-using Microsoft.Build.Framework;
+
 
 public class LocalDatabaseManager : MonoBehaviour {
+    public static LocalDatabaseManager Instance;
+    private void Awake()
+    {
+        // Singleton minta implementációja
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Ne törlõdjön a scene váltáskor
+        } else
+        {
+            Destroy(gameObject); // Ha már van példány, töröld ezt
+        }
+    }
+
     private SQLiteConnection connection;
 
     void Start()
@@ -14,16 +28,45 @@ public class LocalDatabaseManager : MonoBehaviour {
 
     void InitializeDatabase()
     {
-        string databasePath = Path.Combine(Application.persistentDataPath, "gamedatabase.db");
+        string sourcePath = Path.Combine(Application.streamingAssetsPath, "game_data.db");
+        string destinationPath = Path.Combine(Application.persistentDataPath, "game_data.db");
+
+        // Ha a célfájl még nem létezik, másold át a fájlt
+        if (!File.Exists(destinationPath))
+        {
+            try
+            {
+                File.Copy(sourcePath, destinationPath);
+                Debug.Log("Database copied from StreamingAssets to persistentDataPath.");
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError("Failed to copy database: " + ex.Message);
+                return;
+            }
+        }
 
         // Adatbázis kapcsolat létrehozása
-        connection = new SQLiteConnection(databasePath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+        try
+        {
+            connection = new SQLiteConnection(destinationPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
 
-        // Tábla létrehozása, ha még nem létezik
-        //connection.CreateTable<PlayerData>();
+            // Táblák létrehozása, ha még nem léteznek
+            connection.CreateTable<PlayerTbl>();
+            connection.CreateTable<CharacterTbl>();
+            connection.CreateTable<InventoryTbl>();
+            connection.CreateTable<IslandTbl>();
+            connection.CreateTable<MaterialTbl>();
+
+            Debug.Log("Database initialized successfully.");
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("Error initializing database: " + ex.Message);
+        }
     }
 
-    /*public void SavePlayerData(int playerId, int totalScore)
+    public void SavePlayerData(int playerId, int totalScore)
     {
         // Adatok beszúrása vagy frissítése
         var playerData = new PlayerTbl
@@ -34,7 +77,7 @@ public class LocalDatabaseManager : MonoBehaviour {
         };
 
         connection.InsertOrReplace(playerData);
-    }*/
+    }
 
     public void LoadPlayerData()
     {
@@ -61,14 +104,14 @@ public class LocalDatabaseManager : MonoBehaviour {
     // Adatmodell a PlayerTbl táblához
     public class PlayerTbl {
         [PrimaryKey] public int playerId { get; set; }
-        [Required] [MaxLength(255)] public string playerName { get; set; } 
-        [Required] public string userId { get; set; } //email akart lenni sztem
+        [MaxLength(255)] public string playerName { get; set; } 
+        public string userId { get; set; } //email akart lenni sztem
         public string playerPassword { get; set; }
         public int? characterId { get; set; } //kar kép id
         public int islandId { get; set; } //utolsó teljesített sziget
         public int totalScore { get; set; }
         public int lastLogin { get; set; }
-        [Required] public int createdAt { get; set; }
+        public int createdAt { get; set; }
         public int isActive { get; set; }
 
     }
@@ -81,10 +124,24 @@ public class LocalDatabaseManager : MonoBehaviour {
     }
 
     public class InventoryTbl {
+        [PrimaryKey] public int InventoryId { get; set; }
+        public int MaterialId { get; set; }
+        public int MatQuantity  { get; set; }
         }
 
-    public class IslandTbl { }
-    public class MaterialTbl { }
+    public class IslandTbl {
+        [PrimaryKey] public int IslandId    { get; set; }
+        public string AstroSign { get; set; }
+        public int MaterialId { get; set; }
+    }
+    public class MaterialTbl {
+        [PrimaryKey] public int MaterialId { get; set; }
+        public string EnglishName { get; set; }
+        public string WitchName { get; set; }
+        public string LatinName { get; set; }
+        public string Description { get; set; }
+        public string Icon {  get; set; }
+    }
 
 
 }
