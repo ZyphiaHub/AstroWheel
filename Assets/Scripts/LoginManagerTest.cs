@@ -160,8 +160,34 @@ public class LoginManager : MonoBehaviour {
             } else
             {
                 Debug.Log("Player data fetched successfully: " + webRequest.downloadHandler.text);
-                
-            }
+
+                try
+                {
+                    // Deszerializálás a PlayerData osztályba
+                    PlayerData playerData = JsonUtility.FromJson<PlayerData>(webRequest.downloadHandler.text);
+
+                    if (playerData != null)
+                    {
+                        // Adatok mentése PlayerPrefs-be
+                        PlayerPrefs.SetInt("PlayerID", playerData.id);
+                        PlayerPrefs.SetString("PlayerUsername", playerData.username);
+                        PlayerPrefs.SetString("PlayerEmail", playerData.email);
+                        PlayerPrefs.SetInt("PlayerScore", playerData.score);
+                        PlayerPrefs.SetInt("LastCompletedIsland", playerData.lastCompletedIsland);
+                        PlayerPrefs.Save();
+
+                        Debug.Log("Player data saved to PlayerPrefs.");
+                    } else
+                    {
+                        Debug.LogError("Failed to deserialize player data.");
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogError("Error deserializing player data: " + ex.Message);
+                }
+            
+        }
         }
     }
 
@@ -172,5 +198,13 @@ public class LoginManager : MonoBehaviour {
         public string Email;
         public string Password;
     }
-   
+
+    [System.Serializable]
+    public class PlayerData {
+        public int id;
+        public string username;
+        public string email;
+        public int score;
+        public int lastCompletedIsland;
+    }
 }
