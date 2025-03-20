@@ -13,100 +13,100 @@ MonoBehaviour:
   m_Name: PlantDatabase
   m_EditorClassIdentifier: 
   items:
-  - id: 0
+  - plantId: 0
     englishName: Jade Orchid
     witchName: Squirrel's ear
     latinName: Goodyera repens
     description: Material for  Crystals.
     icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
-  - id: 1
+  - plantId: 0
     englishName: Velvet Bean
     witchName: Donkey's eye
     latinName: Mucuna pruriens
     description: Herbal drug used for the management of male infertility, nervous
       disorders, and also as an aphrodisiac.
     icon: {fileID: 21300000, guid: 4e17ed7d88f03db4a86a0ab3a9dedce6, type: 3}
-  - id: 2
+  - plantId: 0
     englishName: Horseweed
     witchName: Colt's tail
     latinName: Erigeron canadensis
     description: Treat for sore throat and dysentery.
     icon: {fileID: 21300000, guid: 3e930e20675fcf0448e446d3235971ad, type: 3}
-  - id: 3
+  - plantId: 0
     englishName: Starflower Pincushions
     witchName: Cat's eye
     latinName: Scabiosa stellata
     description: It is known in ancient times to treat scurvy.
     icon: {fileID: 21300000, guid: fbd9fb58826f61f449b162745758ceaa, type: 3}
-  - id: 4
+  - plantId: 0
     englishName: Spotted Cranesbill
     witchName: Crowfoot
     latinName: Geranium maculatum
     description: "Egy er\u0151teljes krist\xE1ly, amely var\xE1zslatokban haszn\xE1lhat\xF3."
     icon: {fileID: 21300000, guid: d7e6a69d62c26b048ab52b0477b7e8ea, type: 3}
-  - id: 5
+  - plantId: 0
     englishName: Bulbous Buttercup
     witchName: Frog leg
     latinName: Ranunculus bulbosus
     description: Used for skin diseases, arthritis, nerve pain, flu. Can cause irritation.
     icon: {fileID: 21300000, guid: a01bb087dfbe63242b2efdbeed4db972, type: 3}
-  - id: 6
+  - plantId: 0
     englishName: Canadian Snakeroot
     witchName: Cat's paw
     latinName: Asarum canadense
     description: Used for bronchitis, bronchial spasms, and bronchial asthma.
     icon: {fileID: 21300000, guid: 6b6293af9a534da4780436b55e2f2c7b, type: 3}
-  - id: 7
+  - plantId: 0
     englishName: White Turtlehead
     witchName: Snake's head
     latinName: Chelone glabra
     description: It has been used as a method of birth control.
     icon: {fileID: 21300000, guid: 1395a6d1e9a07a143913a3c91bdb1a8c, type: 3}
-  - id: 8
+  - plantId: 0
     englishName: Coral-root
     witchName: Dragon's claw
     latinName: Corallorhiza odontorrhiza
     description: Might help cause sweating, reduce fever, and promote drowsiness.
     icon: {fileID: 21300000, guid: 486705818cd194344aa9e7a2dc49de9b, type: 3}
-  - id: 9
+  - plantId: 0
     englishName: Stiff Slubmoss
     witchName: Wolf's claw
     latinName: Lycopodium annotinum
     description: Used to treat wounds and skin diseases.
     icon: {fileID: 21300000, guid: 30bcf030520b7124babb0e09038675f9, type: 3}
-  - id: 10
+  - plantId: 0
     englishName: Calvary Clover
     witchName: Hedgehog
     latinName: Medicago intertexta
     description: Used in conditions like colds, diabetes, and skin infections.
     icon: {fileID: 21300000, guid: 4d2fa87e463b32445b502a270dd4121f, type: 3}
-  - id: 11
+  - plantId: 0
     englishName: Houndstongue
     witchName: Dog's tongue
     latinName: Cynoglossum officinale
     description: Used in piles, lung diseases, persistent coughs, baldness, sores,
       and ulcers.
     icon: {fileID: 21300000, guid: 7eba0607db3dca045ac5907f350cd12a, type: 3}
-  - id: 12
+  - plantId: 0
     englishName: Common Toadflax
     witchName: Toad
     latinName: Linaria vulgaris
     description: Astringent, hepatic and detergent - cleanses toxins from the tissue.
     icon: {fileID: 21300000, guid: 0caf59d39eb45df40907bf6660399077, type: 3}
-  - id: 13
+  - plantId: 0
     englishName: Narrowleaf Plantain
     witchName: Lamb's tongue
     latinName: Plantago lanceolata
     description: Effective treatment for bleeding, it quickly staunches blood flow
       and encourages the repair of damaged tissue.
     icon: {fileID: 21300000, guid: 0b3b7d954a80ba9449c09b289011071e, type: 3}
-  - id: 14
+  - plantId: 0
     englishName: Red Clover
     witchName: Rabbit's foot
     latinName: Trifolium arvense
     description: A remedy for menopause symptoms, asthma, whooping cough, arthritis.
     icon: {fileID: 21300000, guid: c6d1649399b9ef048a78a0dd5e888850, type: 3}
-  - id: 15
+  - plantId: 0
     englishName: Wild Spurge
     witchName: Snake's milk
     latinName: Euphorbia corollata

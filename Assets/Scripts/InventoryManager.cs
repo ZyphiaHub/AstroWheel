@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour {
     public static InventoryManager Instance { get; private set; }
-
-    public Inventory inventory { get; private set; }
-    public CraftedInventory craftedInventory { get; private set; } 
+    public APIClient apiClient;
+    public Inventory inventory { get;  set; }
+    public CraftedInventory craftedInventory { get;  set; } 
 
     [Header("References")]
     public PlantDatabase plantDatabase; // Az Inspectorban állítsd be!
@@ -19,10 +19,10 @@ public class InventoryManager : MonoBehaviour {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Maradjon életben jelenetváltáskor
+            DontDestroyOnLoad(gameObject); 
         } else
         {
-            Destroy(gameObject); // Ne legyen több példány
+            Destroy(gameObject); 
             return;
         }
 
@@ -30,7 +30,7 @@ public class InventoryManager : MonoBehaviour {
     }
 
     // Inventoryk inicializálása és betöltése
-    private void InitializeInventories()
+    public void InitializeInventories()
     {
         // Plant inventory inicializálása
         inventory = new Inventory();
@@ -94,6 +94,47 @@ public class InventoryManager : MonoBehaviour {
         PlayerPrefs.Save();
         Debug.Log("Plant inventory saved.");
     }
+    // Metódus az inventory adatainak küldésére
+    public void SaveInventoryToServer()
+    {
+        // A PlayerID lekérése a PlayerPrefs-bõl
+        int playerId = PlayerPrefs.GetInt("PlayerID", -1); // -1 az alapértelmezett érték, ha a PlayerID nem létezik
+
+        if (playerId == -1)
+        {
+            Debug.LogError("PlayerID not found in PlayerPrefs. Make sure the player is logged in.");
+            return;
+        }
+
+        // Az inventory adatainak összeállítása
+        List<InventoryItem> inventoryItems = new List<InventoryItem>();
+        foreach (var entry in inventory.items)
+        {
+            inventoryItems.Add(new InventoryItem
+            {
+                itemId = entry.Key.plantId, 
+                quantity = entry.Value
+            });
+        }
+        if (APIClient.Instance == null)
+        {
+            Debug.LogError("APIClient.Instance is null! Make sure it is initialized properly.");
+            return;
+        }
+        // Az adatok küldése a szerverre
+        StartCoroutine(APIClient.Instance.SaveInventory(playerId.ToString(), inventoryItems,
+            onSuccess: response =>
+            {
+                Debug.Log("Inventory saved to server: " + response);
+            },
+            onError: error =>
+            {
+                Debug.LogError("Failed to save inventory: " + error);
+            }
+
+        ));
+    }
+
 
     // Crafted inventory mentése PlayerPrefs-be
     public void SaveCraftedInventory()
@@ -109,6 +150,54 @@ public class InventoryManager : MonoBehaviour {
         PlayerPrefs.Save();
         Debug.Log("Crafted inventory saved.");
         
+    }
+    // Metódus a crafted inventory adatainak küldésére
+    public void SaveCraftedInventoryToServer()
+    {
+        Debug.Log($"SaveInventoryToServer called. Inventory is null? {inventory == null}");
+
+        if (inventory == null)
+        {
+            Debug.LogError("Inventory is null! It was not initialized properly.");
+            return;
+        }
+
+        if (inventory.items == null)
+        {
+            Debug.LogError("Inventory items dictionary is null!");
+            return;
+        }
+        // A PlayerID lekérése a PlayerPrefs-bõl
+        int playerId = PlayerPrefs.GetInt("PlayerID", -1); // -1 az alapértelmezett érték, ha a PlayerID nem létezik
+
+        if (playerId == -1)
+        {
+            Debug.LogError("PlayerID not found in PlayerPrefs. Make sure the player is logged in.");
+            return;
+        }
+
+        // A crafted inventory adatainak összeállítása
+        List<InventoryItem> craftedItems = new List<InventoryItem>();
+        foreach (var entry in craftedInventory.items)
+        {
+            craftedItems.Add(new InventoryItem
+            {
+                itemId = entry.Key.itemId, // Feltételezve, hogy az Item osztálynak van itemId tulajdonsága
+                quantity = entry.Value
+            });
+        }
+
+        // Az adatok küldése a szerverre
+        StartCoroutine(APIClient.Instance.SaveCraftedInventory(playerId.ToString(), craftedItems,
+            onSuccess: response =>
+            {
+                Debug.Log("Crafted inventory saved to server: " + response);
+            },
+            onError: error =>
+            {
+                Debug.LogError("Failed to save crafted inventory: " + error);
+            }
+        ));
     }
 
     // Plant inventory betöltése PlayerPrefs-bõl
@@ -154,7 +243,6 @@ public class InventoryManager : MonoBehaviour {
     /*CRAFTING*/
     public bool CraftItem(CraftingRecipe recipe)
     {
-        // Ellenõrizzük, hogy van-e elegendõ alapanyag
         foreach (var ingredient in recipe.ingredients)
         {
             if (ingredient.plantItem != null) 
@@ -162,14 +250,14 @@ public class InventoryManager : MonoBehaviour {
                 if (!inventory.items.ContainsKey(ingredient.plantItem) || inventory.items[ingredient.plantItem] < ingredient.quantity)
                 {
                     Debug.LogWarning($"Nincs elegendõ {ingredient.plantItem.englishName} a craftoláshoz.");
-                    return false; // Nincs elegendõ alapanyag
+                    return false; 
                 }
             } else if (ingredient.craftedItem != null) // Crafted item alapanyag
             {
                 if (!craftedInventory.items.ContainsKey(ingredient.craftedItem) || craftedInventory.items[ingredient.craftedItem] < ingredient.quantity)
                 {
                     Debug.LogWarning($"Nincs elegendõ {ingredient.craftedItem.itemName} a craftoláshoz.");
-                    return false; // Nincs elegendõ alapanyag
+                    return false; 
                 }
             }
         }
@@ -191,6 +279,8 @@ public class InventoryManager : MonoBehaviour {
         Debug.Log($"Craftolás sikeres: {recipe.outputQuantity} db {recipe.outputItem.itemName} létrehozva.");
         SaveInventory();
         SaveCraftedInventory();
+        SaveInventoryToServer(); 
+        SaveCraftedInventoryToServer();
         return true; // Craftolás sikeres
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlantDatabase : ScriptableObject {
     [System.Serializable]
     public class Item {
-        public int id;
+        public int plantId;
         public string englishName; 
         public string witchName;
         public string latinName;

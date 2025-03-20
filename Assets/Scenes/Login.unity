@@ -782,6 +782,7 @@ GameObject:
   - component: {fileID: 270481637}
   - component: {fileID: 270481641}
   - component: {fileID: 270481642}
+  - component: {fileID: 270481643}
   m_Layer: 0
   m_Name: LoginManager
   m_TagString: Untagged
@@ -817,6 +818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loginManager: {fileID: 270481642}
+  inventoryManager: {fileID: 0}
   emailInputField: {fileID: 1462073517}
   passwordInputField: {fileID: 1193395406}
   nameInputField: {fileID: 1224744857}
@@ -872,6 +874,19 @@ MonoBehaviour:
   registerButton: {fileID: 2084605022}
   quitButton: {fileID: 1124686100}
   errorMessageText: {fileID: 1102455227}
+--- !u!114 &270481643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 270481635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83fa1647fe676854e8425a211f12a3b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  apiConfig: {fileID: 11400000, guid: 62bad0c5af51377419e44607fadbaeca, type: 2}
 --- !u!1 &299119278
 GameObject:
   m_ObjectHideFlags: 0

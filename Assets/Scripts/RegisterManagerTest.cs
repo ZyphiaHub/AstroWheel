@@ -12,8 +12,9 @@ using System.Net;
 
 
 public class RegisterManager : MonoBehaviour {
-    public static RegisterManager Instance; // Singleton példány
+    public static RegisterManager Instance; 
     public LoginManager loginManager;
+    public InventoryManager inventoryManager;
 
     public TMP_InputField emailInputField;
     public TMP_InputField passwordInputField;
@@ -155,7 +156,8 @@ public class RegisterManager : MonoBehaviour {
             response =>
             {
                 //Debug.Log("Registration successful: " + response);
-
+                ClearPlayerPrefsForNewPlayer();
+                InitializeNewPlayerInventory(inventoryManager);
 
                 if (loginManager != null)
                 {
@@ -189,7 +191,7 @@ public class RegisterManager : MonoBehaviour {
             Email = email,
             Password = password,
             PlayerName = playerName,
-            CharacterId = characterIndex
+            CharacterIndex = characterIndex
         };
         string jsonData = JsonUtility.ToJson(registrationData);
 
@@ -289,11 +291,49 @@ public class RegisterManager : MonoBehaviour {
         return true;
     }
 
-    
 
-   
+    private void ClearPlayerPrefsForNewPlayer()
+    {
+        // Töröljük a korábbi inventory adatokat
+        foreach (var item in InventoryManager.Instance.plantDatabase.items)
+        {
+            string key = "plant_" + item.englishName.Replace(" ", "");
+            PlayerPrefs.DeleteKey(key);
+        }
 
-    
+        foreach (var item in InventoryManager.Instance.itemDatabase.items)
+        {
+            string key = "crafted_" + item.itemName.Replace(" ", "");
+            PlayerPrefs.DeleteKey(key);
+        }
+
+        PlayerPrefs.Save();
+        Debug.Log("PlayerPrefs cleared for new player.");
+    }
+
+    private void InitializeNewPlayerInventory(InventoryManager inventoryManager)
+    {
+        // Inicializáljuk az új inventorykat
+        InventoryManager.Instance.inventory = new Inventory();
+        InventoryManager.Instance.craftedInventory = new CraftedInventory();
+
+        foreach (var item in InventoryManager.Instance.plantDatabase.items)
+        {
+            InventoryManager.Instance.inventory.AddItem(item, 0);
+        }
+
+        foreach (var item in InventoryManager.Instance.itemDatabase.items)
+        {
+            InventoryManager.Instance.craftedInventory.AddItem(item, 0);
+        }
+
+        InventoryManager.Instance.SaveInventory();
+        InventoryManager.Instance.SaveCraftedInventory();
+        Debug.Log("New player inventory initialized.");
+    }
+
+
+
 
     [System.Serializable]
     public class PlayerData {
@@ -314,7 +354,7 @@ public class RegisterManager : MonoBehaviour {
         public string Email;
         public string Password;
         public string PlayerName;
-        public int CharacterId;
+        public int CharacterIndex;
     }
 
     [System.Serializable]
