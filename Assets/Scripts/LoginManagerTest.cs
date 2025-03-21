@@ -21,7 +21,7 @@ public class LoginManager : MonoBehaviour {
         loginButton.onClick.AddListener(OnLoginButtonClicked);
         quitButton.onClick.AddListener(OnQuitToDesktopClicked);
         //StartCoroutine(FetchPlayerData()); //itt még az elõzõ van benne
-        PrintAllPlayerPrefs();
+        
     }
 
     public void OnLoginButtonClicked()
@@ -117,25 +117,6 @@ public class LoginManager : MonoBehaviour {
         }
     }
 
-    private void PrintAllPlayerPrefs()
-    {
-        Debug.Log("PlayerPrefs változók:");
-
-        // Az összes PlayerPrefs kulcs lekérése
-        string[] keys = PlayerPrefs.GetString("PlayerPrefsKeys", "").Split(',');
-
-        foreach (string key in keys)
-        {
-            if (!string.IsNullOrEmpty(key))
-            {
-                if (PlayerPrefs.HasKey(key))
-                {
-                    string value = PlayerPrefs.GetString(key, "");
-                    Debug.Log($"{key}: {value}");
-                }
-            }
-        }
-    }
     // Játékos adatainak lekérése
     private IEnumerator FetchPlayerData()
     {
@@ -153,7 +134,8 @@ public class LoginManager : MonoBehaviour {
             webRequest.SetRequestHeader("Authorization", "Bearer " + authToken); // Token hozzáadása a fejléchez
             yield return webRequest.SendWebRequest();
 
-            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || 
+                webRequest.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.LogError("Error fetching player data: " + webRequest.error);
                 Debug.LogError("Server response: " + webRequest.downloadHandler.text);
@@ -168,15 +150,30 @@ public class LoginManager : MonoBehaviour {
 
                     if (playerData != null)
                     {
+                        Debug.Log($"Player data: ID = {playerData.playerId}, Username = {playerData.playerName}, " +
+                            $"Email = {playerData.userId}, CharacterId= {playerData.characterId}, Score = {playerData.totalScore}, " +
+                            $"InventoryID = {playerData.inventoryId}, LastCompletedIsland = {playerData.islandId}");
                         // Adatok mentése PlayerPrefs-be
-                        PlayerPrefs.SetInt("PlayerID", playerData.id);
-                        PlayerPrefs.SetString("PlayerUsername", playerData.username);
-                        PlayerPrefs.SetString("PlayerEmail", playerData.email);
-                        PlayerPrefs.SetInt("PlayerScore", playerData.score);
-                        PlayerPrefs.SetInt("LastCompletedIsland", playerData.lastCompletedIsland);
+                        PlayerPrefs.SetInt("PlayerID", playerData.playerId);
+                        PlayerPrefs.SetString("PlayerUsername", playerData.playerName ?? string.Empty);
+                        PlayerPrefs.SetString("PlayerEmail", playerData.userId ?? string.Empty);
+                        PlayerPrefs.SetInt("PlayerScore", playerData.totalScore);
+                        PlayerPrefs.SetInt("InventoryID", playerData.inventoryId);
+                        PlayerPrefs.SetInt("LastCompletedIsland", playerData.islandId); // Ha islandId null, akkor 0
                         PlayerPrefs.Save();
 
                         Debug.Log("Player data saved to PlayerPrefs.");
+
+                        // Adatok mentése SQLite adatbázisba
+                        LocalDatabaseManager.Instance.SavePlayerData(
+                            playerData.playerId,
+                            playerData.playerName ?? string.Empty,
+                            playerData.userId ?? string.Empty,
+                            playerData.characterId,
+                            playerData.totalScore,
+                            playerData.inventoryId,
+                            playerData.islandId // Ha islandId null, akkor 0
+                        );
                     } else
                     {
                         Debug.LogError("Failed to deserialize player data.");
@@ -201,10 +198,15 @@ public class LoginManager : MonoBehaviour {
 
     [System.Serializable]
     public class PlayerData {
-        public int id;
-        public string username;
-        public string email;
-        public int score;
-        public int lastCompletedIsland;
+        public int playerId; // A szerver "playerId" mezõje
+        public string playerName; // A szerver "playerName" mezõje
+        public string userId; // A szerver "userId" mezõje
+        public int characterId;
+        public int totalScore; // A szerver "totalScore" mezõje
+        public int inventoryId; // A szerver "inventoryId" mezõje
+        public int islandId; // A szerver "islandId" mezõje (nullable)
+        public string characterName; // A szerver "characterName" mezõje
+        public string lastLogin; // A szerver "lastLogin" mezõje
+        public string createdAt; // A szerver "createdAt" mezõje
     }
 }

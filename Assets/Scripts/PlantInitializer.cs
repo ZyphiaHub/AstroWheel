@@ -11,6 +11,7 @@ public class PlantInitializer : MonoBehaviour {
         {
             new PlantDatabase.Item
             {
+                plantId = 12,
                 englishName = "Jade Orchid",
                 witchName = "Squirrel's ear",
                 latinName = "Goodyera repens",
@@ -19,6 +20,7 @@ public class PlantInitializer : MonoBehaviour {
             },
             new PlantDatabase.Item
             {
+                plantId = 13,
                 englishName = "Velvet Bean",
                 witchName = "Donkey's eye",
                 latinName = "Mucuna pruriens",
@@ -28,6 +30,7 @@ public class PlantInitializer : MonoBehaviour {
 
             new PlantDatabase.Item
             {
+                plantId = 14,
                 englishName = "Horseweed",
                 witchName = "Colt's tail",
                 latinName = "Erigeron canadensis",
@@ -36,6 +39,7 @@ public class PlantInitializer : MonoBehaviour {
             },
             new PlantDatabase.Item
             {
+                plantId = 15,
                 englishName = "Starflower Pincushions",
                 witchName = "Cat's eye",
                 latinName = "Scabiosa stellata",
@@ -44,6 +48,7 @@ public class PlantInitializer : MonoBehaviour {
             },
             new PlantDatabase.Item
             {
+                plantId = 16,
                 englishName = "Spotted Cranesbill",
                 witchName = "Crowfoot",
                 latinName = "Geranium maculatum",
@@ -53,6 +58,7 @@ public class PlantInitializer : MonoBehaviour {
             
             new PlantDatabase.Item
             {
+                plantId = 17,
                 englishName = "Bulbous Buttercup",
                 witchName = "Frog leg",
                 latinName = "Ranunculus bulbosus",
@@ -61,6 +67,7 @@ public class PlantInitializer : MonoBehaviour {
             },
             new PlantDatabase.Item
             {
+                plantId = 18,
                 englishName = "Canadian Snakeroot",
                 witchName = "Cat's paw",
                 latinName = "Asarum canadense",
@@ -70,6 +77,7 @@ public class PlantInitializer : MonoBehaviour {
             
             new PlantDatabase.Item
             {
+                plantId = 19,
                 englishName = "White Turtlehead",
                 witchName = "Snake's head",
                 latinName = "Chelone glabra",
@@ -78,6 +86,7 @@ public class PlantInitializer : MonoBehaviour {
             },
             new PlantDatabase.Item
             {
+                plantId = 20,
                 englishName = "Coral-root",
                 witchName = "Dragon's claw",
                 latinName = "Corallorhiza odontorrhiza",
@@ -86,6 +95,7 @@ public class PlantInitializer : MonoBehaviour {
             } ,  
             new PlantDatabase.Item
             {
+                plantId = 21,
                 englishName = "Stiff Slubmoss",
                 witchName = "Wolf's claw",
                 latinName = "Lycopodium annotinum",
@@ -95,6 +105,7 @@ public class PlantInitializer : MonoBehaviour {
             
             new PlantDatabase.Item
             {
+                plantId = 22,
                 englishName = "Calvary Clover",
                 witchName = "Hedgehog",
                 latinName = "Medicago intertexta",
@@ -103,6 +114,7 @@ public class PlantInitializer : MonoBehaviour {
             },
             new PlantDatabase.Item
             {
+                plantId = 23,
                 englishName = "Houndstongue",
                 witchName = "Dog's tongue",
                 latinName = "Cynoglossum officinale",
@@ -112,6 +124,7 @@ public class PlantInitializer : MonoBehaviour {
             
             new PlantDatabase.Item
             {
+                plantId = 24,
                 englishName = "Common Toadflax",
                 witchName = "Toad",
                 latinName = "Linaria vulgaris",
@@ -120,6 +133,7 @@ public class PlantInitializer : MonoBehaviour {
             },
             new PlantDatabase.Item
             {
+                plantId = 25,
                 englishName = "Narrowleaf Plantain",
                 witchName = "Lamb's tongue",
                 latinName = "Plantago lanceolata",
@@ -128,6 +142,7 @@ public class PlantInitializer : MonoBehaviour {
             },
             new PlantDatabase.Item
             {
+                plantId = 26,
                 englishName = "Red Clover",
                 witchName = "Rabbit's foot",
                 latinName = "Trifolium arvense",
@@ -136,6 +151,7 @@ public class PlantInitializer : MonoBehaviour {
             },
             new PlantDatabase.Item
             {
+                plantId = 27,
                 englishName = "Wild Spurge",
                 witchName = "Snake's milk",
                 latinName = "Euphorbia corollata",

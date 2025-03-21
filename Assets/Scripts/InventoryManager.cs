@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour {
@@ -8,8 +9,8 @@ public class InventoryManager : MonoBehaviour {
     public CraftedInventory craftedInventory { get;  set; } 
 
     [Header("References")]
-    public PlantDatabase plantDatabase; // Az Inspectorban állítsd be!
-    public ItemDatabase itemDatabase; // Új ItemDatabase referenciája
+    public PlantDatabase plantDatabase; 
+    public ItemDatabase itemDatabase; 
 
     [Header("Crafting Recipes")]
     public List<CraftingRecipe> craftingRecipe;
@@ -92,28 +93,41 @@ public class InventoryManager : MonoBehaviour {
         }
 
         PlayerPrefs.Save();
-        Debug.Log("Plant inventory saved.");
+        Debug.Log("Plant inventory saved to prefs.");
+
+        // Mentés SQLite adatbázisba
+        int inventoryId = PlayerPrefs.GetInt("InventoryID", -1);
+        if (inventoryId != -1)
+        {
+            LocalDatabaseManager.Instance.SaveInventoryData(inventoryId, inventory.items);
+            Debug.Log("inventory saved to sqlite");
+        } else
+        {
+            Debug.LogError("InventoryId not found in PlayerPrefs. Make sure the player is logged in.");
+        }
+
     }
     // Metódus az inventory adatainak küldésére
     public void SaveInventoryToServer()
     {
         // A PlayerID lekérése a PlayerPrefs-bõl
-        int playerId = PlayerPrefs.GetInt("PlayerID", -1); // -1 az alapértelmezett érték, ha a PlayerID nem létezik
+        int inventoryId = PlayerPrefs.GetInt("InventoryID", -1); 
 
-        if (playerId == -1)
+        if (inventoryId == -1)
         {
-            Debug.LogError("PlayerID not found in PlayerPrefs. Make sure the player is logged in.");
+            Debug.LogError("InventoryId not found in PlayerPrefs. Make sure the player is logged in.");
             return;
         }
 
         // Az inventory adatainak összeállítása
-        List<InventoryItem> inventoryItems = new List<InventoryItem>();
+        List<InventoryData> inventoryDataList = new List<InventoryData>();
         foreach (var entry in inventory.items)
         {
-            inventoryItems.Add(new InventoryItem
+            inventoryDataList.Add(new InventoryData
             {
-                itemId = entry.Key.plantId, 
-                quantity = entry.Value
+                InventoryId = inventoryId,
+                MaterialId = entry.Key.plantId,
+                Quantity = entry.Value
             });
         }
         if (APIClient.Instance == null)
@@ -122,7 +136,7 @@ public class InventoryManager : MonoBehaviour {
             return;
         }
         // Az adatok küldése a szerverre
-        StartCoroutine(APIClient.Instance.SaveInventory(playerId.ToString(), inventoryItems,
+        StartCoroutine(APIClient.Instance.SaveInventory(inventoryId, inventoryDataList.ToArray(),
             onSuccess: response =>
             {
                 Debug.Log("Inventory saved to server: " + response);
@@ -149,46 +163,55 @@ public class InventoryManager : MonoBehaviour {
 
         PlayerPrefs.Save();
         Debug.Log("Crafted inventory saved.");
-        
+
+        // Mentés SQLite adatbázisba
+        int inventoryId = PlayerPrefs.GetInt("InventoryID", -1);
+        if (inventoryId != -1)
+        {
+
+            // Mentés az SQLite adatbázisba
+            LocalDatabaseManager.Instance.SaveCraftedInventoryData(inventoryId, craftedInventory.items);
+            Debug.Log("Crafted inventory saved to SQLite database.");
+        } else
+        {
+            Debug.LogError("InventoryId not found in PlayerPrefs. Make sure the player is logged in.");
+        }
+
     }
     // Metódus a crafted inventory adatainak küldésére
     public void SaveCraftedInventoryToServer()
     {
-        Debug.Log($"SaveInventoryToServer called. Inventory is null? {inventory == null}");
+        Debug.Log($"SaveCraftedInventoryToServer called. Inventory is null? {craftedInventory == null}");
 
-        if (inventory == null)
+        if (craftedInventory == null)
         {
             Debug.LogError("Inventory is null! It was not initialized properly.");
             return;
         }
 
-        if (inventory.items == null)
+        if (craftedInventory.items == null)
         {
             Debug.LogError("Inventory items dictionary is null!");
             return;
         }
         // A PlayerID lekérése a PlayerPrefs-bõl
-        int playerId = PlayerPrefs.GetInt("PlayerID", -1); // -1 az alapértelmezett érték, ha a PlayerID nem létezik
+        int inventoryId = PlayerPrefs.GetInt("InventoryID", -1);
 
-        if (playerId == -1)
-        {
-            Debug.LogError("PlayerID not found in PlayerPrefs. Make sure the player is logged in.");
-            return;
-        }
 
         // A crafted inventory adatainak összeállítása
-        List<InventoryItem> craftedItems = new List<InventoryItem>();
+        List<InventoryData> craftedDataList = new List<InventoryData>();
         foreach (var entry in craftedInventory.items)
         {
-            craftedItems.Add(new InventoryItem
+            craftedDataList.Add(new InventoryData
             {
-                itemId = entry.Key.itemId, // Feltételezve, hogy az Item osztálynak van itemId tulajdonsága
-                quantity = entry.Value
+                InventoryId = inventoryId,
+                MaterialId = entry.Key.itemId,
+                Quantity = entry.Value
             });
         }
 
         // Az adatok küldése a szerverre
-        StartCoroutine(APIClient.Instance.SaveCraftedInventory(playerId.ToString(), craftedItems,
+        StartCoroutine(APIClient.Instance.SaveCraftedInventory(inventoryId, craftedDataList.ToArray(),
             onSuccess: response =>
             {
                 Debug.Log("Crafted inventory saved to server: " + response);
@@ -213,6 +236,24 @@ public class InventoryManager : MonoBehaviour {
             }
         }
         Debug.Log("Plant inventory loaded.");
+        /*// Betöltés SQLite adatbázisból
+        int inventoryId = PlayerPrefs.GetInt("InventoryID", -1);
+        if (inventoryId != -1)
+        {
+            var inventoryData = LocalDatabaseManager.Instance.LoadInventoryData(inventoryId);
+            foreach (var entry in inventoryData)
+            {
+                var plantItem = plantDatabase.items.FirstOrDefault(x => x.plantId == entry.Key);
+                if (plantItem != null)
+                {
+                    inventory.AddItem(plantItem, entry.Value);
+                }
+            }
+            Debug.Log("Plant inventory loaded from SQLite database.");
+        } else
+        {
+            Debug.LogError("InventoryId not found in PlayerPrefs. Make sure the player is logged in.");
+        }*/
     }
 
     // Crafted inventory betöltése PlayerPrefs-bõl
@@ -279,6 +320,7 @@ public class InventoryManager : MonoBehaviour {
         Debug.Log($"Craftolás sikeres: {recipe.outputQuantity} db {recipe.outputItem.itemName} létrehozva.");
         SaveInventory();
         SaveCraftedInventory();
+
         SaveInventoryToServer(); 
         SaveCraftedInventoryToServer();
         return true; // Craftolás sikeres

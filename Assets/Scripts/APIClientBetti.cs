@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -130,77 +131,109 @@ public class APIClient : MonoBehaviour {
         );
     }
 
-    public IEnumerator SaveInventory(string playerId, List<InventoryItem> items, System.Action<string> onSuccess, System.Action<string> onError)
+    public IEnumerator SaveInventory(int inventoryId, InventoryData[] plantItems, System.Action<string> onSuccess, System.Action<string> onError)
     {
+        if (inventoryId <= 0)
+        {
+            onError?.Invoke("Invalid inventoryId.");
+            yield break;
+        }
+
+        // Szûrés: csak azok az elemek, amelyeknek quantity > 0
+        var validItems = plantItems
+            .Where(item => item.Quantity > 0)
+            .ToList();
+
+        if (validItems.Count == 0)
+        {
+            onError?.Invoke("No valid items to save.");
+            yield break;
+        }
         string url = "https://astrowheelapi.onrender.com/api/inventoryMaterials";
 
-        // Az inventory adatainak összeállítása
-        InventoryData inventoryData = new InventoryData
+        foreach (var item in validItems)
         {
-            playerId = playerId,
-            items = items
-        };
+            // Beállítjuk az inventoryId-t, ha még nincs beállítva
+            item.InventoryId = inventoryId;
 
-        // JSON adat létrehozása
-        string jsonData = JsonUtility.ToJson(inventoryData);
-        Debug.Log("Sending inventory data: " + jsonData);
+            // JSON adat létrehozása
+            string jsonData = JsonUtility.ToJson(item);
+            Debug.Log("Sending inventory data: " + jsonData);
 
-        // POST kérés elküldése
-        using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
-        {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
-            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            webRequest.downloadHandler = new DownloadHandlerBuffer();
-            webRequest.SetRequestHeader("Content-Type", "application/json");
-
-            yield return webRequest.SendWebRequest();
-
-            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            // POST kérés elküldése
+            using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
             {
-                onError?.Invoke(webRequest.error);
-                Debug.LogError("Inventory save failed: " + webRequest.error);
-                Debug.LogError("Server response: " + webRequest.downloadHandler.text);
-            } else
-            {
-                onSuccess?.Invoke(webRequest.downloadHandler.text);
-                Debug.Log("Inventory saved successfully: " + webRequest.downloadHandler.text);
+                byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+                webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+                webRequest.downloadHandler = new DownloadHandlerBuffer();
+                webRequest.SetRequestHeader("Content-Type", "application/json");
+
+                yield return webRequest.SendWebRequest();
+
+                if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+                {
+                    onError?.Invoke(webRequest.error);
+                    Debug.LogError("Inventory save failed: " + webRequest.error);
+                    Debug.LogError("Server response: " + webRequest.downloadHandler.text);
+                } else
+                {
+                    onSuccess?.Invoke(webRequest.downloadHandler.text);
+                    Debug.Log("Inventory saved successfully: " + webRequest.downloadHandler.text);
+                }
             }
         }
     }
-    public IEnumerator SaveCraftedInventory(string playerId, List<InventoryItem> craftedItems, System.Action<string> onSuccess, System.Action<string> onError)
+    public IEnumerator SaveCraftedInventory(int inventoryId, InventoryData[] craftedItems, System.Action<string> onSuccess, System.Action<string> onError)
     {
+        if (inventoryId <= 0)
+        {
+            onError?.Invoke("Invalid inventoryId.");
+            yield break;
+        }
+
+        // Szûrés: csak azok az elemek, amelyeknek quantity > 0
+        var validItems = craftedItems
+            .Where(item => item.Quantity > 0)
+            .ToList();
+
+        if (validItems.Count == 0)
+        {
+            onError?.Invoke("No valid items to save.");
+            yield break;
+        }
+
         string url = "https://astrowheelapi.onrender.com/api/inventoryMaterials"; // Vagy egy másik URL, ha a crafted inventory külön végponton mentõdik
 
-        // Az inventory adatainak összeállítása
-        InventoryData inventoryData = new InventoryData
+        foreach (var item in validItems)
         {
-            playerId = playerId, // A playerId stringként kerül elküldésre
-            items = craftedItems
-        };
+            // Beállítjuk az inventoryId-t, ha még nincs beállítva
+            item.InventoryId = inventoryId;
 
-        // JSON adat létrehozása
-        string jsonData = JsonUtility.ToJson(inventoryData);
-        Debug.Log("Sending crafted inventory data: " + jsonData);
+            // JSON adat létrehozása
+            string jsonData = JsonUtility.ToJson(item);
+            Debug.Log("Sending crafted inventory data: " + jsonData);
 
-        // POST kérés elküldése
-        using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
-        {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
-            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            webRequest.downloadHandler = new DownloadHandlerBuffer();
-            webRequest.SetRequestHeader("Content-Type", "application/json");
-
-            yield return webRequest.SendWebRequest();
-
-            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            // POST kérés elküldése
+            using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
             {
-                onError?.Invoke(webRequest.error);
-                Debug.LogError("Crafted inventory save failed: " + webRequest.error);
-                Debug.LogError("Server response: " + webRequest.downloadHandler.text);
-            } else
-            {
-                onSuccess?.Invoke(webRequest.downloadHandler.text);
-                Debug.Log("Crafted inventory saved successfully: " + webRequest.downloadHandler.text);
+                byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+                webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+                webRequest.downloadHandler = new DownloadHandlerBuffer();
+                webRequest.SetRequestHeader("Content-Type", "application/json");
+
+                yield return webRequest.SendWebRequest();
+
+                if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+                {
+                    onError?.Invoke(webRequest.error);
+                    Debug.LogError("Crafted inventory save failed: " + webRequest.error);
+                    Debug.LogError("Server response: " + webRequest.downloadHandler.text);
+                    yield break; // Ha hiba történik, kilépünk a ciklusból
+                } else
+                {
+                    onSuccess?.Invoke(webRequest.downloadHandler.text);
+                    Debug.Log("Crafted inventory saved successfully: " + webRequest.downloadHandler.text);
+                }
             }
         }
     }
@@ -276,12 +309,7 @@ public class LoginRequest {
 
 [System.Serializable]
 public class InventoryData {
-    public string playerId; // A játékos egyedi azonosítója
-    public List<InventoryItem> items; // Az inventory tárgyai
-}
-
-[System.Serializable]
-public class InventoryItem {
-    public int itemId; // A tárgy egyedi azonosítója
-    public int quantity; // A tárgy mennyisége
+    public int InventoryId;
+    public int MaterialId;
+    public int Quantity;
 }
