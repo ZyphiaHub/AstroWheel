@@ -31,7 +31,7 @@ public class RegisterManager : MonoBehaviour {
 
     [SerializeField] private Sprite[] characterSprites;
     public Sprite[] CharacterSprites => characterSprites;
-    private int selectedCharacterIndex = 0; // Kiválasztott karakter indexe
+    private int selectedCharacterIndex = 0; 
 
     private void Start()
     {

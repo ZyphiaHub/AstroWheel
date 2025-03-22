@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
 
     public const string LastCompletedIslandKey = "LastCompletedIsland";
     public const string TotalScoreKey = "TotalScore";
-    public const string PlayerIdKey = "PlayerId";
+    //public const int PlayerIdKey = "PlayerId";
     public const string CharacterIdKey = "CharacterId";
 
     private int islandIndex; // Új változó az aktuális sziget indexének tárolására
@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("GameManager inicializálva.");
+            //Debug.Log("GameManager inicializálva.");
         } else
         {
             Debug.LogWarning("Második GameManager példány törölve!");
@@ -29,13 +29,11 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    
-
     private void Start()
     {
         
 
-        Debug.Log("Beléptél a Login Menübe");
+        //Debug.Log("Beléptél a Login Menübe");
         SceneManager.LoadScene("Login");
 
         
@@ -92,19 +90,37 @@ public class GameManager : MonoBehaviour {
     {
         return PlayerPrefs.GetInt(TotalScoreKey, 0); 
     }
-
-    // PlayerId mentése
-    public void SavePlayerId(string playerId)
+    public bool IsInternetAvailable()
     {
-        PlayerPrefs.SetString(PlayerIdKey, playerId);
-        PlayerPrefs.Save(); // Azonnali mentés
+        return Application.internetReachability != NetworkReachability.NotReachable;
+    }
+    // PlayerId mentése
+    /* public void SavePlayerId(int playerId)
+     {
+         PlayerPrefs.SetInt(PlayerIdKey, playerId);
+         PlayerPrefs.Save(); 
+     }*/
+    public void SavePlayerId(int playerId)
+    {
+        PlayerPrefs.SetInt("PlayerId", playerId);
+        PlayerPrefs.Save();
+        Debug.Log("PlayerId saved: " + playerId);
     }
 
     // PlayerId betöltése
-    public string LoadPlayerId()
+    public int LoadPlayerId()
     {
-        return PlayerPrefs.GetString(PlayerIdKey, ""); // Alapértelmezett érték: üres string
+        // Példa: PlayerId betöltése PlayerPrefsbõl
+        if (PlayerPrefs.HasKey("PlayerId"))
+        {
+            return PlayerPrefs.GetInt("PlayerId");
+        } else
+        {
+            Debug.LogError("PlayerId not found in PlayerPrefs!");
+            return 0; // Vagy dobj egy kivételt, ha szükséges
+        }
     }
+    
 
     // Puzzle megoldásának állapotának mentése
     public void SetPuzzleSolved(bool isSolved)
@@ -130,4 +146,5 @@ public class GameManager : MonoBehaviour {
     {
         islandIndex = index;
     }
+   
 }

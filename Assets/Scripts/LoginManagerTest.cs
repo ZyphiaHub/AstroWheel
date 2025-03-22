@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using UnityEngine.Networking;
 using static RegisterManager;
+using System;
 
 public class LoginManager : MonoBehaviour {
     public TMP_InputField emailInputField;
@@ -17,11 +18,10 @@ public class LoginManager : MonoBehaviour {
 
     private void Start()
     {
-        // Gomb esemény hozzárendelése
+
         loginButton.onClick.AddListener(OnLoginButtonClicked);
         quitButton.onClick.AddListener(OnQuitToDesktopClicked);
-        //StartCoroutine(FetchPlayerData()); //itt még az elõzõ van benne
-        
+
     }
 
     public void OnLoginButtonClicked()
@@ -74,6 +74,7 @@ public class LoginManager : MonoBehaviour {
     }
 
     // Bejelentkezési kérés
+    
     public IEnumerator Login(string email, string password, System.Action<string> onSuccess, System.Action<string> onError)
     {
         string url = "https://astrowheelapi.onrender.com/api/auth/login"; 
@@ -101,17 +102,19 @@ public class LoginManager : MonoBehaviour {
             {
                 onError?.Invoke(webRequest.error);
                 Debug.LogError("Login failed: " + webRequest.error);
-                Debug.LogError("Server response: " + webRequest.downloadHandler.text); // Szerver válasz logolása
+                Debug.LogError("Server response: " + webRequest.downloadHandler.text); 
             } else
             {
                 onSuccess?.Invoke(webRequest.downloadHandler.text);
                 Debug.Log("Login successful: " + webRequest.downloadHandler.text);
                 var response = JsonUtility.FromJson<LoginResponse>(webRequest.downloadHandler.text);
+                PlayerPrefs.SetString("Password", password);
                 PlayerPrefs.SetString("AuthToken", response.token);
                 PlayerPrefs.Save();
                 
+                
                 StartCoroutine(FetchPlayerData());
-                //ide mentés sqliteba
+                
 
             }
         }
@@ -150,30 +153,49 @@ public class LoginManager : MonoBehaviour {
 
                     if (playerData != null)
                     {
+
+                        // MySQL szerveren lévõ lastLogin
+                        string serverLastLogin = playerData.lastLogin;
+                        Debug.Log("serverlastloginkérés" + serverLastLogin);
+
+                        // Helyi lastLogin lekérése
+                        string localLastLogin = LocalDatabaseManager.Instance.GetLastLogin(playerData.playerId);
+                        Debug.Log("locallastloginkérés" + localLastLogin);
+
                         Debug.Log($"Player data: ID = {playerData.playerId}, Username = {playerData.playerName}, " +
-                            $"Email = {playerData.userId}, CharacterId= {playerData.characterId}, Score = {playerData.totalScore}, " +
+                            $"Email = {playerData.userId}, Password = {playerData.playerPassword}, CharacterId= {playerData.characterId}, Score = {playerData.totalScore}, " +
                             $"InventoryID = {playerData.inventoryId}, LastCompletedIsland = {playerData.islandId}");
                         // Adatok mentése PlayerPrefs-be
-                        PlayerPrefs.SetInt("PlayerID", playerData.playerId);
+                        //PlayerPrefs.SetInt("PlayerID", playerData.playerId);
+                        if (string.Compare(serverLastLogin, localLastLogin, StringComparison.Ordinal) > 0) { 
+
+                        GameManager.Instance.SavePlayerId(playerData.playerId);
+
                         PlayerPrefs.SetString("PlayerUsername", playerData.playerName ?? string.Empty);
                         PlayerPrefs.SetString("PlayerEmail", playerData.userId ?? string.Empty);
                         PlayerPrefs.SetInt("PlayerScore", playerData.totalScore);
                         PlayerPrefs.SetInt("InventoryID", playerData.inventoryId);
-                        PlayerPrefs.SetInt("LastCompletedIsland", playerData.islandId); // Ha islandId null, akkor 0
+                        PlayerPrefs.SetInt("LastCompletedIsland", playerData.islandId); 
                         PlayerPrefs.Save();
 
                         Debug.Log("Player data saved to PlayerPrefs.");
+
+                            playerData.playerPassword = PlayerPrefs.GetString("Password", "");
 
                         // Adatok mentése SQLite adatbázisba
                         LocalDatabaseManager.Instance.SavePlayerData(
                             playerData.playerId,
                             playerData.playerName ?? string.Empty,
                             playerData.userId ?? string.Empty,
+                            playerData.playerPassword,
                             playerData.characterId,
                             playerData.totalScore,
                             playerData.inventoryId,
-                            playerData.islandId // Ha islandId null, akkor 0
+                            playerData.islandId,
+                            playerData.lastLogin,
+                            playerData.createdAt
                         );
+                            }
                     } else
                     {
                         Debug.LogError("Failed to deserialize player data.");
@@ -199,13 +221,14 @@ public class LoginManager : MonoBehaviour {
     [System.Serializable]
     public class PlayerData {
         public int playerId; // A szerver "playerId" mezõje
-        public string playerName; // A szerver "playerName" mezõje
+        public string playerName; 
         public string userId; // A szerver "userId" mezõje
+        public string playerPassword;
         public int characterId;
         public int totalScore; // A szerver "totalScore" mezõje
-        public int inventoryId; // A szerver "inventoryId" mezõje
+        public int inventoryId; 
         public int islandId; // A szerver "islandId" mezõje (nullable)
-        public string characterName; // A szerver "characterName" mezõje
+        public string characterName; 
         public string lastLogin; // A szerver "lastLogin" mezõje
         public string createdAt; // A szerver "createdAt" mezõje
     }

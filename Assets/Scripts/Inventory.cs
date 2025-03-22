@@ -18,7 +18,7 @@ public class Inventory {
             items.Add(item, quantity);
         }
 
-        Debug.Log($"Item added: {item.englishName}, Quantity: {quantity}");
+        //Debug.Log($"Item added: {item.englishName}, Quantity: {quantity}");
     }
 
     // Tárgy eltávolítása az inventoryból
@@ -47,11 +47,11 @@ public class Inventory {
     // Inventory tartalmának kiírása (debug célokra)
     public void PrintInventory()
     {
-        Debug.Log("Inventory contents:");
+        /*Debug.Log("Inventory contents:");
         foreach (var entry in items)
         {
             Debug.Log($"{entry.Key.englishName}: {entry.Value} db");
-        }
+        }*/
     }
 }
 

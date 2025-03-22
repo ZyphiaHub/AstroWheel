@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using static LocalDatabaseManager;
 
 public class APIClient : MonoBehaviour {
     public APIConfig apiConfig; // Az APIConfig ScriptableObject referenciája
@@ -25,13 +26,21 @@ public class APIClient : MonoBehaviour {
     }
     private void Start()
     {
-        StartCoroutine(FetchAndDisplayPlayers());
+        //StartCoroutine(FetchAndDisplayPlayers());
     }
 
 
     // GET kérés a játékosok lekérdezéséhez
     public IEnumerator GetPlayers(System.Action<PlayerData[]> onSuccess, System.Action<string> onError)
     {
+        if (!GameManager.Instance.IsInternetAvailable())
+        {
+            string email = PlayerPrefs.GetString("RegisteredEmail", "");
+            string password = PlayerPrefs.GetString("RegisteredPassword", "");
+            Debug.Log("No internet connection. Loading data from local SQLite database...");
+            LocalDatabaseManager.Instance.LoadPlayerDataByEmailAndPassword(email, password);
+            yield break;
+        }
         string url = apiConfig.playersGetUrl;
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
@@ -211,7 +220,7 @@ public class APIClient : MonoBehaviour {
 
             // JSON adat létrehozása
             string jsonData = JsonUtility.ToJson(item);
-            Debug.Log("Sending crafted inventory data: " + jsonData);
+            //Debug.Log("Sending crafted inventory data: " + jsonData);
 
             // POST kérés elküldése
             using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
@@ -232,20 +241,56 @@ public class APIClient : MonoBehaviour {
                 } else
                 {
                     onSuccess?.Invoke(webRequest.downloadHandler.text);
-                    Debug.Log("Crafted inventory saved successfully: " + webRequest.downloadHandler.text);
+                    //Debug.Log("Crafted inventory saved successfully: " + webRequest.downloadHandler.text);
                 }
             }
         }
     }
-    // PUT kérés a játékos adatainak frissítéséhez
-    public IEnumerator UpdatePlayer(string playerId, PlayerData updatedData, System.Action<string> onSuccess, System.Action<string> onError)
+
+    public IEnumerator UpdateTotalScore(int inventoryId, int totalScore, System.Action<string> onSuccess, System.Action<string> onError)
     {
-        // Az URL összeállítása a playerId alapján
+        string url = $"https://astrowheelapi.onrender.com/api/Inventory/{inventoryId}";
+
+        // Létrehozzuk a DTO-t
+        var inventoryTotScore = new InventoryTotScore
+        {
+            InventoryId = inventoryId,
+            TotalScore = totalScore
+        };
+
+        // JSON formátumba alakítjuk
+        string jsonData = JsonUtility.ToJson(inventoryTotScore);
+
+        // PUT kérés elküldése
+        using (UnityWebRequest webRequest = new UnityWebRequest(url, "PUT"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                onError?.Invoke(webRequest.error);
+                Debug.LogError("Inventory update failed: " + webRequest.error);
+                Debug.LogError("Server response: " + webRequest.downloadHandler.text);
+            } else
+            {
+                onSuccess?.Invoke(webRequest.downloadHandler.text);
+                //Debug.Log("Inventory updated successfully: " + webRequest.downloadHandler.text);
+            }
+        }
+    }
+    // PUT kérés a játékos adatainak frissítéséhez
+    public IEnumerator UpdatePlayer(int playerId, PlayerData updatedData, System.Action<string> onSuccess, System.Action<string> onError)
+    {
         string url = $"https://astrowheelapi.onrender.com/api/players/{playerId}";
 
         // A frissítendõ adatok JSON formátumba alakítása
         string jsonData = JsonUtility.ToJson(updatedData);
-        Debug.Log("Sending update data: " + jsonData);
+        Debug.Log("Sending player update data: " + jsonData);
 
         // PUT kérés elküldése
         using (UnityWebRequest webRequest = new UnityWebRequest(url, "PUT"))
@@ -261,15 +306,31 @@ public class APIClient : MonoBehaviour {
             {
                 onError?.Invoke(webRequest.error);
                 Debug.LogError("Player update failed: " + webRequest.error);
+                Debug.LogError($"UpdatePlayer: Status code: {webRequest.responseCode}");
                 Debug.LogError("Server response: " + webRequest.downloadHandler.text);
             } else
             {
                 onSuccess?.Invoke(webRequest.downloadHandler.text);
                 Debug.Log("Player updated successfully: " + webRequest.downloadHandler.text);
+                Debug.Log($"UpdatePlayer: Server response: {webRequest.downloadHandler.text}");
             }
         }
     }
+
+    // Új metódus az IslandId frissítéséhez
+    public IEnumerator UpdatePlayerIslandId(int playerId, int newIslandId, System.Action<string> onSuccess, System.Action<string> onError)
+    {
+        var updatedData = new PlayerData
+        {
+            playerId = playerId,
+            islandId = newIslandId
+        };
+        Debug.Log($"UpdatePlayerIslandId: Updating player {playerId} with new IslandId {newIslandId}");
+
+        yield return UpdatePlayer(playerId, updatedData, onSuccess, onError);
+    }
 }
+
 
 
 [System.Serializable]
@@ -278,15 +339,16 @@ public class PlayerData {
     public string playerName;
     public string userId;
     public int characterId;
-    public int? islandId; // Nullable, mert az islandId lehet null
+    public int islandId; 
     public int inventoryId;
-    public int? recipeBookId; // Nullable, mert a recipeBookId lehet null
+    public int? recipeBookId; 
     public int totalScore;
-    public DateTime? lastLogin; // Nullable, mert a lastLogin lehet null
+    public DateTime? lastLogin; 
     public DateTime createdAt;
     public string characterName;
-    public string islandName; // Nullable, mert az islandName lehet null
+    public string islandName; 
 }
+
 
 
 [System.Serializable]
@@ -312,4 +374,11 @@ public class InventoryData {
     public int InventoryId;
     public int MaterialId;
     public int Quantity;
+}
+
+[System.Serializable]
+public class InventoryTotScore {
+    public int InventoryId;
+    public int TotalScore;
+   
 }

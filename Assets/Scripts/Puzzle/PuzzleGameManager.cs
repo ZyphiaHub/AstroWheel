@@ -225,12 +225,12 @@ public class PuzzleGameManager : MonoBehaviour {
             {
                 // Increase move count
                 moves++;
-                Debug.Log("Moves: " + moves);
+                //Debug.Log("Moves: " + moves);
                 // Everything is moveable, so we don't need to check it's a Piece.
                 draggingPiece = hit.transform;
                 offset = draggingPiece.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 offset += Vector3.back;
-                Debug.Log("Piece clicked: " + hit.transform.name); // Debug log
+                //Debug.Log("Piece clicked: " + hit.transform.name); // Debug log
             } else
             {
                 Debug.Log("No piece clicked"); // Debug log
@@ -332,11 +332,45 @@ public class PuzzleGameManager : MonoBehaviour {
         GameManager.Instance.SaveTotalScore(currentTotalScore + score);
         Debug.Log("current totalscore: "+currentTotalScore);
 
+        //serverre score
+        int inventoryId = PlayerPrefs.GetInt("InventoryID");
+        int totalScore = GameManager.Instance.LoadTotalScore();
+
+        StartCoroutine( APIClient.Instance.UpdateTotalScore(
+            inventoryId,
+            totalScore,
+            onSuccess: response =>
+            {
+                //Debug.Log("Inventory updated successfully: " + response);
+            },
+            onError: error =>
+            {
+                Debug.LogError("Failed to update inventory: " + error);
+            }
+        ));
         // Beállítjuk, hogy a puzzle megoldva van
         GameManager.Instance.SetPuzzleSolved(true);
 
         if (GameManager.Instance.LoadLastCompletedIsland() == 0) {
             GameManager.Instance.SaveLastCompletedIsland(1);
+
+            // serverre is küldöm
+            int playerId = GameManager.Instance.LoadPlayerId();
+            Debug.Log("puzzle vége:"+ playerId);
+            int newIslandId = 1; 
+
+            StartCoroutine(APIClient.Instance.UpdatePlayerIslandId(
+                playerId,
+                newIslandId,
+                onSuccess: response =>
+                {
+                    Debug.Log("IslandId updated successfully: " + response);
+                },
+                onError: error =>
+                {
+                    Debug.LogError("Failed to update IslandId: " + error);
+                }
+            ));
         }
 
         // Hozzáadjuk a 0 indexû tárgyat az inventoryhoz
@@ -352,6 +386,7 @@ public class PuzzleGameManager : MonoBehaviour {
             
             InventoryManager.Instance.inventory.PrintInventory();
             InventoryManager.Instance.SaveInventory();
+            InventoryManager.Instance.SaveCraftedInventoryToServer();
         } else
             {
             Debug.LogWarning("PlantDatabase nincs beállítva vagy nincsenek tárgyak!");

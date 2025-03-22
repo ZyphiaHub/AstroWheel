@@ -93,7 +93,7 @@ public class InventoryManager : MonoBehaviour {
         }
 
         PlayerPrefs.Save();
-        Debug.Log("Plant inventory saved to prefs.");
+        //Debug.Log("Plant inventory saved to prefs.");
 
         // Mentés SQLite adatbázisba
         int inventoryId = PlayerPrefs.GetInt("InventoryID", -1);
@@ -139,7 +139,7 @@ public class InventoryManager : MonoBehaviour {
         StartCoroutine(APIClient.Instance.SaveInventory(inventoryId, inventoryDataList.ToArray(),
             onSuccess: response =>
             {
-                Debug.Log("Inventory saved to server: " + response);
+                //Debug.Log("Inventory saved to server: " + response);
             },
             onError: error =>
             {
@@ -162,7 +162,7 @@ public class InventoryManager : MonoBehaviour {
         }
 
         PlayerPrefs.Save();
-        Debug.Log("Crafted inventory saved.");
+        //Debug.Log("Crafted inventory saved.");
 
         // Mentés SQLite adatbázisba
         int inventoryId = PlayerPrefs.GetInt("InventoryID", -1);
@@ -181,7 +181,7 @@ public class InventoryManager : MonoBehaviour {
     // Metódus a crafted inventory adatainak küldésére
     public void SaveCraftedInventoryToServer()
     {
-        Debug.Log($"SaveCraftedInventoryToServer called. Inventory is null? {craftedInventory == null}");
+        //Debug.Log($"SaveCraftedInventoryToServer called. Inventory is null? {craftedInventory == null}");
 
         if (craftedInventory == null)
         {
@@ -214,7 +214,7 @@ public class InventoryManager : MonoBehaviour {
         StartCoroutine(APIClient.Instance.SaveCraftedInventory(inventoryId, craftedDataList.ToArray(),
             onSuccess: response =>
             {
-                Debug.Log("Crafted inventory saved to server: " + response);
+                //Debug.Log("Crafted inventory saved to server: " + response);
             },
             onError: error =>
             {

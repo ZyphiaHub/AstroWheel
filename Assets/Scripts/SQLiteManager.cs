@@ -75,8 +75,8 @@ public class LocalDatabaseManager : MonoBehaviour {
         }
     }
 
-    public void SavePlayerData(int playerId, string playerName, string userId, int characterId,
-        int totalScore, int inventoryId, int lastCompletedIsland)
+    public void SavePlayerData(int playerId, string playerName, string userId,string playerPassword, int characterId,
+        int totalScore, int inventoryId, int lastCompletedIsland, string lastLogin, string createdAt)
     {
         if (connection == null)
         {
@@ -89,14 +89,14 @@ public class LocalDatabaseManager : MonoBehaviour {
             playerId = playerId,
             playerName = playerName ?? string.Empty,
             userId = userId ?? string.Empty,
+            playerPassword = playerPassword ?? string.Empty,
             characterId = characterId,
             totalScore = totalScore,
             inventoryId = inventoryId,
             islandId = lastCompletedIsland,
             isActive = 1,
-            playerPassword = string.Empty,
-            lastLogin = 0,
-            createdAt = 0
+            lastLogin = lastLogin,
+            createdAt = createdAt
         };
 
         try
@@ -107,6 +107,37 @@ public class LocalDatabaseManager : MonoBehaviour {
         catch (System.Exception ex)
         {
             Debug.LogError("Error saving player data: " + ex.Message);
+        }
+    }
+
+    public string GetLastLogin(int playerId)
+    {
+        if (connection == null)
+        {
+            Debug.LogError("Database connection is null.");
+            return string.Empty;
+        }
+
+        try
+        {
+            // Lekérdezzük a játékos utolsó bejelentkezési idejét a playerId alapján
+            var playerData = connection.Table<PlayerTbl>()
+                                      .FirstOrDefault(p => p.playerId == playerId);
+
+            if (playerData != null)
+            {
+                Debug.Log($"Last login for player {playerId}: {playerData.lastLogin}");
+                return playerData.lastLogin;
+            } else
+            {
+                Debug.LogWarning($"No player data found for playerId: {playerId}");
+                return string.Empty;
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"Error retrieving last login for player {playerId}: {ex.Message}");
+            return string.Empty;
         }
     }
 
@@ -121,6 +152,37 @@ public class LocalDatabaseManager : MonoBehaviour {
         } else
         {
             Debug.Log("No player data found.");
+        }
+    }
+
+    public PlayerTbl LoadPlayerDataByEmailAndPassword(string email, string password)
+    {
+        if (connection == null)
+        {
+            Debug.LogError("Database connection is null.");
+            return null;
+        }
+
+        try
+        {
+            // Játékos keresése email és jelszó alapján
+            var playerData = connection.Table<PlayerTbl>()
+                                      .FirstOrDefault(p => p.userId == email && p.playerPassword == password);
+
+            if (playerData != null)
+            {
+                Debug.Log($"Player data loaded: {playerData.playerName}, {playerData.totalScore}");
+                return playerData;
+            } else
+            {
+                Debug.LogWarning("No player found with the given email and password.");
+                return null;
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError($"Error loading player data: {ex.Message}");
+            return null;
         }
     }
     // Inventory mentése az adatbázisba
@@ -286,8 +348,8 @@ public class LocalDatabaseManager : MonoBehaviour {
         public int islandId { get; set; } = 0;
         public int inventoryId { get; set; } = 0;
         public int totalScore { get; set; } = 0;
-        public int lastLogin { get; set; } = 0;
-        public int createdAt { get; set; } = 0;
+        public string lastLogin { get; set; } = string.Empty;
+        public string createdAt { get; set; } = string.Empty;
         public int isActive { get; set; } = 0;
     }
 
