@@ -11,6 +11,8 @@ public class APIClient : MonoBehaviour {
     //public InventoryManager inventoryManager;
     
     public static APIClient Instance { get;  private set; }
+    public Inventory inventory { get; set; }
+    public CraftedInventory craftedInventory { get; set; }
 
     private void Awake()
     {
@@ -123,22 +125,8 @@ public class APIClient : MonoBehaviour {
             }
         }
     }
-    private IEnumerator FetchAndDisplayPlayers()
-    {
-        yield return APIClient.Instance.GetPlayers(
-            onSuccess: players =>
-            {
-                foreach (var player in players)
-                {
-                    Debug.Log($"Player ID: {player.playerId}, Name: {player.playerName}, Character: {player.characterName}");
-                }
-            },
-            onError: error =>
-            {
-                Debug.LogError("Error fetching players: " + error);
-            }
-        );
-    }
+   
+    
 
     public IEnumerator SaveInventory(int inventoryId, InventoryData[] plantItems, System.Action<string> onSuccess, System.Action<string> onError)
     {
@@ -247,6 +235,101 @@ public class APIClient : MonoBehaviour {
         }
     }
 
+    // Load regular plant inventory
+    public IEnumerator LoadInventory(int inventoryId, System.Action<InventoryData[]> onSuccess, System.Action<string> onError)
+    {
+        if (inventoryId <= 0)
+        {
+            onError?.Invoke("Invalid inventoryId.");
+            yield break;
+        }
+
+        string url = $"https://astrowheelapi.onrender.com/api/inventoryMaterials/byInventory/{inventoryId}";
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
+                webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                onError?.Invoke(webRequest.error);
+            } else
+            {
+                string jsonResponse = webRequest.downloadHandler.text;
+                try
+                {
+                    // Parse the response
+                    var wrapper = JsonUtility.FromJson<InventoryMaterialResponseWrapper>("{\"inventoryMaterials\":" + jsonResponse + "}");
+
+                    // Convert to InventoryData array
+                    InventoryData[] inventoryItems = wrapper.inventoryMaterials
+                        .Where(item => item.materialId <= 27)
+                        .Select(item => new InventoryData
+                        {
+                            InventoryId = item.inventoryId,
+                            MaterialId = item.materialId,
+                            Quantity = item.quantity
+                        })
+                        .ToArray();
+
+                    onSuccess?.Invoke(inventoryItems);
+                }
+                catch (Exception ex)
+                {
+                    onError?.Invoke($"Failed to parse inventory data: {ex.Message}");
+                }
+            }
+        }
+    }
+
+    public IEnumerator LoadCraftedInventory(int inventoryId, System.Action<InventoryData[]> onSuccess, System.Action<string> onError)
+    {
+        if (inventoryId <= 0)
+        {
+            onError?.Invoke("Invalid inventoryId.");
+            yield break;
+        }
+
+        string url = $"https://astrowheelapi.onrender.com/api/inventoryMaterials/byInventory/{inventoryId}";
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
+                webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                onError?.Invoke(webRequest.error);
+            } else
+            {
+                string jsonResponse = webRequest.downloadHandler.text;
+                try
+                {
+                    // Parse the response
+                    var wrapper = JsonUtility.FromJson<InventoryMaterialResponseWrapper>("{\"inventoryMaterials\":" + jsonResponse + "}");
+
+                    // Convert to InventoryData array and filter for crafted items
+                    // Assuming crafted items have materialId above a certain threshold (adjust as needed)
+                    InventoryData[] inventoryItems = wrapper.inventoryMaterials
+                        .Where(item => item.materialId >= 28) // Example filter for crafted items
+                        .Select(item => new InventoryData
+                        {
+                            InventoryId = item.inventoryId,
+                            MaterialId = item.materialId,
+                            Quantity = item.quantity
+                        })
+                        .ToArray();
+
+                    onSuccess?.Invoke(inventoryItems);
+                }
+                catch (Exception ex)
+                {
+                    onError?.Invoke($"Failed to parse crafted inventory data: {ex.Message}");
+                }
+            }
+        }
+    }
     public IEnumerator UpdateTotalScore(int inventoryId, int totalScore, System.Action<string> onSuccess, System.Action<string> onError)
     {
         string url = $"https://astrowheelapi.onrender.com/api/Inventory/{inventoryId}";
@@ -329,6 +412,7 @@ public class APIClient : MonoBehaviour {
 
         yield return UpdatePlayer(playerId, updatedData, onSuccess, onError);
     }
+   
 }
 
 
@@ -348,7 +432,6 @@ public class PlayerData {
     public string characterName;
     public string islandName; 
 }
-
 
 
 [System.Serializable]
@@ -380,5 +463,18 @@ public class InventoryData {
 public class InventoryTotScore {
     public int InventoryId;
     public int TotalScore;
-   
+
+}
+
+[System.Serializable]
+public class InventoryMaterialResponse {
+    public int inventoryMaterialId;
+    public int inventoryId;
+    public int materialId;
+    public int quantity;
+}
+
+[System.Serializable]
+public class InventoryMaterialResponseWrapper {
+    public InventoryMaterialResponse[] inventoryMaterials;
 }

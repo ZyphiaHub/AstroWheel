@@ -79,8 +79,9 @@ public class InventoryManager : MonoBehaviour {
         SaveCraftedInventory();
         Debug.Log("Crafted inventory initialized with new items.");
 
-        
+
     }
+
 
     // Plant inventory mentése PlayerPrefs-be
     public void SaveInventory()
@@ -88,8 +89,8 @@ public class InventoryManager : MonoBehaviour {
         foreach (var entry in plantDatabase.items)
         {
             string key = "plant_" + entry.englishName.Replace(" ", "");
-            int quantity = inventory.items.ContainsKey(entry) ? inventory.items[entry] : 0;
-            PlayerPrefs.SetInt(key, quantity);
+            //int quantity = inventory.items.ContainsKey(entry) ? inventory.items[entry] : 0;
+            PlayerPrefs.SetInt(key, 0);
         }
 
         PlayerPrefs.Save();
@@ -106,6 +107,50 @@ public class InventoryManager : MonoBehaviour {
             Debug.LogError("InventoryId not found in PlayerPrefs. Make sure the player is logged in.");
         }
 
+    }
+    public void LoadFetchedMatToPlantDatabase(LoginManager.MaterialDataFetch[] materials)
+    {
+        inventory.items.Clear();
+        craftedInventory.items.Clear();
+
+        foreach (var plant in plantDatabase.items)
+        {
+            inventory.items[plant] = 0;
+        }
+
+        foreach (var item in itemDatabase.items)
+        {
+            craftedInventory.items[item] = 0;
+        }
+
+        foreach (var material in materials)
+        {
+            if (material.materialId <= 27) // Növények
+            {
+                var plantItem = plantDatabase.items.FirstOrDefault(p => p.plantId == material.materialId);
+                if (plantItem != null)
+                {
+                    inventory.AddItem(plantItem, material.quantity);
+                    Debug.Log($"Added {material.quantity}x {plantItem.englishName} (ID: {material.materialId})");
+                } else
+                {
+                    Debug.LogWarning($"No plant found with ID: {material.materialId}");
+                }
+            } else // Craftolt itemek (ID >= 28)
+            {
+                var craftedItem = itemDatabase.items.FirstOrDefault(i => i.itemId == material.materialId);
+                if (craftedItem != null)
+                {
+                    craftedInventory.AddItem(craftedItem, material.quantity);
+                    Debug.Log($"Added {material.quantity}x {craftedItem.itemName} (ID: {material.materialId})");
+                } else
+                {
+                    Debug.LogWarning($"No crafted item found with ID: {material.materialId}");
+                }
+            }
+        }
+
+        Debug.Log($"Inventory loaded: {inventory.items.Count} plants, {craftedInventory.items.Count} crafted items");
     }
     // Metódus az inventory adatainak küldésére
     public void SaveInventoryToServer()
@@ -157,8 +202,8 @@ public class InventoryManager : MonoBehaviour {
         foreach (var entry in itemDatabase.items)
         {
             string key = "crafted_" + entry.itemName.Replace(" ", "");
-            int quantity = craftedInventory.items.ContainsKey(entry) ? craftedInventory.items[entry] : 0;
-            PlayerPrefs.SetInt(key, quantity);
+            //int quantity = craftedInventory.items.ContainsKey(entry) ? craftedInventory.items[entry] : 0;
+            PlayerPrefs.SetInt(key, 0);
         }
 
         PlayerPrefs.Save();

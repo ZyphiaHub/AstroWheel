@@ -78,12 +78,13 @@ public class RegisterManager : MonoBehaviour {
         PlayerPrefs.SetString("RegisteredEmail", email);
         PlayerPrefs.Save();
         PlayerPrefs.SetString("RegisteredPassword", password);
+        PlayerPrefs.Save();
         characterSelectionPanel.SetActive(true);
         selectCharacterButton.onClick.AddListener(OnSelectCharacterButtonClicked);
-        PlayerPrefs.SetInt("SelectedCharacterIndex", selectedCharacterIndex);
+        //PlayerPrefs.SetInt("SelectedCharacterIndex", selectedCharacterIndex);
+        //PlayerPrefs.Save();
         GameManager.Instance.SaveLastCompletedIsland(0);
         GameManager.Instance.SaveTotalScore(0);
-        PlayerPrefs.Save();
 
         
     }
@@ -151,7 +152,8 @@ public class RegisterManager : MonoBehaviour {
 
         string email = PlayerPrefs.GetString("RegisteredEmail", "");
         string password = PlayerPrefs.GetString("RegisteredPassword", "");
-        int characterIndex = selectedCharacterIndex;
+        //int characterIndex = selectedCharacterIndex;
+        int characterIndex = PlayerPrefs.GetInt("SelectedCharacterIndex", 0);
 
         StartCoroutine(RegisterPlayer(playerName, email, password, characterIndex, 
             response =>
@@ -219,14 +221,6 @@ public class RegisterManager : MonoBehaviour {
                 onSuccess?.Invoke(webRequest.downloadHandler.text);
                 Debug.Log("Registration successful: " + webRequest.downloadHandler.text);
                 
-
-                // Regisztráció után lekérjük a játékos adatait
-                
-
-                // Név regisztrációs panel bezárása
-                //registerNamePanel.SetActive(false);
-
-                // SceneManager.LoadScene("Island_1");
 
             }
         }
@@ -329,9 +323,13 @@ public class RegisterManager : MonoBehaviour {
             InventoryManager.Instance.craftedInventory.AddItem(item, 0);
         }
 
+        //playerperf és lite
         InventoryManager.Instance.SaveInventory();
         InventoryManager.Instance.SaveCraftedInventory();
         Debug.Log("New player inventory initialized.");
+
+        
+        
     }
 
 
