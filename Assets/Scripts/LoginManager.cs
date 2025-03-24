@@ -7,6 +7,7 @@ using System.Collections;
 using UnityEngine.Networking;
 using static RegisterManager;
 using System;
+using static LocalDatabaseManager;
 
 public class LoginManager : MonoBehaviour {
     public TMP_InputField emailInputField;
@@ -37,31 +38,10 @@ public class LoginManager : MonoBehaviour {
             return;
         }
 
-        // Bejelentkezési kérés indítása
+        
         // Bejelentkezési kérés indítása
         StartCoroutine(LoginAndFetchData(email, password));
-        /*StartCoroutine(Login(email, password,
-            response =>
-            {
-                Debug.Log("Login successful: " + response);
-
-
-                int lastCompletedIsland = GameManager.Instance.LoadLastCompletedIsland();
-                Debug.Log("corutin last island: " + lastCompletedIsland);
-
-                if (lastCompletedIsland >= 1)
-                { // Ha az elsõ sziget teljesítve van
-                    SceneManager.LoadScene("Main_Menu"); // Fõmenü betöltése
-                } else
-                {
-                    SceneManager.LoadScene("Island_1"); // Elsõ sziget betöltése
-                }
-            },
-            error =>
-            {
-                errorMessageText.text = "Invalid email or password!";
-            }
-        ));*/
+        
 
     }
 
@@ -78,7 +58,6 @@ public class LoginManager : MonoBehaviour {
         Application.Quit();
     }
 
-    // Bejelentkezési kérés
     
     public IEnumerator Login(string email, string password, System.Action<string> onSuccess, System.Action<string> onError)
     {
@@ -90,6 +69,10 @@ public class LoginManager : MonoBehaviour {
             Email = email,
             Password = password
         };
+        PlayerPrefs.SetString("LoginEmail", email);
+        PlayerPrefs.Save();
+        var proba = PlayerPrefs.GetString("LoginEmail", "");
+        Debug.Log("login email erteke: " + proba);
         string jsonData = JsonUtility.ToJson(loginData);
         Debug.Log("Sending login data: " + jsonData);
 
@@ -107,7 +90,21 @@ public class LoginManager : MonoBehaviour {
             {
                 onError?.Invoke(webRequest.error);
                 Debug.LogError("Login failed: " + webRequest.error);
-                Debug.LogError("Server response: " + webRequest.downloadHandler.text); 
+                Debug.LogError("Server response: " + webRequest.downloadHandler.text);
+
+                
+                StartCoroutine(FetchPlayerSQLite(email, password));
+                int lastCompletedIsland = GameManager.Instance.LoadLastCompletedIsland();
+                Debug.Log("lite  last island: " + lastCompletedIsland);
+
+                if (lastCompletedIsland >= 1)
+                { // Ha az elsõ sziget teljesítve van
+                    SceneManager.LoadScene("Main_Menu"); // Fõmenü betöltése
+                } else
+                {
+                    SceneManager.LoadScene("Island_1"); // Elsõ sziget betöltése
+                }
+
             } else
             {
                 onSuccess?.Invoke(webRequest.downloadHandler.text);
@@ -125,6 +122,41 @@ public class LoginManager : MonoBehaviour {
             }
         }
     }
+    private IEnumerator FetchPlayerSQLite(string email, string password)
+    {
+        Debug.Log("Fetching player data from SQLite...");
+        Debug.Log("email és pass liteban" + email + password);
+        PlayerTbl playerData = LocalDatabaseManager.Instance.LoadPlayerDataByEmailAndPassword(email, password);
+
+        if (playerData != null)
+        {
+            Debug.Log($"Local Player Data: ID = {playerData.playerId}, Username = {playerData.playerName}, " +
+                $"Email = {playerData.userId}, CharacterId = {playerData.characterId}, Score = {playerData.totalScore}, " +
+                $"InventoryID = {playerData.inventoryId}, LastCompletedIsland = {playerData.islandId}");
+
+            // Adatok betöltése a GameManager-be
+            GameManager.Instance.SavePlayerId(playerData.playerId);
+            GameManager.Instance.SaveLastCompletedIsland(playerData.islandId);
+
+            PlayerPrefs.SetString("PlayerUsername", playerData.playerName ?? string.Empty);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetString("PlayerEmail", playerData.userId ?? string.Empty);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("PlayerScore", playerData.totalScore);
+            PlayerPrefs.Save();
+            PlayerPrefs.SetInt("InventoryID", playerData.inventoryId);
+            PlayerPrefs.Save();
+
+            Debug.Log("Local player data loaded successfully.");
+        } else
+        {
+            Debug.LogError("No player data found in SQLite for the given email and password.");
+        }
+
+        //isFetchPlayerDataCompleted = true;
+        yield break;
+    }
+
     private IEnumerator LoginAndFetchData(string email, string password)
     {
         yield return StartCoroutine(Login(email, password,
@@ -205,7 +237,7 @@ public class LoginManager : MonoBehaviour {
                         GameManager.Instance.SaveLastCompletedIsland(playerData.islandId);
                             
                         PlayerPrefs.SetString("PlayerUsername", playerData.playerName ?? string.Empty);
-                        PlayerPrefs.SetString("PlayerEmail", playerData.userId ?? string.Empty);
+                        //PlayerPrefs.SetString("PlayerEmail", playerData.userId ?? string.Empty);
                         PlayerPrefs.SetInt("PlayerScore", playerData.totalScore);
                         PlayerPrefs.SetInt("InventoryID", playerData.inventoryId);
                         //PlayerPrefs.SetInt("LastCompletedIsland", playerData.islandId); 
@@ -214,12 +246,16 @@ public class LoginManager : MonoBehaviour {
                         Debug.Log("Player data saved to PlayerPrefs.");
 
                             playerData.playerPassword = PlayerPrefs.GetString("Password", "");
+                            playerData.playerEmail = PlayerPrefs.GetString("LoginEmail", "");
+                            var proba = PlayerPrefs.GetString("LoginEmail", "");
+                            Debug.Log("login emailfetchplayerben: " + proba);
 
-                        // Adatok mentése SQLite adatbázisba
-                        LocalDatabaseManager.Instance.SavePlayerData(
-                            playerData.playerId,
-                            playerData.playerName ?? string.Empty,
-                            playerData.userId ?? string.Empty,
+                            // Adatok mentése SQLite adatbázisba
+                            LocalDatabaseManager.Instance.SavePlayerData(
+                                playerData.playerId,
+                                playerData.playerName ?? string.Empty,
+                                playerData.userId ?? string.Empty,
+                                playerData.playerEmail,
                             playerData.playerPassword,
                             playerData.characterId,
                             playerData.totalScore,
@@ -259,6 +295,7 @@ public class LoginManager : MonoBehaviour {
         public string playerName; 
         public string userId; // A szerver "userId" mezõje
         public string playerPassword;
+        public string playerEmail;
         public int characterId;
         public int totalScore; // A szerver "totalScore" mezõje
         public int inventoryId; 

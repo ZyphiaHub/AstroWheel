@@ -72,7 +72,6 @@ public class GameManager : MonoBehaviour {
     public int LoadLastCompletedIsland()
     {
         int proba = PlayerPrefs.GetInt("LastCompletedIsland", 0);
-        Debug.Log("Lastcompleted perf Island is " + proba);
         return PlayerPrefs.GetInt("LastCompletedIsland", 0);
 
     }

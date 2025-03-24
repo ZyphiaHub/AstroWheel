@@ -76,6 +76,7 @@ public class RegisterManager : MonoBehaviour {
 
         // Adatok mentése a PlayerPrefs-be
         PlayerPrefs.SetString("RegisteredEmail", email);
+        PlayerPrefs.Save();
         PlayerPrefs.SetString("RegisteredPassword", password);
         characterSelectionPanel.SetActive(true);
         selectCharacterButton.onClick.AddListener(OnSelectCharacterButtonClicked);
@@ -161,6 +162,7 @@ public class RegisterManager : MonoBehaviour {
 
                 if (loginManager != null)
                 {
+                    
                     StartCoroutine(loginManager.Login(email, password,
                         response => {
                             //Debug.Log("Login successful: " + response);

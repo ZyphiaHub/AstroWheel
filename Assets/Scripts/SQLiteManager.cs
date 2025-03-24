@@ -75,7 +75,7 @@ public class LocalDatabaseManager : MonoBehaviour {
         }
     }
 
-    public void SavePlayerData(int playerId, string playerName, string userId,string playerPassword, int characterId,
+    public void SavePlayerData(int playerId, string playerName, string userId,string playerEmail, string playerPassword, int characterId,
         int totalScore, int inventoryId, int lastCompletedIsland, string lastLogin, string createdAt)
     {
         if (connection == null)
@@ -89,6 +89,7 @@ public class LocalDatabaseManager : MonoBehaviour {
             playerId = playerId,
             playerName = playerName ?? string.Empty,
             userId = userId ?? string.Empty,
+            playerEmail = playerEmail ?? string.Empty,
             playerPassword = playerPassword ?? string.Empty,
             characterId = characterId,
             totalScore = totalScore,
@@ -141,19 +142,6 @@ public class LocalDatabaseManager : MonoBehaviour {
         }
     }
 
-    public void LoadPlayerData()
-    {
-        // Adatok lekérése
-        var playerData = connection.Table<PlayerTbl>().FirstOrDefault(p => p.playerId == 1);
-
-        if (playerData != null)
-        {
-            Debug.Log($"Loaded Data - {playerData.playerName},  {playerData.totalScore}");
-        } else
-        {
-            Debug.Log("No player data found.");
-        }
-    }
 
     public PlayerTbl LoadPlayerDataByEmailAndPassword(string email, string password)
     {
@@ -168,10 +156,10 @@ public class LocalDatabaseManager : MonoBehaviour {
             // Játékos keresése email és jelszó alapján
             var playerData = connection.Table<PlayerTbl>()
                                       .FirstOrDefault(p => p.userId == email && p.playerPassword == password);
-
+            
             if (playerData != null)
             {
-                Debug.Log($"Player data loaded: {playerData.playerName}, {playerData.totalScore}");
+                Debug.Log($"Player data loaded from SQLIte: {playerData.playerName}, {playerData.totalScore}");
                 return playerData;
             } else
             {
@@ -343,6 +331,7 @@ public class LocalDatabaseManager : MonoBehaviour {
         [PrimaryKey] public int playerId { get; set; }
         [MaxLength(255)] public string playerName { get; set; } = string.Empty;
         public string userId { get; set; } = string.Empty;
+        public string playerEmail { get; set; }
         public string playerPassword { get; set; } = string.Empty;
         public int characterId { get; set; } = 0;
         public int islandId { get; set; } = 0;
