@@ -41,13 +41,11 @@ MonoBehaviour:
   - itemId: 33
     itemName: Wand of Truth
     description: Guides you like a compass when you don't know where to step next.
-    icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
+    icon: {fileID: 21300000, guid: c491e538fa84b524f9a3f17ef65fc6be, type: 3}
   - itemId: 34
-    itemName: Elixir of Second Chances
-    description: The threads of fate sometimes become tangled. A single sip of this
-      elixir unravels the knots, weaving new paths before you.  Drink it, and time
-      will favor you once more! Gain +3 extra moves in the game.
-    icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
+    itemName: Wand of Propagation
+    description: Doubles your gained material quantity at the end of the game.
+    icon: {fileID: 21300000, guid: c491e538fa84b524f9a3f17ef65fc6be, type: 3}
   - itemId: 35
     itemName: ChronoPotion
     description: A concetradet elixir of your achievements. This is the only form

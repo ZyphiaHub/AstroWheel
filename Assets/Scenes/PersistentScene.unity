@@ -425,118 +425,176 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bd7178b7fd77b443938726c509492a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  apiClient: {fileID: 0}
   plantDatabase: {fileID: 11400000, guid: 9eaecee37aff1c04fbdf06680b5f1f37, type: 2}
   itemDatabase: {fileID: 11400000, guid: 61acc7d210a793e469a3dd50925367aa, type: 2}
   craftingRecipe:
   - ingredients:
     - plantItem:
-        id: 0
+        plantId: 0
         englishName: Jade Orchid
         witchName: Squirrel's ear
         latinName: Goodyeara repens
         description: Material fro Crystals
         icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
       craftedItem:
-        id: 
+        itemId: 0
         itemName: 
         description: 
         icon: {fileID: 0}
       quantity: 2
     outputItem:
-      id: 
-      itemName: Elixir of Second Chances
-      description: The threads of fate sometimes become tangled. A single sip of
-        this elixir unravels the knots, weaving new paths before you.  Drink it,
-        and time will favor you once more! Gain +3 extra moves in the game.
-      icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
-    outputQuantity: 1
-  - ingredients:
-    - plantItem:
-        id: 0
-        englishName: Jade Orchid
-        witchName: Squirrel's ear
-        latinName: Goodyeara repens
-        description: Material fro Crystals
-        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
-      craftedItem:
-        id: 
-        itemName: 
-        description: 
-        icon: {fileID: 0}
-      quantity: 2
-    outputItem:
-      id: 
-      itemName: Fire agate
-      description: The threads of fate sometimes become tangled. A single sip of
-        this elixir unravels the knots, weaving new paths before you.  Drink it,
-        and time will favor you once more! Gain +3 extra moves in the game.
-      icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
-    outputQuantity: 1
-  - ingredients:
-    - plantItem:
-        id: 0
-        englishName: Jade Orchid
-        witchName: Squirrel's ear
-        latinName: Goodyeara repens
-        description: Material fro Crystals
-        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
-      craftedItem:
-        id: 
-        itemName: 
-        description: 
-        icon: {fileID: 0}
-      quantity: 2
-    outputItem:
-      id: 
-      itemName: Elixir of Second Chances
-      description: The threads of fate sometimes become tangled. A single sip of
-        this elixir unravels the knots, weaving new paths before you.  Drink it,
-        and time will favor you once more! Gain +3 extra moves in the game.
-      icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
-    outputQuantity: 1
-  - ingredients:
-    - plantItem:
-        id: 0
-        englishName: Jade Orchid
-        witchName: Squirrel's ear
-        latinName: Goodyeara repens
-        description: Material fro Crystals
-        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
-      craftedItem:
-        id: 
-        itemName: 
-        description: 
-        icon: {fileID: 0}
-      quantity: 2
-    outputItem:
-      id: 
-      itemName: Amethyst
-      description: The threads of fate sometimes become tangled. A single sip of
-        this elixir unravels the knots, weaving new paths before you.  Drink it,
-        and time will favor you once more! Gain +3 extra moves in the game.
-      icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
-    outputQuantity: 1
-  - ingredients:
-    - plantItem:
-        id: 0
-        englishName: Jade Orchid
-        witchName: Squirrel's ear
-        latinName: Goodyeara repens
-        description: Material fro Crystals
-        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
-      craftedItem:
-        id: 
-        itemName: 
-        description: 
-        icon: {fileID: 0}
-      quantity: 2
-    outputItem:
-      id: 
+      itemId: 28
       itemName: Cross-stone
+      description: A stone made from the plants of Earth element. It protects against
+        malice and curses. It transforms conflict into harmony.
+      icon: {fileID: 21300000, guid: 20e793d3cd5d40142bd9b270e2500a5f, type: 3}
+    outputQuantity: 2
+  - ingredients:
+    - plantItem:
+        plantId: 0
+        englishName: Jade Orchid
+        witchName: Squirrel's ear
+        latinName: Goodyeara repens
+        description: Material fro Crystals
+        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
+      craftedItem:
+        itemId: 0
+        itemName: 
+        description: 
+        icon: {fileID: 0}
+      quantity: 2
+    outputItem:
+      itemId: 29
+      itemName: Fire agate
+      description: A stone made from the plants of Fire element. Protects against
+        malice.
+      icon: {fileID: 21300000, guid: 5d73fc73e795db8499852ff770d9f300, type: 3}
+    outputQuantity: 2
+  - ingredients:
+    - plantItem:
+        plantId: 0
+        englishName: Jade Orchid
+        witchName: Squirrel's ear
+        latinName: Goodyeara repens
+        description: Material fro Crystals
+        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
+      craftedItem:
+        itemId: 0
+        itemName: 
+        description: 
+        icon: {fileID: 0}
+      quantity: 2
+    outputItem:
+      itemId: 30
+      itemName: Heliotrop
+      description: A stone made from the plants of the Air element. It wards off
+        unwanted effects
+      icon: {fileID: 21300000, guid: 47041d99134636347a2459a27ea5d9ac, type: 3}
+    outputQuantity: 2
+  - ingredients:
+    - plantItem:
+        plantId: 0
+        englishName: Jade Orchid
+        witchName: Squirrel's ear
+        latinName: Goodyeara repens
+        description: Material fro Crystals
+        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
+      craftedItem:
+        itemId: 0
+        itemName: 
+        description: 
+        icon: {fileID: 0}
+      quantity: 2
+    outputItem:
+      itemId: 31
+      itemName: Amethyst
+      description: A stone made from the plants of the Water element. It protects
+        against astral attacks and negative environmental energies.
+      icon: {fileID: 21300000, guid: f7cd7d683998262478efb639c05803e7, type: 3}
+    outputQuantity: 2
+  - ingredients:
+    - plantItem:
+        plantId: 0
+        englishName: Jade Orchid
+        witchName: Squirrel's ear
+        latinName: Goodyeara repens
+        description: Material fro Crystals
+        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
+      craftedItem:
+        itemId: 0
+        itemName: 
+        description: 
+        icon: {fileID: 0}
+      quantity: 2
+    outputItem:
+      itemId: 32
+      itemName: Elixir of Second Chances
       description: The threads of fate sometimes become tangled. A single sip of
         this elixir unravels the knots, weaving new paths before you.  Drink it,
         and time will favor you once more! Gain +3 extra moves in the game.
       icon: {fileID: 21300000, guid: 3dab10427b781e640ab22994f11e980e, type: 3}
+    outputQuantity: 1
+  - ingredients:
+    - plantItem:
+        plantId: 0
+        englishName: Jade Orchid
+        witchName: Squirrel's ear
+        latinName: Goodyeara repens
+        description: Material fro Crystals
+        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
+      craftedItem:
+        itemId: 0
+        itemName: 
+        description: 
+        icon: {fileID: 0}
+      quantity: 2
+    outputItem:
+      itemId: 33
+      itemName: Wand of Truth
+      description: Guides you like a compass when you don't know where to step next.
+      icon: {fileID: 21300000, guid: c491e538fa84b524f9a3f17ef65fc6be, type: 3}
+    outputQuantity: 1
+  - ingredients:
+    - plantItem:
+        plantId: 0
+        englishName: Jade Orchid
+        witchName: Squirrel's ear
+        latinName: Goodyeara repens
+        description: Material fro Crystals
+        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
+      craftedItem:
+        itemId: 0
+        itemName: 
+        description: 
+        icon: {fileID: 0}
+      quantity: 2
+    outputItem:
+      itemId: 34
+      itemName: Wand of Propagation
+      description: Doubles your gained material quantity at the end of the game.
+      icon: {fileID: 21300000, guid: c491e538fa84b524f9a3f17ef65fc6be, type: 3}
+    outputQuantity: 1
+  - ingredients:
+    - plantItem:
+        plantId: 0
+        englishName: Jade Orchid
+        witchName: Squirrel's ear
+        latinName: Goodyeara repens
+        description: Material fro Crystals
+        icon: {fileID: 21300000, guid: 618c0ed8223ee364a8d27cd5307ea42e, type: 3}
+      craftedItem:
+        itemId: 0
+        itemName: 
+        description: 
+        icon: {fileID: 0}
+      quantity: 2
+    outputItem:
+      itemId: 35
+      itemName: ChronoPotion
+      description: A concetradet elixir of your achievements. This is the only form
+        of time, that will satisfy Chronos.
+      icon: {fileID: 21300000, guid: 05fdc8516eec0c34db37c3e6143cd7c2, type: 3}
     outputQuantity: 1
 --- !u!4 &2012109858
 Transform:

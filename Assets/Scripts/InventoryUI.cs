@@ -10,7 +10,7 @@ public class InventoryUI : MonoBehaviour {
 
     [Header("Crafted Inventory References")]
     public ItemDatabase itemDatabase;   // ItemDatabase referenciája
-    public GameObject craftedSlotPrefab; // Crafted slot prefab referenciája
+    public GameObject craftedSlotPrefab; 
     public Transform craftedPanelParent;
 
     [Header("Crafting UI References")]
@@ -116,6 +116,12 @@ public class InventoryUI : MonoBehaviour {
     // Craft panel inicializálása
     private void InitializeCraftPanel()
     {
+        // Ellenõrizzük, hogy létezik-e a recipeListParent
+        if (recipeListParent == null)
+        {
+            Debug.LogError("recipeListParent nincs beállítva!");
+            return;
+        }
         // Töröljük a korábbi recept gombokat
         foreach (Transform child in recipeListParent)
         {
@@ -138,6 +144,9 @@ public class InventoryUI : MonoBehaviour {
                 continue;
             }
             GameObject recipeButton = Instantiate(recipeButtonPrefab, recipeListParent);
+
+            LayoutElement layoutElement = recipeButton.AddComponent<LayoutElement>();
+            layoutElement.minHeight = 50;
 
             if (recipeButton == null)
             {
@@ -165,6 +174,9 @@ public class InventoryUI : MonoBehaviour {
             }
             button.onClick.AddListener(() => SelectRecipe(recipe));
         }
+
+        // Frissítsd a layoutot
+        LayoutRebuilder.ForceRebuildLayoutImmediate(recipeListParent.GetComponent<RectTransform>());
 
         // Craft gomb eseménykezelõje
         if (craftButton != null)
