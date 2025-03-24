@@ -43,7 +43,7 @@ public class MainMenuManager : MonoBehaviour {
         private void LoadAndDisplayPlayerData()
     {
         // Játékos neve
-        string playerName = PlayerPrefs.GetString("PlayerName", "Guest");
+        string playerName = PlayerPrefs.GetString("PlayerUsername", "Guest");
         playerNameText.text = "Witch: \n" + playerName;
 
         // Pontok betöltése a GameManager segítségével

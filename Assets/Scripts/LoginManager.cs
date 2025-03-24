@@ -237,10 +237,11 @@ public class LoginManager : MonoBehaviour {
                         GameManager.Instance.SaveLastCompletedIsland(playerData.islandId);
                             
                         PlayerPrefs.SetString("PlayerUsername", playerData.playerName ?? string.Empty);
-                        //PlayerPrefs.SetString("PlayerEmail", playerData.userId ?? string.Empty);
+                            PlayerPrefs.Save();
+                        
                         PlayerPrefs.SetInt("PlayerScore", playerData.totalScore);
-                        PlayerPrefs.SetInt("InventoryID", playerData.inventoryId);
-                        //PlayerPrefs.SetInt("LastCompletedIsland", playerData.islandId); 
+                            PlayerPrefs.Save();
+                            PlayerPrefs.SetInt("InventoryID", playerData.inventoryId);
                         PlayerPrefs.Save();
 
                         Debug.Log("Player data saved to PlayerPrefs.");
