@@ -67,7 +67,7 @@ public class LocalDatabaseManager : MonoBehaviour {
             connection.CreateTable<MaterialTbl>();
             connection.CreateTable<CraftedInventoryTbl>();
 
-            Debug.Log("Database initialized successfully.");
+           // Debug.Log("Database initialized successfully.");
         }
         catch (System.Exception ex)
         {

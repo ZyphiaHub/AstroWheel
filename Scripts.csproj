@@ -72,7 +72,6 @@
     <Compile Include="Assets\Scripts\LoginManager.cs" />
     <Compile Include="Assets\Scripts\IslandManager.cs" />
     <Compile Include="Assets\Scripts\OverView.cs" />
-    <Compile Include="Assets\Scripts\LoginManagerTest.cs" />
     <Compile Include="Assets\Scripts\RegisterManagerTest.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\Match3\Board.cs" />

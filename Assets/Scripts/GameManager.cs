@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance { get; private set; }
 
-    public const string LastCompletedIslandKey = "LastCompletedIsland";
+    //public const string LastCompletedIslandKey = "LastCompletedIsland";
     public const string TotalScoreKey = "TotalScore";
     //public const int PlayerIdKey = "PlayerId";
     public const string CharacterIdKey = "CharacterId";
@@ -63,14 +64,17 @@ public class GameManager : MonoBehaviour {
     // Mentés: Utolsó teljesített sziget mentése
     public void SaveLastCompletedIsland(int islandIndex)
     {
-        PlayerPrefs.SetInt(LastCompletedIslandKey, islandIndex);
-        PlayerPrefs.Save(); // Azonnali mentés
+        PlayerPrefs.SetInt("LastCompletedIsland", islandIndex);
+        PlayerPrefs.Save(); 
     }
 
     // Betöltés: Utolsó teljesített sziget betöltése
     public int LoadLastCompletedIsland()
     {
-        return PlayerPrefs.GetInt(LastCompletedIslandKey, 0); // Alapértelmezett érték: 0 (elsõ sziget)
+        int proba = PlayerPrefs.GetInt("LastCompletedIsland", 0);
+        Debug.Log("Lastcompleted perf Island is " + proba);
+        return PlayerPrefs.GetInt("LastCompletedIsland", 0);
+
     }
 
     // Ellenõrzés: Egy adott sziget teljesítve van-e
@@ -104,7 +108,6 @@ public class GameManager : MonoBehaviour {
     {
         PlayerPrefs.SetInt("PlayerId", playerId);
         PlayerPrefs.Save();
-        Debug.Log("PlayerId saved: " + playerId);
     }
 
     // PlayerId betöltése

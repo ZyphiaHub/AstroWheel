@@ -18,7 +18,7 @@ public class APIClient : MonoBehaviour {
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("APIClient initialized.");
+            //Debug.Log("APIClient initialized.");
         } else
         {
             Destroy(gameObject);
