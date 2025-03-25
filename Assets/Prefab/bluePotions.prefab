@@ -135,11 +135,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   column: 0
   row: 0
-  previousColumn: 0
-  previousRow: 0
   targetX: 0
   targetY: 0
   isMatched: 0
+  previousColumn: 0
+  previousRow: 0
   otherDot: {fileID: 0}
   swipeAngle: 0
   swipeResist: 1
