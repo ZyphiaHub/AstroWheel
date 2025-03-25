@@ -73,8 +73,7 @@ public class LoginManager : MonoBehaviour {
         };
         PlayerPrefs.SetString("LoginEmail", email);
         PlayerPrefs.Save();
-        //var proba = PlayerPrefs.GetString("LoginEmail", "");
-        //Debug.Log("login email erteke: " + proba);
+
         string jsonData = JsonUtility.ToJson(loginData);
         Debug.Log("Sending login data: " + jsonData);
 
@@ -99,8 +98,6 @@ public class LoginManager : MonoBehaviour {
                 int lastCompletedIsland = GameManager.Instance.LoadLastCompletedIsland();
                 //Debug.Log("lite  last island: " + lastCompletedIsland);
 
-
-
                 if (lastCompletedIsland >= 1)
                 { // Ha az elsõ sziget teljesítve van
                     SceneManager.LoadScene("Main_Menu"); // Fõmenü betöltése
@@ -108,6 +105,14 @@ public class LoginManager : MonoBehaviour {
                 {
                     SceneManager.LoadScene("Island_1"); // Elsõ sziget betöltése
                 }
+
+                int inventoryId = PlayerPrefs.GetInt("InventoryID", 0);
+                Debug.Log("inventroy kívül " + inventoryId);
+                List<MaterialDataFetchLite> loadedPlants = LocalDatabaseManager.Instance.LoadInventoryData(inventoryId);
+                InventoryManager.Instance.LoadFetchedLiteToPlantDatabase(loadedPlants);
+
+                List<MaterialDataFetchLite> loadedItems = LocalDatabaseManager.Instance.LoadCraftedInventoryData(inventoryId);
+                InventoryManager.Instance.LoadFetchedLiteToItemDatabase(loadedItems);
 
             } else
             {
@@ -148,8 +153,10 @@ public class LoginManager : MonoBehaviour {
             PlayerPrefs.Save();
             PlayerPrefs.SetInt("PlayerScore", playerData.totalScore);
             PlayerPrefs.Save();
+            Debug.Log($"InventoryID before save: {playerData.inventoryId} (Type: {playerData.inventoryId.GetType()})");
             PlayerPrefs.SetInt("InventoryID", playerData.inventoryId);
             PlayerPrefs.Save();
+            Debug.Log($"InventoryID after save: {PlayerPrefs.GetInt("InventoryID", -1)}");
 
             Debug.Log("Local player data loaded successfully.");
         } else
@@ -278,7 +285,7 @@ public class LoginManager : MonoBehaviour {
 
                     if (playerData.materials != null && playerData.materials.Count > 0)
                     {
-                        InventoryManager.Instance.LoadFetchedMatToPlantDatabase(playerData.materials.ToArray());
+                        InventoryManager.Instance.LoadFetchedMatToInventory(playerData.materials.ToArray());
                         InventoryManager.Instance.SaveInventory();
                         InventoryManager.Instance.SaveCraftedInventory();
 

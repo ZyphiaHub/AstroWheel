@@ -108,7 +108,50 @@ public class InventoryManager : MonoBehaviour {
         }
 
     }
-    public void LoadFetchedMatToPlantDatabase(LoginManager.MaterialDataFetch[] materials)
+    public void LoadFetchedLiteToPlantDatabase(List<LocalDatabaseManager.MaterialDataFetchLite> fetchedPlants)
+    {
+        inventory.items.Clear();
+        foreach (var plant in plantDatabase.items)
+        {
+            inventory.items[plant] = 0;
+        }
+        foreach (var plant in fetchedPlants)
+        {
+            var plantItem = plantDatabase.items.FirstOrDefault(p => p.plantId == plant.materialId);
+            if (plantItem != null)
+            {
+                inventory.AddItem(plantItem, plant.quantity);
+                Debug.Log($"Added {plant.quantity}x {plantItem.englishName} (ID: {plant.materialId})");
+            } else
+            {
+                    Debug.LogWarning($"No plant found with ID: {plant.materialId}");
+            }
+        }
+    }
+
+    public void LoadFetchedLiteToItemDatabase(List<LocalDatabaseManager.MaterialDataFetchLite> fetchedItems)
+    {
+        craftedInventory.items.Clear();
+        foreach (var item in itemDatabase.items)
+        {
+            craftedInventory.items[item] = 0;
+        }
+
+        foreach(var item in fetchedItems)
+        {
+            var craftItem = itemDatabase.items.FirstOrDefault(p => p.itemId == item.materialId);
+            if (craftItem != null)
+            {
+                craftedInventory.AddItem(craftItem, item.quantity);
+                Debug.Log($"Added {item.quantity}x  (ID: {item.materialId})");
+            } else
+            {
+                Debug.LogWarning($"No plant found with ID: {item.materialId}");
+            }
+        }
+    }
+    
+    public void LoadFetchedMatToInventory(LoginManager.MaterialDataFetch[] materials)
     {
         inventory.items.Clear();
         craftedInventory.items.Clear();
@@ -281,8 +324,8 @@ public class InventoryManager : MonoBehaviour {
             }
         }
         Debug.Log("Plant inventory loaded.");
-        /*// Betöltés SQLite adatbázisból
-        int inventoryId = PlayerPrefs.GetInt("InventoryID", -1);
+        // Betöltés SQLite adatbázisból
+       /* int inventoryId = PlayerPrefs.GetInt("InventoryID", -1);
         if (inventoryId != -1)
         {
             var inventoryData = LocalDatabaseManager.Instance.LoadInventoryData(inventoryId);

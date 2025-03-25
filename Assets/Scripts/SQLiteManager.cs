@@ -3,10 +3,14 @@ using SQLite4Unity3d;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using static UnityEngine.EventSystems.EventTrigger;
+using System;
 
 
 public class LocalDatabaseManager : MonoBehaviour {
     public static LocalDatabaseManager Instance { get; private set; }
+    public Inventory inventory { get; set; }
+    public CraftedInventory craftedInventory { get; set; }
     private void Awake()
     {
         // Singleton minta implementációja
@@ -147,7 +151,7 @@ public class LocalDatabaseManager : MonoBehaviour {
     {
         if (connection == null)
         {
-            Debug.LogError("Database connection is null.");
+            Debug.LogError("Database connection is null in loadplayerbyemailandpass.");
             return null;
         }
 
@@ -155,7 +159,8 @@ public class LocalDatabaseManager : MonoBehaviour {
         {
             // Játékos keresése email és jelszó alapján
             var playerData = connection.Table<PlayerTbl>()
-                                      .FirstOrDefault(p => p.userId == email && p.playerPassword == password);
+                                      .FirstOrDefault(p => p.playerEmail.Equals(email.Trim(), StringComparison.OrdinalIgnoreCase) 
+                                      && p.playerPassword == password.Trim());
             
             if (playerData != null)
             {
@@ -217,35 +222,41 @@ public class LocalDatabaseManager : MonoBehaviour {
     }
 
     // Inventory betöltése az adatbázisból
-    public Dictionary<int, int> LoadInventoryData(int inventoryId)
+    public List<MaterialDataFetchLite> LoadInventoryData(int inventoryId)
     {
-        var inventoryData = new Dictionary<int, int>();
-
+        List<MaterialDataFetchLite> resultList = new List<MaterialDataFetchLite>();
         if (connection == null)
         {
             Debug.LogError("Database connection is null.");
-            return inventoryData;
+            return resultList;
         }
-
         try
         {
-            var items = connection.Table<InventoryTbl>()
+            Debug.Log("inventoryid: " +inventoryId);
+            var records = connection.Table<InventoryTbl>()
                                   .Where(x => x.InventoryId == inventoryId)
                                   .ToList();
 
-            foreach (var item in items)
+            foreach (var record in records)
             {
-                inventoryData[item.MaterialId] = item.MatQuantity;
+                MaterialDataFetchLite data = new MaterialDataFetchLite
+                {
+                    materialId = record.MaterialId,
+                    quantity = record.MatQuantity
+                };
+                resultList.Add(data);
             }
 
             Debug.Log("Inventory data loaded from SQLite database.");
+            return resultList;
         }
         catch (System.Exception ex)
         {
             Debug.LogError("Error loading inventory data: " + ex.Message);
+            return resultList;
         }
 
-        return inventoryData;
+       
     }
     public void SaveCraftedInventoryData(int inventoryId, Dictionary<ItemDatabase.Item, int> craftedItems)
     {
@@ -288,35 +299,40 @@ public class LocalDatabaseManager : MonoBehaviour {
             Debug.LogError("Error saving crafted inventory data: " + ex.Message);
         }
     }
-    public Dictionary<int, int> LoadCraftedInventoryData(int inventoryId)
+    public List<MaterialDataFetchLite> LoadCraftedInventoryData(int inventoryId)
     {
-        var craftedInventoryData = new Dictionary<int, int>();
+        List<MaterialDataFetchLite> resultList = new List<MaterialDataFetchLite>();
 
         if (connection == null)
         {
             Debug.LogError("Database connection is null.");
-            return craftedInventoryData;
+            return resultList;
         }
-
         try
         {
-            var items = connection.Table<CraftedInventoryTbl>()
+            var records = connection.Table<CraftedInventoryTbl>()
                                   .Where(x => x.InventoryId == inventoryId)
                                   .ToList();
 
-            foreach (var item in items)
+            foreach (var record in records)
             {
-                craftedInventoryData[item.ItemId] = item.Quantity;
+                MaterialDataFetchLite data = new MaterialDataFetchLite
+                {
+                    materialId = record.ItemId,
+                    quantity = record.Quantity
+                };
+                resultList.Add(data);
             }
 
             Debug.Log("Crafted inventory data loaded from SQLite database.");
+            return resultList;
         }
         catch (System.Exception ex)
         {
             Debug.LogError("Error loading crafted inventory data: " + ex.Message);
+            return resultList;
         }
-
-        return craftedInventoryData;
+        
     }
     void OnDestroy()
     {
@@ -376,5 +392,9 @@ public class LocalDatabaseManager : MonoBehaviour {
         public string Icon {  get; set; }
     }
 
-
+    [System.Serializable]
+    public class MaterialDataFetchLite {
+        public int materialId;
+        public int quantity;
+    }
 }
