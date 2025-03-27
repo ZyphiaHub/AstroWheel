@@ -27,8 +27,7 @@ public class PuzzleGameManager : MonoBehaviour {
     private int moves = 0;
 
     [Header("Inventory")]
-    [SerializeField] private PlantDatabase plantDatabase; // Referencia a PlantDatabase-re
-    
+    [SerializeField] private PlantDatabase plantDatabase;     
 
 
     private List<Transform> pieces;
@@ -377,7 +376,7 @@ public class PuzzleGameManager : MonoBehaviour {
         if (plantDatabase != null && plantDatabase.items.Length > 0)
         {
             PlantDatabase.Item itemToAdd = plantDatabase.items[0];
-            int quantityToAdd = score / 3;
+            int quantityToAdd = score / 2;
             if (quantityToAdd < 1) { quantityToAdd = 1; }          
                 
             InventoryManager.Instance.inventory.AddItem(itemToAdd, quantityToAdd);
