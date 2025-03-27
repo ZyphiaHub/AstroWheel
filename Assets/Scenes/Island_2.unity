@@ -661,8 +661,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 46
-  m_fontSizeBase: 46
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2173,7 +2173,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Welcome young one!
+  m_text: Welcome back! You can earn a lot of points by matching images again. \n\nBy
+    playing the game repeatedly, you'll earn TimePoints and collect Velvet Bean plant,
+    also known among witches as the Donkey's eye.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c55ad572296285d48b52bbcbebc3f508, type: 2}
   m_sharedMaterial: {fileID: -2411651911283037723, guid: c55ad572296285d48b52bbcbebc3f508, type: 2}
@@ -2302,7 +2304,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.6301887, g: 0.21283726, b: 0.21283726, a: 1}
+    m_NormalColor: {r: 0.37647063, g: 0.5372549, b: 0.5137255, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
