@@ -151,8 +151,9 @@ public class LoginManager : MonoBehaviour {
             PlayerPrefs.Save();
             PlayerPrefs.SetString("PlayerEmail", playerData.userId ?? string.Empty);
             PlayerPrefs.Save();
-            PlayerPrefs.SetInt("PlayerScore", playerData.totalScore);
-            PlayerPrefs.Save();
+            GameManager.Instance.SaveTotalScore(playerData.totalScore);
+            //PlayerPrefs.SetInt("PlayerScore", playerData.totalScore);
+            //PlayerPrefs.Save();
             Debug.Log($"InventoryID before save: {playerData.inventoryId} (Type: {playerData.inventoryId.GetType()})");
             PlayerPrefs.SetInt("InventoryID", playerData.inventoryId);
             PlayerPrefs.Save();
@@ -258,9 +259,9 @@ public class LoginManager : MonoBehaviour {
                             
                    PlayerPrefs.SetString("PlayerUsername", playerData.playerName ?? string.Empty);
                    PlayerPrefs.Save();
-                        
-                   PlayerPrefs.SetInt("PlayerScore", playerData.totalScore);
-                   PlayerPrefs.Save();
+                   GameManager.Instance.SaveTotalScore(playerData.totalScore);     
+                   //PlayerPrefs.SetInt("PlayerScore", playerData.totalScore);
+                   //PlayerPrefs.Save();
                    PlayerPrefs.SetInt("InventoryID", playerData.inventoryId);
                    PlayerPrefs.Save();
 
@@ -319,7 +320,7 @@ public class LoginManager : MonoBehaviour {
         public string playerPassword;
         public string playerEmail;
         public int characterId;
-        public int totalScore; // A szerver "totalScore" mezõje
+        public int totalScore; 
         public int inventoryId; 
         public int islandId; // A szerver "islandId" mezõje (nullable)
         public string characterName; 

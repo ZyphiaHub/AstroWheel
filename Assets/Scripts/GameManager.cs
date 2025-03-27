@@ -32,12 +32,8 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        
-
         //Debug.Log("Beléptél a Login Menübe");
         SceneManager.LoadScene("Login");
-
-        
     }
 
     private void Update()
@@ -46,8 +42,6 @@ public class GameManager : MonoBehaviour {
         {
             currentState.UpdateState();
         }
-        
-
     }
 
     public void ChangeState(IGameState newState)
@@ -61,19 +55,16 @@ public class GameManager : MonoBehaviour {
         currentState.EnterState();
     }
 
-    // Mentés: Utolsó teljesített sziget mentése
     public void SaveLastCompletedIsland(int islandIndex)
     {
         PlayerPrefs.SetInt("LastCompletedIsland", islandIndex);
-        PlayerPrefs.Save(); 
+        PlayerPrefs.Save();
     }
 
-    // Betöltés: Utolsó teljesített sziget betöltése
     public int LoadLastCompletedIsland()
     {
         int proba = PlayerPrefs.GetInt("LastCompletedIsland", 0);
         return PlayerPrefs.GetInt("LastCompletedIsland", 0);
-
     }
 
     // Ellenõrzés: Egy adott sziget teljesítve van-e
@@ -84,20 +75,19 @@ public class GameManager : MonoBehaviour {
 
     public void SaveTotalScore(int totalScore)
     {
-        PlayerPrefs.SetInt(TotalScoreKey, totalScore);
-        PlayerPrefs.Save(); // Azonnali mentés
+        PlayerPrefs.SetInt("TotalScore", totalScore);
+        PlayerPrefs.Save();
     }
 
-    // TotalScore betöltése
     public int LoadTotalScore()
     {
-        return PlayerPrefs.GetInt(TotalScoreKey, 0); 
+        return PlayerPrefs.GetInt("TotalScore", 0);
     }
     public bool IsInternetAvailable()
     {
         return Application.internetReachability != NetworkReachability.NotReachable;
     }
-    // PlayerId mentése
+
     /* public void SavePlayerId(int playerId)
      {
          PlayerPrefs.SetInt(PlayerIdKey, playerId);
@@ -109,10 +99,8 @@ public class GameManager : MonoBehaviour {
         PlayerPrefs.Save();
     }
 
-    // PlayerId betöltése
     public int LoadPlayerId()
     {
-        // Példa: PlayerId betöltése PlayerPrefsbõl
         if (PlayerPrefs.HasKey("PlayerId"))
         {
             return PlayerPrefs.GetInt("PlayerId");
@@ -122,31 +110,51 @@ public class GameManager : MonoBehaviour {
             return 0; // Vagy dobj egy kivételt, ha szükséges
         }
     }
-    
 
-    // Puzzle megoldásának állapotának mentése
     public void SetPuzzleSolved(bool isSolved)
     {
         PlayerPrefs.SetInt($"Island_{islandIndex}_Solved", isSolved ? 1 : 0);
         PlayerPrefs.Save();
     }
 
-    // Puzzle megoldásának állapotának betöltése
     public bool IsPuzzleSolved(int islandIndex)
     {
         return PlayerPrefs.GetInt($"Island_{islandIndex}_Solved", 0) == 1;
     }
 
-    // Aktuális sziget indexének lekérése
     public int GetCurrentIslandIndex()
     {
-        return islandIndex; // vagy bármilyen más logika, ami visszaadja az aktuális sziget indexét
-    }
+        return islandIndex; }
 
-    // Aktuális sziget indexének beállítása
     public void SetCurrentIslandIndex(int index)
     {
         islandIndex = index;
     }
-   
+
+    public void SaveRegisteredEmail(string email)
+    {
+        PlayerPrefs.SetString("RegisteredEmail", email);
+        PlayerPrefs.Save();
+    }
+    public string LoadRegisteredEmail(){
+        return PlayerPrefs.GetString("RegisteredEmail", "");
+    }
+
+    public void SaveRegisteredPassword(string password)
+    {
+        PlayerPrefs.SetString("RegisteredPassword", password);
+        PlayerPrefs.Save();
+    }
+
+    public string LoadRegisteredPassword()
+    {
+        return PlayerPrefs.GetString("RegisteredPassword", "");
+    }
+
+    public void SaveSelectedCharacterIndex(int selectedCharacterIndex)
+    {
+        PlayerPrefs.SetInt("SelectedCharacterIndex", selectedCharacterIndex);
+        PlayerPrefs.Save();
+    }
+
 }

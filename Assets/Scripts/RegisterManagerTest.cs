@@ -75,18 +75,14 @@ public class RegisterManager : MonoBehaviour {
         }
 
         // Adatok mentése a PlayerPrefs-be
-        PlayerPrefs.SetString("RegisteredEmail", email);
-        PlayerPrefs.Save();
-        PlayerPrefs.SetString("RegisteredPassword", password);
-        PlayerPrefs.Save();
+        GameManager.Instance.SaveRegisteredEmail(email);
+        GameManager.Instance.SaveRegisteredPassword(password);
         characterSelectionPanel.SetActive(true);
         selectCharacterButton.onClick.AddListener(OnSelectCharacterButtonClicked);
         //PlayerPrefs.SetInt("SelectedCharacterIndex", selectedCharacterIndex);
         //PlayerPrefs.Save();
         GameManager.Instance.SaveLastCompletedIsland(0);
         GameManager.Instance.SaveTotalScore(0);
-
-        
     }
 
     private bool IsValidEmail(string email)
@@ -100,8 +96,7 @@ public class RegisterManager : MonoBehaviour {
         // Panel aktiválása vagy deaktiválása
         if (characterSelectionPanel.activeSelf)
         {
-            PlayerPrefs.SetInt("SelectedCharacterIndex", selectedCharacterIndex);
-            PlayerPrefs.Save();
+            GameManager.Instance.SaveSelectedCharacterIndex(selectedCharacterIndex);
             Debug.Log("Selected character index saved: " + selectedCharacterIndex);
         }
 
@@ -150,8 +145,10 @@ public class RegisterManager : MonoBehaviour {
             return;
         }
 
-        string email = PlayerPrefs.GetString("RegisteredEmail", "");
-        string password = PlayerPrefs.GetString("RegisteredPassword", "");
+        //string email = PlayerPrefs.GetString("RegisteredEmail", "");
+        string email = GameManager.Instance.LoadRegisteredEmail();
+        //string password = PlayerPrefs.GetString("RegisteredPassword", "");
+        string password = GameManager.Instance.LoadRegisteredPassword();
         //int characterIndex = selectedCharacterIndex;
         int characterIndex = PlayerPrefs.GetInt("SelectedCharacterIndex", 0);
 
@@ -327,11 +324,8 @@ public class RegisterManager : MonoBehaviour {
         InventoryManager.Instance.SaveInventory();
         InventoryManager.Instance.SaveCraftedInventory();
         Debug.Log("New player inventory initialized.");
-
-        
         
     }
-
 
 
 
