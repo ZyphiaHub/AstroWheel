@@ -324,7 +324,7 @@ public class LoginManager : MonoBehaviour {
         public int inventoryId; 
         public int islandId; // A szerver "islandId" mezõje (nullable)
         public string characterName; 
-        public string lastLogin; // A szerver "lastLogin" mezõje
+        public string lastLogin; 
         public string createdAt; // A szerver "createdAt" mezõje
         public List<MaterialDataFetch> materials;
     }
