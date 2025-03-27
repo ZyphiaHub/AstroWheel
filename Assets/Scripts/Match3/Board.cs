@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public enum GameState{
     wait,
@@ -28,10 +29,12 @@ public class Board : MonoBehaviour {
     public TMP_Text scoreText;
     public TMP_Text movesText;
 
+    [Header("Inventory")]
+    [SerializeField] private PlantDatabase plantDatabase;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         findMatches = FindObjectOfType<FindMatches>();
         allTiles = new BackgroundTile[width, height];
         allDots = new GameObject[width, height];
@@ -230,15 +233,82 @@ public class Board : MonoBehaviour {
     {
         Debug.Log("A játék véget ért!");
         Debug.Log("Végső pontszám: " + match3Point);
+        int currentTotalScore = GameManager.Instance.LoadTotalScore();
 
-        // Itt lehet a játék végi logikát hozzáadni
-        // Pl.: SceneManager.LoadScene("GameOverScene");
+        GameManager.Instance.SaveTotalScore(currentTotalScore + match3Point);
+        Debug.Log("current totalscore: " + currentTotalScore);
+        //serverre score
+        int inventoryId = PlayerPrefs.GetInt("InventoryID");
+        int totalScore = GameManager.Instance.LoadTotalScore();
+
+        StartCoroutine(APIClient.Instance.UpdateTotalScore(
+            inventoryId,
+            totalScore,
+            onSuccess: response =>
+            {
+                //Debug.Log("Inventory updated successfully: " + response);
+            },
+            onError: error =>
+            {
+                Debug.LogError("Failed to update inventory: " + error);
+            }
+        ));
+
+        // Beállítjuk, hogy a puzzle megoldva van
+        GameManager.Instance.SetPuzzleSolved(true);
+
+        if (GameManager.Instance.LoadLastCompletedIsland() == 1)
+        {
+            GameManager.Instance.SaveLastCompletedIsland(2);
+
+            // serverre is küldöm
+            int playerId = GameManager.Instance.LoadPlayerId();
+            Debug.Log("puzzle vége:" + playerId);
+            int newIslandId = 2;
+
+            StartCoroutine(APIClient.Instance.UpdatePlayerIslandId(
+                playerId,
+                newIslandId,
+                onSuccess: response =>
+                {
+                    Debug.Log("IslandId updated successfully: " + response);
+                },
+                onError: error =>
+                {
+                    Debug.LogError("Failed to update IslandId: " + error);
+                }
+            ));
+        }
+        // Hozzáadjuk a 0 indexű tárgyat az inventoryhoz
+        if (plantDatabase != null && plantDatabase.items.Length > 0)
+        {
+            PlantDatabase.Item itemToAdd = plantDatabase.items[1];
+            int quantityToAdd = match3Point / 4;
+            if (quantityToAdd < 1) { quantityToAdd = 1; }
+
+            InventoryManager.Instance.inventory.AddItem(itemToAdd, quantityToAdd);
+
+            Debug.Log($"Item added to inventory: {itemToAdd.englishName}, Quantity: {quantityToAdd}");
+
+            InventoryManager.Instance.inventory.PrintInventory();
+            InventoryManager.Instance.SaveInventory();
+            InventoryManager.Instance.SaveCraftedInventoryToServer();
+        } else
+        {
+            Debug.LogWarning("PlantDatabase nincs beállítva vagy nincsenek tárgyak!");
+        }
+
+        if (plantDatabase == null)
+        {
+            Debug.LogError("PlantDatabase nincs beállítva a PuzzleGameManager-ben!");
+            return;
+        }
     }
 
     void UpdateUI()
     {
-        scoreText.text = "Pontszám: " + match3Point;
-        movesText.text = "Lépések: " + remMoves;
+        scoreText.text = "Collected \nScore: \n" + match3Point;
+        movesText.text = "Remaining\nMoves:\n " + remMoves;
         Debug.Log("ui update");
     }
 }
