@@ -601,10 +601,12 @@ MonoBehaviour:
   - {fileID: 6839504776039816345, guid: 9e34417fadef89049baeee960c8eb74f, type: 3}
   - {fileID: 8805551459050871502, guid: e1c9a8eb0b9180547bac66eb493e83e1, type: 3}
   tilePrefab: {fileID: 2768125495754725896, guid: 1b2e08ec39b8a304c949767f35bc466a, type: 3}
-  remMoves: 20
+  remMoves: 15
   scoreText: {fileID: 1861329663}
   movesText: {fileID: 934645203}
+  descText: {fileID: 935520124}
   plantDatabase: {fileID: 11400000, guid: 9eaecee37aff1c04fbdf06680b5f1f37, type: 2}
+  playAgainButton: {fileID: 1038131677}
 --- !u!224 &668102276
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1037,7 +1039,7 @@ GameObject:
   - component: {fileID: 935520125}
   - component: {fileID: 935520124}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: descText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1243,8 +1245,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PuzzleGameManager, Scripts
+      - m_Target: {fileID: 668102275}
+        m_TargetAssemblyTypeName: Board, Scripts
         m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
