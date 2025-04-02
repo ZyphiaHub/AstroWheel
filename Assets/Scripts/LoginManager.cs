@@ -20,6 +20,7 @@ public class LoginManager : MonoBehaviour {
     public TMP_Text errorMessageText;
 
     private bool isFetchPlayerDataCompleted = false;
+    private Coroutine loginRoutine;
 
     private void Start()
     {
@@ -28,9 +29,13 @@ public class LoginManager : MonoBehaviour {
         quitButton.onClick.AddListener(OnQuitToDesktopClicked);
 
     }
-
+    private void OnEnable()
+    {
+        ResetLoginUI();
+    }
     public void OnLoginButtonClicked()
     {
+        ClearSessionData();
         string email = emailInputField.text;
         string password = passwordInputField.text;
 
@@ -40,13 +45,42 @@ public class LoginManager : MonoBehaviour {
             return;
         }
 
-        
-        // Bejelentkezési kérés indítása
-        StartCoroutine(LoginAndFetchData(email, password));
-        
 
+        // Bejelentkezési kérés indítása
+        if (loginRoutine != null)
+        {
+            StopCoroutine(loginRoutine);
+        }
+        loginRoutine = StartCoroutine(LoginAndFetchData(emailInputField.text, passwordInputField.text));
     }
 
+
+
+    private void ClearSessionData()
+    {
+        PlayerPrefs.DeleteKey("AuthToken");
+        PlayerPrefs.DeleteKey("PlayerUsername");
+        PlayerPrefs.DeleteKey("InventoryID");
+        PlayerPrefs.Save();
+
+        // Reset game state
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SavePlayerId(0);
+            GameManager.Instance.SaveLastCompletedIsland(0);
+            GameManager.Instance.SaveTotalScore(0);
+        }
+    }
+
+    public void ResetLoginUI()
+    {
+        emailInputField.text = "";
+        passwordInputField.text = "";
+        errorMessageText.text = "";
+
+        // Fontos: engedélyezzük a gombot
+        loginButton.interactable = true;
+    }
     private bool IsValidEmail(string email)
     {
         // Egyszerû regex az email cím ellenõrzésére
@@ -56,8 +90,15 @@ public class LoginManager : MonoBehaviour {
 
     private void OnQuitToDesktopClicked()
     {
-        Debug.Log("Kilépés a játékból...");
+        // Adjunk hozzá extra ellenõrzéseket
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
+
+        // Erõltesd a kilépést
+        System.Diagnostics.Process.GetCurrentProcess().Kill();
     }
 
     
@@ -303,7 +344,19 @@ public class LoginManager : MonoBehaviour {
         isFetchPlayerDataCompleted = true;
         
     }
+    public void Logout()
+    {
+        // 1. Töröljük a session adatokat
+        PlayerPrefs.DeleteKey("AuthToken");
+        PlayerPrefs.DeleteKey("PlayerUsername");
+        PlayerPrefs.Save();
 
+        // 2. Reseteljük a UI-t
+        ResetLoginUI();
+
+        // 3. Visszatöltjük a login scénet
+        SceneManager.LoadScene("LoginScene");
+    }
 
     [System.Serializable]
     public class LoginData
