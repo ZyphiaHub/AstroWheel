@@ -25,12 +25,15 @@ public class Board : MonoBehaviour {
     public GameObject[,] allDots;
     private FindMatches findMatches;
 
-    public int remMoves = 20;
+    public int remMoves = 15;
     public TMP_Text scoreText;
     public TMP_Text movesText;
+    public TMP_Text descText;
 
     [Header("Inventory")]
     [SerializeField] private PlantDatabase plantDatabase;
+    [Header("UI Elements")]
+    public GameObject playAgainButton;
 
 
     // Use this for initialization
@@ -221,7 +224,6 @@ public class Board : MonoBehaviour {
     public void DecreaseMoveCount()
     {
         remMoves--;
-        Debug.Log("Hátralévő lépések: " + remMoves);
 
         if (remMoves <= 0)
         {
@@ -232,7 +234,6 @@ public class Board : MonoBehaviour {
     void EndGame()
     {
         Debug.Log("A játék véget ért!");
-        Debug.Log("Végső pontszám: " + match3Point);
         int currentTotalScore = GameManager.Instance.LoadTotalScore();
 
         GameManager.Instance.SaveTotalScore(currentTotalScore + match3Point);
@@ -240,6 +241,7 @@ public class Board : MonoBehaviour {
         //serverre score
         int inventoryId = PlayerPrefs.GetInt("InventoryID");
         int totalScore = GameManager.Instance.LoadTotalScore();
+
 
         StartCoroutine(APIClient.Instance.UpdateTotalScore(
             inventoryId,
@@ -291,8 +293,9 @@ public class Board : MonoBehaviour {
             Debug.Log($"Item added to inventory: {itemToAdd.englishName}, Quantity: {quantityToAdd}");
 
             InventoryManager.Instance.inventory.PrintInventory();
-            InventoryManager.Instance.SaveInventory();
+            InventoryManager.Instance.SaveInventoryToServer();
             InventoryManager.Instance.SaveCraftedInventoryToServer();
+            descText.text = ($"The game\nhas finished.\nYou gained\n{quantityToAdd} Velvet bean");
         } else
         {
             Debug.LogWarning("PlantDatabase nincs beállítva vagy nincsenek tárgyak!");
@@ -303,12 +306,59 @@ public class Board : MonoBehaviour {
             Debug.LogError("PlantDatabase nincs beállítva a PuzzleGameManager-ben!");
             return;
         }
+        playAgainButton.SetActive(true);
+        currentState = GameState.wait;
+        StartCoroutine(SetDotsInActive());
+        
+        UpdateUI();
     }
+
+    public void RestartGame()
+    {
+        // Töröljük az összes dot-ot
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (allDots[i, j] != null)
+                {
+                    Destroy(allDots[i, j]);
+                }
+            }
+        }
+
+        match3Point = 0;
+        remMoves = 15; // vagy bármilyen kezdőérték
+        currentState = GameState.move;
+
+        SetUp();
+
+        playAgainButton.SetActive(false);
+        descText.text = "Every icon you match, worth 1 point.\n\nAutomatic matches doesn't count against your steps.";
+        UpdateUI();
+    }
+
 
     void UpdateUI()
     {
         scoreText.text = "Collected \nScore: \n" + match3Point;
         movesText.text = "Remaining\nMoves:\n " + remMoves;
-        Debug.Log("ui update");
+    }
+
+    private IEnumerator SetDotsInActive()
+    {
+        yield return StartCoroutine(FillBoardCo());
+        yield return new WaitForSeconds(3f);
+        
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (allDots[i, j] != null)
+                {
+                    allDots[i, j].SetActive(false);
+                }
+            }
+        }
     }
 }
