@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\MatiCatch\MainMatiCatch.cs" />
     <Compile Include="Assets\Scripts\MatiKviz\MainMatiKviz.cs" />
+    <Compile Include="Assets\Scripts\AudiManager.cs" />
     <Compile Include="Assets\Scripts\ItemInitializer.cs" />
     <Compile Include="Assets\Scripts\APIClient.cs" />
     <Compile Include="Assets\Scripts\RecipeManager.cs" />
