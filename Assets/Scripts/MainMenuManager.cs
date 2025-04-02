@@ -5,17 +5,24 @@ using TMPro;
 
 public class MainMenuManager : MonoBehaviour {
     public Button[] islandButtons;
+    [Header("Volume Controls")]
+    public Button volumeUpButton;
+    public Button volumeDownButton;
+    public TMP_Text volumeText;
 
-    public TMP_Text playerNameText; // Játékos neve
-    public TMP_Text playerScoreText; // Pontok
-    public TMP_Text lastCompletedIslandText; // Utolsó teljesített sziget száma
+    public TMP_Text playerNameText; 
+    public TMP_Text playerScoreText; 
+    public TMP_Text lastCompletedIslandText; 
 
     private void Start()
     {
         Debug.Log("Beléptél a Fõmenübe!");
-        // Adatok betöltése és megjelenítése
+        
+        volumeUpButton.onClick.AddListener(IncreaseVolume);
+        volumeDownButton.onClick.AddListener(DecreaseVolume);
+        UpdateVolumeUI();
         LoadAndDisplayPlayerData();
-        // Gombok állapotának beállítása
+        
         for (int i = 0; i < islandButtons.Length; i++)
         {
             int islandIndex = i + 1; // A szigetek indexelése 1-tõl kezdõdik
@@ -35,9 +42,29 @@ public class MainMenuManager : MonoBehaviour {
             
         }
     }
+    private void IncreaseVolume()
+    {
+        AudioManager.Instance.IncreaseVolume();
+        UpdateVolumeUI();
+    }
+
+    private void DecreaseVolume()
+    {
+        AudioManager.Instance.DecreaseVolume();
+        UpdateVolumeUI();
+    }
+
+    private void UpdateVolumeUI()
+    {
+        if (volumeText != null)
+        {
+            float volume = AudioManager.Instance.GetCurrentVolume();
+            volumeText.text = $"Volume: {Mathf.RoundToInt(volume * 100)}%";
+        }
+    }
+
     public void LoadIslandScene(int islandIndex)
     {
-        // Sziget scene betöltése
         SceneManager.LoadScene($"Island_{islandIndex}"); }
 
         private void LoadAndDisplayPlayerData()
