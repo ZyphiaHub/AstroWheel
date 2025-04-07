@@ -3102,6 +3102,7 @@ MonoBehaviour:
   - {fileID: 1707161886}
   volumeUpButton: {fileID: 487326565}
   volumeDownButton: {fileID: 957231742}
+  logoutButton: {fileID: 1851556361}
   volumeText: {fileID: 1122651440}
   playerNameText: {fileID: 1948453744}
   playerScoreText: {fileID: 1098077964}
@@ -5254,7 +5255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1642079252
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5881,9 +5882,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 308295583}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: OverView, Scripts
-        m_MethodName: BackToLogin
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
