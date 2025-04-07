@@ -126,7 +126,7 @@ public class IslandManager : MonoBehaviour, IGameState {
     private void LoadSelectedCharacterImage()
     {
         // Betöltjük a kiválasztott karakterkép indexét
-        int selectedCharacterIndex = PlayerPrefs.GetInt("SelectedCharacterIndex", 0);
+        int selectedCharacterIndex = PlayerPrefs.GetInt("CharacterId", 0);
 
         // Ellenõrizzük, hogy a RegisterManager és a characterSprites tömb létezik-e
         if (RegisterManager.Instance != null && RegisterManager.Instance.CharacterSprites != null)
