@@ -8,6 +8,7 @@ public class MainMenuManager : MonoBehaviour {
     [Header("Volume Controls")]
     public Button volumeUpButton;
     public Button volumeDownButton;
+    public Button logoutButton;
     public TMP_Text volumeText;
 
     public TMP_Text playerNameText; 
@@ -20,6 +21,7 @@ public class MainMenuManager : MonoBehaviour {
         
         volumeUpButton.onClick.AddListener(IncreaseVolume);
         volumeDownButton.onClick.AddListener(DecreaseVolume);
+        logoutButton.onClick.AddListener(Logout);
         UpdateVolumeUI();
         LoadAndDisplayPlayerData();
         
@@ -81,5 +83,27 @@ public class MainMenuManager : MonoBehaviour {
         int lastCompletedIsland = PlayerPrefs.GetInt("LastCompletedIsland", 0);
         lastCompletedIslandText.text = "Last Completed \nIsland: " + lastCompletedIsland;
     }
+
+    public void Logout()
+    {
+        // TÖRÖLJÜK MINDEN ADATOT
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+
+        // UI visszaállítása
+        //ResetLoginUI();
+
+        // GameManager visszaállítása
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SavePlayerId(0);
+            GameManager.Instance.SaveLastCompletedIsland(0);
+            GameManager.Instance.SaveTotalScore(0);
+        }
+
+        // Login jelenet betöltése 
+        SceneManager.LoadScene("Login"); 
+    }
+    
 
 }
