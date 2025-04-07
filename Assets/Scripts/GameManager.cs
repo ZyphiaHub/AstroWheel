@@ -110,6 +110,22 @@ public class GameManager : MonoBehaviour {
             return 0; // Vagy dobj egy kivételt, ha szükséges
         }
     }
+    public void SaveCharId(int charId)
+    {
+        PlayerPrefs.SetInt("CharacterId", charId);
+        PlayerPrefs.Save();
+    }
+    public int LoadCharId()
+    {
+        if (PlayerPrefs.HasKey("CharacterId"))
+        {
+            return PlayerPrefs.GetInt("CharacterId");
+        } else
+        {
+            Debug.LogError("PlayerId not found in PlayerPrefs!");
+            return 0; // Vagy dobj egy kivételt, ha szükséges
+        }
+    }
 
     public void SetPuzzleSolved(bool isSolved)
     {
