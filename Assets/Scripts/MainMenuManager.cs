@@ -9,6 +9,7 @@ public class MainMenuManager : MonoBehaviour {
     public Button volumeUpButton;
     public Button volumeDownButton;
     public Button logoutButton;
+    public Button quitButton;
     public TMP_Text volumeText;
 
     public TMP_Text playerNameText; 
@@ -21,7 +22,8 @@ public class MainMenuManager : MonoBehaviour {
         
         volumeUpButton.onClick.AddListener(IncreaseVolume);
         volumeDownButton.onClick.AddListener(DecreaseVolume);
-        logoutButton.onClick.AddListener(Logout);
+        //logoutButton.onClick.AddListener(Logout);
+        quitButton.onClick.AddListener(OnQuitToDesktopClicked);
         UpdateVolumeUI();
         LoadAndDisplayPlayerData();
         
@@ -104,6 +106,18 @@ public class MainMenuManager : MonoBehaviour {
         // Login jelenet betöltése 
         SceneManager.LoadScene("Login"); 
     }
-    
+    private void OnQuitToDesktopClicked()
+    {
+        // Adjunk hozzá extra ellenõrzéseket
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+
+        // Erõltesd a kilépést
+        System.Diagnostics.Process.GetCurrentProcess().Kill();
+    }
+
 
 }
