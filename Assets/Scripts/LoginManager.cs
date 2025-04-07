@@ -29,16 +29,20 @@ public class LoginManager : MonoBehaviour {
         quitButton.onClick.AddListener(OnQuitToDesktopClicked);
 
     }
-    private void OnEnable()
+    /*private void OnEnable()
     {
         ResetLoginUI();
-    }
+        loginButton.onClick.RemoveAllListeners(); // Régi események törlése
+        loginButton.onClick.AddListener(OnLoginButtonClicked);
+        registerButton.onClick.RemoveAllListeners();
+        //registerButton.onClick.AddListener(OnRegisterButtonClicked); // HIÁNYZIK A JELENLEGI KÓDBÓL!
+    }*/
     public void OnLoginButtonClicked()
     {
         ClearSessionData();
         string email = emailInputField.text;
         string password = passwordInputField.text;
-
+        Debug.Log("Login gomb megnyomva!");
         if (!IsValidEmail(email))
         {
             errorMessageText.text = "Invalid email address!";
@@ -300,9 +304,9 @@ public class LoginManager : MonoBehaviour {
                             
                    PlayerPrefs.SetString("PlayerUsername", playerData.playerName ?? string.Empty);
                    PlayerPrefs.Save();
-                   GameManager.Instance.SaveTotalScore(playerData.totalScore);     
-                   //PlayerPrefs.SetInt("PlayerScore", playerData.totalScore);
-                   //PlayerPrefs.Save();
+                   GameManager.Instance.SaveTotalScore(playerData.totalScore);
+                   GameManager.Instance.SaveCharId(playerData.characterId-6);
+                   
                    PlayerPrefs.SetInt("InventoryID", playerData.inventoryId);
                    PlayerPrefs.Save();
 
@@ -344,19 +348,7 @@ public class LoginManager : MonoBehaviour {
         isFetchPlayerDataCompleted = true;
         
     }
-    public void Logout()
-    {
-        // 1. Töröljük a session adatokat
-        PlayerPrefs.DeleteKey("AuthToken");
-        PlayerPrefs.DeleteKey("PlayerUsername");
-        PlayerPrefs.Save();
 
-        // 2. Reseteljük a UI-t
-        ResetLoginUI();
-
-        // 3. Visszatöltjük a login scénet
-        SceneManager.LoadScene("LoginScene");
-    }
 
     [System.Serializable]
     public class LoginData
