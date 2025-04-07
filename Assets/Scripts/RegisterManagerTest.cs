@@ -79,8 +79,6 @@ public class RegisterManager : MonoBehaviour {
         GameManager.Instance.SaveRegisteredPassword(password);
         characterSelectionPanel.SetActive(true);
         selectCharacterButton.onClick.AddListener(OnSelectCharacterButtonClicked);
-        //PlayerPrefs.SetInt("SelectedCharacterIndex", selectedCharacterIndex);
-        //PlayerPrefs.Save();
         GameManager.Instance.SaveLastCompletedIsland(0);
         GameManager.Instance.SaveTotalScore(0);
     }
