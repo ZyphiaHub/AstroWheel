@@ -121,7 +121,7 @@ public class LoginManager : MonoBehaviour {
 
         string jsonData = JsonUtility.ToJson(loginData);
         Debug.Log("Sending login data: " + jsonData);
-
+        errorMessageText.text = "Connecting, please wait...";
         // POST kérés elküldése
         using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
         {
@@ -197,8 +197,6 @@ public class LoginManager : MonoBehaviour {
             PlayerPrefs.SetString("PlayerEmail", playerData.userId ?? string.Empty);
             PlayerPrefs.Save();
             GameManager.Instance.SaveTotalScore(playerData.totalScore);
-            //PlayerPrefs.SetInt("PlayerScore", playerData.totalScore);
-            //PlayerPrefs.Save();
             Debug.Log($"InventoryID before save: {playerData.inventoryId} (Type: {playerData.inventoryId.GetType()})");
             PlayerPrefs.SetInt("InventoryID", playerData.inventoryId);
             PlayerPrefs.Save();
