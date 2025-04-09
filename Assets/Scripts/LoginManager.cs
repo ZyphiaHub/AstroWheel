@@ -185,7 +185,8 @@ public class LoginManager : MonoBehaviour {
         if (playerData != null)
         {
             Debug.Log($"Local Player Data: ID = {playerData.playerId}, Username = {playerData.playerName}, " +
-                $"Email = {playerData.userId}, CharacterId = {playerData.characterId}, Score = {playerData.totalScore}, " +
+                $"Email = {playerData.userId}, CharacterId = {playerData.characterId}," +
+                $"CharacterIndex = {playerData.characterIndex}, Score = {playerData.totalScore}, " +
                 $"InventoryID = {playerData.inventoryId}, LastCompletedIsland = {playerData.islandId}");
 
             // Adatok betöltése a GameManager-be
@@ -303,9 +304,9 @@ public class LoginManager : MonoBehaviour {
                    PlayerPrefs.SetString("PlayerUsername", playerData.playerName ?? string.Empty);
                    PlayerPrefs.Save();
                    GameManager.Instance.SaveTotalScore(playerData.totalScore);
-                   GameManager.Instance.SaveCharId(playerData.characterId-6);
-                   
-                   PlayerPrefs.SetInt("InventoryID", playerData.inventoryId);
+                   //GameManager.Instance.SaveCharId(playerData.characterId-6);
+                   GameManager.Instance.SaveCharId(playerData.characterIndex);
+                    PlayerPrefs.SetInt("InventoryID", playerData.inventoryId);
                    PlayerPrefs.Save();
 
                    Debug.Log("Player data saved to PlayerPrefs.");
@@ -321,6 +322,7 @@ public class LoginManager : MonoBehaviour {
                     playerData.playerEmail,
                     playerData.playerPassword,
                     playerData.characterId,
+                    playerData.characterIndex,
                     playerData.totalScore,
                      playerData.inventoryId,
                      playerData.islandId,
@@ -363,12 +365,13 @@ public class LoginManager : MonoBehaviour {
         public string playerPassword;
         public string playerEmail;
         public int characterId;
+        public int characterIndex;
         public int totalScore; 
         public int inventoryId; 
         public int islandId; // A szerver "islandId" mezõje (nullable)
         public string characterName; 
         public string lastLogin; 
-        public string createdAt; // A szerver "createdAt" mezõje
+        public string createdAt; 
         public List<MaterialDataFetch> materials;
     }
 

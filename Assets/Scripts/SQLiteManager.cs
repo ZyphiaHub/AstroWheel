@@ -80,7 +80,7 @@ public class LocalDatabaseManager : MonoBehaviour {
     }
 
     public void SavePlayerData(int playerId, string playerName, string userId,string playerEmail, string playerPassword, int characterId,
-        int totalScore, int inventoryId, int lastCompletedIsland, string lastLogin, string createdAt)
+        int characterIndex, int totalScore, int inventoryId, int lastCompletedIsland, string lastLogin, string createdAt)
     {
         if (connection == null)
         {
@@ -96,6 +96,7 @@ public class LocalDatabaseManager : MonoBehaviour {
             playerEmail = playerEmail ?? string.Empty,
             playerPassword = playerPassword ?? string.Empty,
             characterId = characterId,
+            characterIndex = characterIndex,
             totalScore = totalScore,
             inventoryId = inventoryId,
             islandId = lastCompletedIsland,
@@ -350,6 +351,7 @@ public class LocalDatabaseManager : MonoBehaviour {
         public string playerEmail { get; set; }
         public string playerPassword { get; set; } = string.Empty;
         public int characterId { get; set; } = 0;
+        public int characterIndex { get; set; } = 0;
         public int islandId { get; set; } = 0;
         public int inventoryId { get; set; } = 0;
         public int totalScore { get; set; } = 0;

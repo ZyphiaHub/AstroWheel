@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour {
     }
     public void SaveCharId(int charId)
     {
-        PlayerPrefs.SetInt("CharacterId", charId);
+        PlayerPrefs.SetInt("CharacterIndex", charId);
         PlayerPrefs.Save();
     }
     public int LoadCharId()
