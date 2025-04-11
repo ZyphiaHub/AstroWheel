@@ -25,7 +25,7 @@ public class Board : MonoBehaviour {
     public GameObject[,] allDots;
     private FindMatches findMatches;
 
-    public int remMoves = 15;
+    public int remMoves = 12;
     public TMP_Text scoreText;
     public TMP_Text movesText;
     public TMP_Text descText;
@@ -281,7 +281,7 @@ public class Board : MonoBehaviour {
                 }
             ));
         }
-        // Hozzáadjuk a 0 indexű tárgyat az inventoryhoz
+        // Hozzáadjuk a 1 indexű tárgyat az inventoryhoz
         if (plantDatabase != null && plantDatabase.items.Length > 0)
         {
             PlantDatabase.Item itemToAdd = plantDatabase.items[1];
