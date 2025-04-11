@@ -11,8 +11,10 @@ public class MemoController : MonoBehaviour {
     public Sprite[] cardFaces;
     private int score = 0;
     private int remGuesses = 24;
-    [SerializeField] private TMP_Text scoreText;  // Pontszám UI
+    [SerializeField] private TMP_Text scoreText;  
     [SerializeField] private TMP_Text guessesText;
+    [SerializeField] private PlantDatabase plantDatabase;
+    public TMP_Text endText;
 
     public List<Sprite> cardPairs = new List<Sprite>();
 
@@ -166,7 +168,58 @@ public class MemoController : MonoBehaviour {
     {
         if (won)
         {
+            int currentTotalScore = GameManager.Instance.LoadTotalScore();
+
+            GameManager.Instance.SaveTotalScore(currentTotalScore + score);
+            Debug.Log("current totalscore: " + currentTotalScore);
+            //serverre score
+            int inventoryId = PlayerPrefs.GetInt("InventoryID");
+            int totalScore = GameManager.Instance.LoadTotalScore();
+
             Debug.Log("Nyertél! A játéknak vége");
+            if (GameManager.Instance.LoadLastCompletedIsland() == 6)
+            {
+                GameManager.Instance.SaveLastCompletedIsland(7);
+
+                // serverre is küldöm
+                int playerId = GameManager.Instance.LoadPlayerId();
+                Debug.Log("mem puzzle vége");
+                int newIslandId = 8;
+
+                StartCoroutine(APIClient.Instance.UpdatePlayerIslandId(
+                    playerId,
+                    newIslandId,
+                    onSuccess: response =>
+                    {
+                        Debug.Log("IslandId updated successfully: " + response);
+                    },
+                    onError: error =>
+                    {
+                        Debug.LogError("Failed to update IslandId: " + error);
+                    }
+                ));
+            }
+
+            // Hozzáadjuk a 6 indexû tárgyat az inventoryhoz
+            if (plantDatabase != null && plantDatabase.items.Length > 0)
+            {
+                PlantDatabase.Item itemToAdd = plantDatabase.items[6];
+                int quantityToAdd = score;
+                if (quantityToAdd < 1) { quantityToAdd = 1; }
+
+                InventoryManager.Instance.inventory.AddItem(itemToAdd, quantityToAdd);
+
+                Debug.Log($"Item added to inventory: {itemToAdd.englishName}, Quantity: {quantityToAdd}");
+
+                InventoryManager.Instance.inventory.PrintInventory();
+                InventoryManager.Instance.SaveInventoryToServer();
+                InventoryManager.Instance.SaveCraftedInventoryToServer();
+                endText.text = ($"The game\nhas finished.\nYou gained\n{quantityToAdd} Cat's paw");
+            } else
+            {
+                Debug.LogWarning("PlantDatabase nincs beállítva vagy nincsenek tárgyak!");
+            }
+            UpdateUI();
         } 
         
     }
