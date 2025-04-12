@@ -60,6 +60,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.34f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\HOG\RandomObjectSelector.cs" />
     <Compile Include="Assets\Scripts\MatiCatch\MainMatiCatch.cs" />
     <Compile Include="Assets\Scripts\MatiKviz\MainMatiKviz.cs" />
     <Compile Include="Assets\Scripts\AudiManager.cs" />
@@ -90,13 +91,16 @@
     <Compile Include="Assets\Scripts\Match3\BackgroundTile.cs" />
     <Compile Include="Assets\Scripts\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\CraftedItemDatabase.cs" />
+    <Compile Include="Assets\Scripts\HOG\RandomObjectPlacer.cs" />
     <Compile Include="Assets\Scripts\MainMenuState.cs" />
     <Compile Include="Assets\Scripts\PlantDatabase.cs" />
     <Compile Include="Assets\Scripts\RecipeInitializer.cs" />
     <Compile Include="Assets\Scripts\DialogDatabse.cs" />
     <Compile Include="Assets\Scripts\Patterning\MainPatterning.cs" />
     <Compile Include="Assets\Scripts\RegisterManager.cs" />
+    <Compile Include="Assets\Scripts\HOG\HOGManager.cs" />
     <Compile Include="Assets\Scripts\Hearth.cs" />
+    <Compile Include="Assets\Scripts\HOG\HiddenObject.cs" />
     <Compile Include="Assets\Scripts\PersistentDataManager.cs" />
     <Compile Include="Assets\Scripts\ServerSyncGetZsofi.cs" />
     <Compile Include="Assets\Scripts\MemoriaJatek\MemoController.cs" />
@@ -108,7 +112,6 @@
     <Compile Include="Assets\Scripts\Match3\Dot.cs" />
     <Compile Include="Assets\Scripts\Puzzle\PuzzleGameManager.cs" />
     <Compile Include="Assets\Scripts\GameState.cs" />
-    <Compile Include="Assets\Scripts\CookonTime\CookonTime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Scripts.asmdef" />

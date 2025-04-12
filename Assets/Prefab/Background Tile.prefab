@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1956141409228214090}
   - component: {fileID: 1711343423256971491}
-  - component: {fileID: -8288037182823456226}
+  - component: {fileID: 5838163354618397148}
   m_Layer: 0
   m_Name: Background Tile
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-8288037182823456226
+--- !u!114 &5838163354618397148
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,12 +94,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2768125495754725896}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76ff55313fb11464b942abed6e84bb22, type: 3}
+  m_Script: {fileID: 11500000, guid: 6aeeb63a7495a554ba1bb2b1d405ac83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dots:
-  - {fileID: 3129442766420610989, guid: 6d2c0ee8c3db85044a531d1e145355a2, type: 3}
-  - {fileID: 4363610516594315477, guid: 55c14b3de692b9d4aaa566b04f6fad8d, type: 3}
-  - {fileID: 5317535226646966383, guid: 77ea7d15b36a9814993d913e4f6483ef, type: 3}
-  - {fileID: 6839504776039816345, guid: 9e34417fadef89049baeee960c8eb74f, type: 3}
-  - {fileID: 8805551459050871502, guid: e1c9a8eb0b9180547bac66eb493e83e1, type: 3}
+  ObjectName: Academie
