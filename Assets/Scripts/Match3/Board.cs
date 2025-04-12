@@ -73,8 +73,6 @@ public class Board : MonoBehaviour {
                 allDots[i, j] = dot;
 
 
-
-
             }
 
         }

@@ -15,6 +15,7 @@ public class MemoController : MonoBehaviour {
     [SerializeField] private TMP_Text guessesText;
     [SerializeField] private PlantDatabase plantDatabase;
     public TMP_Text endText;
+    public GameObject playAgainButton;
 
     public List<Sprite> cardPairs = new List<Sprite>();
 
@@ -36,10 +37,36 @@ public class MemoController : MonoBehaviour {
         AddCardPairs();
         Shuffle(cardPairs);
         gamePicks = cardPairs.Count / 2;
-
+        playAgainButton.SetActive(false);
         UpdateUI();
     }
+    void InitializeGame()
+    {
+        // Visszaállítás kezdõértékekre
+        score = 0;
+        remGuesses = 24;
+        countCorrectPicks = 0;
+        firstPick = secondPick = false;
+        firstPickIndex = secondPickIndex = -1;
+        firstPickPuzzle = secondPickPuzzle = "";
 
+        // Kártyák visszaállítása
+        foreach (Button card in cardList)
+        {
+            card.image.sprite = backImage;
+            card.image.color = Color.white;
+            card.interactable = true;
+        }
+
+        // Kártyapárok újragenerálása és összekeverése
+        cardPairs.Clear();
+        AddCardPairs();
+        Shuffle(cardPairs);
+
+        // UI frissítése
+        UpdateUI();
+        playAgainButton.SetActive(false);
+    }
     void GetButtons()
     {
         GameObject[] objects = GameObject.FindGameObjectsWithTag("CardButton");
@@ -114,7 +141,7 @@ public class MemoController : MonoBehaviour {
             cardList[secondPickIndex].image.color = new Color(0, 0, 0, 0);
 
             //pontozás
-            score += Mathf.Max(2, 14 - countPicks);
+            score += Mathf.Max(1, 10 - countPicks);
             Debug.Log("pontszám:" + score);
 
             
@@ -136,6 +163,7 @@ public class MemoController : MonoBehaviour {
             EndGame(false);
         } else {
             Debug.Log("Vesztettél");
+
             }
     }
 
@@ -148,8 +176,10 @@ public class MemoController : MonoBehaviour {
             Debug.Log("game finished");
             Debug.Log(countPicks);
             Debug.Log("összpontszám:" + score);
-
+            endText.text = ($"The game\nhas finished.\nYou have lost!");
+            playAgainButton.SetActive(true);
             EndGame(true);
+            
         }
     }
 
@@ -168,9 +198,10 @@ public class MemoController : MonoBehaviour {
     {
         if (won)
         {
+            playAgainButton.SetActive(true);
             int currentTotalScore = GameManager.Instance.LoadTotalScore();
 
-            GameManager.Instance.SaveTotalScore(currentTotalScore + score);
+            GameManager.Instance.SaveTotalScore(currentTotalScore + score/2);
             Debug.Log("current totalscore: " + currentTotalScore);
             //serverre score
             int inventoryId = PlayerPrefs.GetInt("InventoryID");
@@ -204,7 +235,7 @@ public class MemoController : MonoBehaviour {
             if (plantDatabase != null && plantDatabase.items.Length > 0)
             {
                 PlantDatabase.Item itemToAdd = plantDatabase.items[6];
-                int quantityToAdd = score;
+                int quantityToAdd = score/4;
                 if (quantityToAdd < 1) { quantityToAdd = 1; }
 
                 InventoryManager.Instance.inventory.AddItem(itemToAdd, quantityToAdd);
@@ -222,6 +253,10 @@ public class MemoController : MonoBehaviour {
             UpdateUI();
         } 
         
+    }
+    public void RestartGame()
+    {
+        InitializeGame();
     }
     void UpdateUI()
     {
