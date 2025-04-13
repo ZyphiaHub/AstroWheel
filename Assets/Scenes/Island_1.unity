@@ -296,8 +296,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Welcome back! You can assemble different images now with the puzzle. \n\nBy
-    playing the game repeatedly, you'll earn TimePoints and collect Jade Orchid plant,
-    also known among witches as the Squirrel's Ear.
+    playing the game repeatedly, you'll earn ChronoPoints and collect Jade Orchid
+    plant, also known among witches as the Squirrel's Ear.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c55ad572296285d48b52bbcbebc3f508, type: 2}
   m_sharedMaterial: {fileID: -2411651911283037723, guid: c55ad572296285d48b52bbcbebc3f508, type: 2}
