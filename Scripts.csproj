@@ -61,9 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\HOG\RandomObjectSelector.cs" />
-    <Compile Include="Assets\Scripts\MatiCatch\MainMatiCatch.cs" />
-    <Compile Include="Assets\Scripts\MatiKviz\MainMatiKviz.cs" />
-    <Compile Include="Assets\Scripts\AudiManager.cs" />
     <Compile Include="Assets\Scripts\ItemInitializer.cs" />
     <Compile Include="Assets\Scripts\APIClient.cs" />
     <Compile Include="Assets\Scripts\RecipeManager.cs" />
@@ -75,7 +72,6 @@
     <Compile Include="Assets\Scripts\LoginManager.cs" />
     <Compile Include="Assets\Scripts\IslandManager.cs" />
     <Compile Include="Assets\Scripts\OverView.cs" />
-    <Compile Include="Assets\Scripts\RegisterManagerTest.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\Match3\Board.cs" />
     <Compile Include="Assets\Scripts\Match3\DestroyParticle.cs" />
@@ -94,10 +90,9 @@
     <Compile Include="Assets\Scripts\HOG\RandomObjectPlacer.cs" />
     <Compile Include="Assets\Scripts\MainMenuState.cs" />
     <Compile Include="Assets\Scripts\PlantDatabase.cs" />
-    <Compile Include="Assets\Scripts\RecipeInitializer.cs" />
     <Compile Include="Assets\Scripts\DialogDatabse.cs" />
-    <Compile Include="Assets\Scripts\Patterning\MainPatterning.cs" />
     <Compile Include="Assets\Scripts\RegisterManager.cs" />
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\HOG\HOGManager.cs" />
     <Compile Include="Assets\Scripts\Hearth.cs" />
     <Compile Include="Assets\Scripts\HOG\HiddenObject.cs" />

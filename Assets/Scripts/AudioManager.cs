@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -31,11 +29,7 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    /*private void Start()
-    {
-        musicSource.clip = backGround;
-        musicSource.Play();
-    }*/
+   
     private void InitializeAudio()
     {
         float savedVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 0.75f); // Alapérték: 75%
